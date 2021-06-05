@@ -15,8 +15,7 @@ class Product(models.Model):
     artist = models.ForeignKey('Artist', on_delete=models.PROTECT)
     label = models.ForeignKey('Label', null=True, blank=True,
                               on_delete=models.SET_NULL)
-    genre = models.ForeignKey('Genre', null=True, blank=True,
-                              on_delete=models.SET_NULL)
+    genre = models.ManyToManyField('Genre', blank=True)
     sku = models.CharField(max_length=254)
     title = models.CharField(max_length=254)
     description = models.TextField(blank=True)
@@ -45,7 +44,7 @@ class Product(models.Model):
 
 class Artist(models.Model):
     name = models.CharField(max_length=100)
-    friendly_name = models.CharField(max_length=100, blank=True)
+    friendly_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name

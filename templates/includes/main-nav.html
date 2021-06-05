@@ -12,7 +12,6 @@
             <div class="dropdown-menu border-0" aria-labelledby="all-products-link">
                 <a href="{% url 'products' %}?sort=price&direction=asc" class="dropdown-item">By Price</a>
                 <a href="{% url 'products' %}?sort=rating&direction=desc" class="dropdown-item ">By Rating</a>
-                <a href="{% url 'products' %}?sort=genre&direction=asc" class="dropdown-item ">By Genre</a>
                 <a href="{% url 'products' %}" class="dropdown-item">All Products</a>
             </div>
         </li>
@@ -22,10 +21,10 @@
                 Genre
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="clothing-link">
-                <a href="{% url 'products' %}?category=activewear,essentials" class="dropdown-item">Rock</a>
-                <a href="{% url 'products' %}?category=jeans" class="dropdown-item">Hip Hop</a>
-                <a href="{% url 'products' %}?category=shirts" class="dropdown-item">R &amp; B</a>
-                <a href="{% url 'products' %}?category=activewear,essentials,jeans,shirts" class="dropdown-item">All Genres</a>
+                <a href="{% url 'products' %}?genre=rock" class="dropdown-item">Rock</a>
+                <a href="{% url 'products' %}?genre=hip-hop" class="dropdown-item">Hip Hop</a>
+                <a href="{% url 'products' %}?genre=instrumental" class="dropdown-item">Instrumental</a>
+                <a href="{% url 'products' %}?genre=pop" class="dropdown-item">Pop</a>
             </div>
         </li>
 

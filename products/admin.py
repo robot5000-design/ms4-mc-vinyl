@@ -5,9 +5,9 @@ from .models import Product, Artist, Label, Genre
 
 class ProductAdmin(admin.ModelAdmin, DynamicArrayMixin):
     list_display = (
-        'sku',
         'title',
         'artist',
+        'sku',
         'color',
         'price',
         'rating',
@@ -18,23 +18,23 @@ class ProductAdmin(admin.ModelAdmin, DynamicArrayMixin):
 
 
 class ArtistAdmin(admin.ModelAdmin):
-    list_display = (
-        'friendly_name',
+    list_display = (        
         'name',
+        'friendly_name',
     )
 
 
 class LabelAdmin(admin.ModelAdmin):
     list_display = (
-        'friendly_name',
         'name',
+        'friendly_name',
     )
 
 
 class GenreAdmin(admin.ModelAdmin):
     list_display = (
-        'friendly_name',
         'name',
+        'friendly_name',
     )
 
 
