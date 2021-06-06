@@ -86,9 +86,10 @@
                                             {% endif %}
                                             {% if request.user.is_superuser %}
                                                 <small class="ml-3">
-                                                    <a href="">Edit</a> | 
-                                                    <a class="text-danger" href="">Delete</a>
+                                                    <a class="btn btn-black" href="{% url 'edit_product' product.id %}">Edit</a>
+                                                    <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteProductModal" data-product="{{ product.id }}">Delete</a>
                                                 </small>
+                                                {% include 'products/includes/modal_delete.html' %}
                                             {% endif %}
                                         </div>
                                     </div>
@@ -157,4 +158,5 @@
             }
         })
     </script>
+    <script src="{% static 'products/js/scripts.js' %}"></script>
 {% endblock %}

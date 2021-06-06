@@ -2,6 +2,8 @@ asgiref==3.3.4
 dj-database-url==0.5.0
 Django==3.2.3
 django-allauth==0.44.0
+django-better-admin-arrayfield==1.4.2
+django-crispy-forms==1.11.2
 oauthlib==3.1.0
 Pillow==8.2.0
 psycopg2-binary==2.8.6

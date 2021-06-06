@@ -48,9 +48,10 @@
                     {% endif %}
                     {% if request.user.is_superuser %}
                         <small class="ml-3">
-                            <a href="{% url 'edit_product' product.id %}">Edit</a> | 
-                            <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+                            <a class="btn btn-black" href="{% url 'edit_product' product.id %}">Edit</a> | 
+                            <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteProductModal" data-product="{{ product.id }}">Delete</a>
                         </small>
+                        {% include 'products/includes/modal_delete.html' %}
                     {% endif %}
                     <p class="mt-3">{{ product.description }}</p>
                     <form class="form" action="" method="POST">
@@ -162,4 +163,5 @@
         handleEnableDisable(itemId);
     });
     </script>
+    <script src="{% static 'products/js/scripts.js' %}"></script>
 {% endblock %}
