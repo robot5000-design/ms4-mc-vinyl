@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django_better_admin_arrayfield.admin.mixins import DynamicArrayMixin
-from .models import Product, Artist, Label, Genre
+from .models import Product, Genre
 
 
 class ProductAdmin(admin.ModelAdmin, DynamicArrayMixin):
@@ -17,18 +17,18 @@ class ProductAdmin(admin.ModelAdmin, DynamicArrayMixin):
     ordering = ('sku',)
 
 
-class ArtistAdmin(admin.ModelAdmin):
-    list_display = (        
-        'name',
-        'friendly_name',
-    )
+# class ArtistAdmin(admin.ModelAdmin):
+#     list_display = (        
+#         'name',
+#         'friendly_name',
+#     )
 
 
-class LabelAdmin(admin.ModelAdmin):
-    list_display = (
-        'name',
-        'friendly_name',
-    )
+# class LabelAdmin(admin.ModelAdmin):
+#     list_display = (
+#         'name',
+#         'friendly_name',
+#     )
 
 
 class GenreAdmin(admin.ModelAdmin):
@@ -39,6 +39,6 @@ class GenreAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Artist, ArtistAdmin)
-admin.site.register(Label, LabelAdmin)
+# admin.site.register(Artist, ArtistAdmin)
+# admin.site.register(Label, LabelAdmin)
 admin.site.register(Genre, GenreAdmin)

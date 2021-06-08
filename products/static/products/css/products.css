@@ -1,0 +1,24 @@
+.inline-deletelink {
+    float: right;
+    background: url('/media/trash-solid.svg') 0 0 no-repeat;
+    width: 16px;
+    height: 16px;
+    border: 0px none;
+}
+
+.dynamic-array-widget .remove {
+    height: 15px;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.dynamic-array-widget .array-item {
+    display: flex;
+    align-items: center;
+}
+
+.dynamic-array-widget ul {
+    padding-left: 0;
+}

@@ -12,9 +12,8 @@ def current_year():
 
 
 class Product(models.Model):
-    artist = models.ForeignKey('Artist', on_delete=models.PROTECT)
-    label = models.ForeignKey('Label', null=True, blank=True,
-                              on_delete=models.SET_NULL)
+    artist = models.CharField(max_length=254)
+    label = models.CharField(max_length=254, blank=True)
     genre = models.ManyToManyField('Genre', blank=True)
     sku = models.CharField(max_length=254)
     title = models.CharField(max_length=254)
@@ -42,26 +41,26 @@ class Product(models.Model):
         return self.title
 
 
-class Artist(models.Model):
-    name = models.CharField(max_length=100)
-    friendly_name = models.CharField(max_length=100)
+# class Artist(models.Model):
+#     name = models.CharField(max_length=100)
+#     friendly_name = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
-    def get_friendly_name(self):
-        return self.friendly_name
+#     def get_friendly_name(self):
+#         return self.friendly_name
 
 
-class Label(models.Model):
-    name = models.CharField(max_length=50)
-    friendly_name = models.CharField(max_length=50, blank=True)
+# class Label(models.Model):
+#     name = models.CharField(max_length=50)
+#     friendly_name = models.CharField(max_length=50, blank=True)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
-    def get_friendly_name(self):
-        return self.friendly_name
+#     def get_friendly_name(self):
+#         return self.friendly_name
 
 
 class Genre(models.Model):
