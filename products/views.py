@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 from .models import Product, Genre
 from .forms import ProductForm
@@ -38,7 +39,7 @@ def all_products(request):
                 messages.error(request, "You didn't enter any search criteria!")
                 return redirect(reverse('products'))
             
-            queries = Q(artist__icontains=query) | Q(title__icontains=query)
+            queries = Q(artist__icontains=query) | Q(title__icontains=query) | Q(genre__name__icontains=query)
             products = products.filter(queries)
 
     current_sorting = f'{sort}_{direction}'
@@ -65,6 +66,7 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
+@login_required
 def edit_product(request, product_id):
     """ A view to edit individual product details """
     if not request.user.is_superuser:
@@ -81,8 +83,8 @@ def edit_product(request, product_id):
                 sku=current_sku).exclude(title=current_title)
             print(current_title)
             if sku_exists:
-                messages.info(request,
-                              'Another title with that SKU already exists!')
+                messages.error(request,
+                               'Another title with that SKU already exists!')
             else:
                 form.save()
                 messages.success(request, 'Successfully updated product!')
@@ -103,6 +105,7 @@ def edit_product(request, product_id):
     return render(request, template, context)
 
 
+@login_required
 def add_product(request):
     """ A view to add individual product details """
     if not request.user.is_superuser:
@@ -115,7 +118,7 @@ def add_product(request):
             new_sku = request.POST['sku']
             sku_exists = Product.objects.filter(sku=new_sku)
             if sku_exists:
-                messages.info(request, 'That SKU already exists!')
+                messages.error(request, 'That SKU already exists!')
             else:
                 product = form.save()
                 messages.success(request, 'Successfully added product!')
@@ -133,6 +136,7 @@ def add_product(request):
     return render(request, template, context)
 
 
+@login_required
 def delete_product(request, product_id):
     """ A view to delete individual product details """
 
