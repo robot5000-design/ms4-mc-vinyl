@@ -2,6 +2,7 @@ $('.btt-link').click(function(e) {
     window.scrollTo(0,0)
 })
 
+// change the sort dropdown to match the current chosen option
 $('#sort-selector').change(function() {
     var selector = $(this);
     var currentUrl = new URL(window.location);
@@ -23,48 +24,7 @@ $('#sort-selector').change(function() {
     }
 })
 
-// Disable +/- buttons outside 1-99 range
-function handleEnableDisable(itemId) {
-    var currentValue = parseInt($(`#id_qty_${itemId}`).val());
-    var minusDisabled = currentValue < 2;
-    var plusDisabled = currentValue > 98;
-    $(`#decrement-qty_${itemId}`).prop('disabled', minusDisabled);
-    $(`#increment-qty_${itemId}`).prop('disabled', plusDisabled);
-}
-
-// Ensure proper enabling/disabling of all inputs on page load
-var allQtyInputs = $('.qty_input');
-for(var i = 0; i < allQtyInputs.length; i++){
-    var itemId = $(allQtyInputs[i]).data('item_id');
-    handleEnableDisable(itemId);
-}
-
-// Check enable/disable every time the input is changed
-$('.qty_input').change(function() {
-    var itemId = $(this).data('item_id');
-    handleEnableDisable(itemId);
-});
-
-// Increment quantity
-$('.increment-qty').click(function(e) {
-    e.preventDefault();
-    var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
-    var currentValue = parseInt($(closestInput).val());
-    $(closestInput).val(currentValue + 1);
-    var itemId = $(this).data('item_id');
-    handleEnableDisable(itemId);
-});
-
-// Decrement quantity
-$('.decrement-qty').click(function(e) {
-    e.preventDefault();
-    var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
-    var currentValue = parseInt($(closestInput).val());
-    $(closestInput).val(currentValue - 1);
-    var itemId = $(this).data('item_id');
-    handleEnableDisable(itemId);
-});
-
+// setting the href for the delete confirm modal
 $(".call-delete").click(function(event) {
     event.preventDefault();
     var productId = $(this).attr("data-product");
@@ -72,11 +32,13 @@ $(".call-delete").click(function(event) {
     $("#confirm-delete").attr("href", deleteUrl);
 });
 
+// listen for image field change in product management form
 $('#new-image').change(function() {
     var file = $('#new-image')[0].files[0];
     $('#filename').text(`Image will be set to: ${file.name}`);
 });
 
+// for the dynamic array for track listing
 window.addEventListener("load", function() {
     function a(a) {
         a.querySelectorAll(".remove").forEach(a=>{

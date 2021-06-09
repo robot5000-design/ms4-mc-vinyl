@@ -22,3 +22,8 @@
 .dynamic-array-widget ul {
     padding-left: 0;
 }
+
+.preview-image {
+    width: 96px;
+    height: 96px;
+}
