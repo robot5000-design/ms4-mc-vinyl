@@ -6,7 +6,7 @@ $('.update-link').click(function(e) {
 
 // Remove item and reload on click
 $('.remove-item').click(function(e) {
-    var csrfToken = $("#update-form-csrf").val();
+    var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
     var itemId = $(this).attr('id').split('remove_')[1];
     var url = `/bag/remove/${itemId}/`;
     var data = {'csrfmiddlewaretoken': csrfToken};
