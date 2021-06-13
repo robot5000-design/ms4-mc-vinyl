@@ -12,8 +12,8 @@ class OrderAdmin(admin.ModelAdmin):
 
     readonly_fields = ('order_number', 'date',
                        'delivery_cost', 'order_total',
-                       'grand_total', 'original_bag',
-                       'stripe_pid')
+                       'grand_total',
+                       )
 
     # optional to use fields but it keeps to order of how they appear in the
     # admin page exactly how we want them
