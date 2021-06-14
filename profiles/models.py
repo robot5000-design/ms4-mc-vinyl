@@ -6,8 +6,7 @@ from django_countries.fields import CountryField
 
 
 class UserProfile(models.Model):
-    """
-    A user profile model for maintaining default
+    """ A user profile model for maintaining default
     delivery information and order history
     """
     # OneToOneField is like a foreignKey but one profile for one user and one
@@ -28,8 +27,7 @@ class UserProfile(models.Model):
 
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
-    """
-    Create or update the user profile
+    """ Create or update the user profile
     """
     if created:
         UserProfile.objects.create(user=instance)
