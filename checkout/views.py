@@ -12,6 +12,7 @@ from .forms import OrderForm
 from .models import Order, OrderLineItem
 from products.models import Product
 from profiles.models import UserProfile
+from profiles.forms import UserProfileForm
 from bag.contexts import bag_contents
 
 
@@ -39,10 +40,14 @@ def checkout(request):
 
     if request.method == 'POST':
         bag = request.session.get('bag', {})
+        if request.user.is_authenticated:
+            email = request.user.email
+        else:
+            email = request.POST['email']
 
         form_data = {
             'full_name': request.POST['full_name'],
-            'email': request.POST['email'],
+            'email': email,
             'phone_number': request.POST['phone_number'],
             'country': request.POST['country'],
             'postcode': request.POST['postcode'],
@@ -104,8 +109,8 @@ def checkout(request):
             try:
                 profile = UserProfile.objects.get(user=request.user)
                 order_form = OrderForm(initial={
-                    'full_name': profile.user.get_full_name(),
-                    'email': profile.user.email,
+                    'full_name': profile.default_full_name,
+                    'email': request.user.email,
                     'phone_number': profile.default_phone_number,
                     'country': profile.default_country,
                     'postcode': profile.default_postcode,
@@ -141,25 +146,26 @@ def checkout_success(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)
 
     if request.user.is_authenticated:
-        #profile = UserProfile.objects.get(user=request.user)
-        # Attach the user's profile to the order
-        #order.user_profile = profile
+        profile = UserProfile.objects.get(user=request.user)
+        # Add the user's profile to the order
+        order.user_profile = profile
         order.save()
 
         # Save the user's info
-        # if save_info:
-        #     profile_data = {
-        #         'default_phone_number': order.phone_number,
-        #         'default_country': order.country,
-        #         'default_postcode': order.postcode,
-        #         'default_town_or_city': order.town_or_city,
-        #         'default_street_address1': order.street_address1,
-        #         'default_street_address2': order.street_address2,
-        #         'default_county': order.county,
-        #     }
-        #     user_profile_form = UserProfileForm(profile_data, instance=profile)
-        #     if user_profile_form.is_valid():
-        #         user_profile_form.save()
+        if save_info:
+            profile_data = {
+                'default_full_name': order.full_name,
+                'default_phone_number': order.phone_number,
+                'default_country': order.country,
+                'default_postcode': order.postcode,
+                'default_town_or_city': order.town_or_city,
+                'default_street_address1': order.street_address1,
+                'default_street_address2': order.street_address2,
+                'default_county': order.county,
+            }
+            user_profile_form = UserProfileForm(profile_data, instance=profile)
+            if user_profile_form.is_valid():
+                user_profile_form.save()
 
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \

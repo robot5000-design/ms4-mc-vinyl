@@ -12,6 +12,7 @@ class UserProfile(models.Model):
     # OneToOneField is like a foreignKey but one profile for one user and one
     # user for one profile
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    default_full_name = models.CharField(max_length=50, blank=True)
     default_phone_number = models.CharField(max_length=20, blank=True)
     default_street_address1 = models.CharField(max_length=80, blank=True)
     default_street_address2 = models.CharField(max_length=80, blank=True)
