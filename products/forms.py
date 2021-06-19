@@ -31,4 +31,7 @@ class ProductForm(forms.ModelForm):
         genres_friendly_names = [(genre.id, genre.get_friendly_name()) for genre in genres]
         self.fields['genre'].choices = genres_friendly_names
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'border-black rounded-0'
+            if field_name == 'track_list':
+                field.widget.attrs['class'] = 'my-2 mr-2 border-black rounded-0'
+            else:
+                field.widget.attrs['class'] = 'border-black rounded-0'
