@@ -56,6 +56,11 @@
                                         {% endif %}
                                         <label for="rating1">1</label>
                                     </span>
+                                    {% if request.user.is_superuser %}
+                                        {% if review_form.admin_comment %}
+                                            {{ review_form.admin_comment | as_crispy_field }}
+                                        {% endif %}
+                                    {% endif %}
                                     <div class="text-left">
                                         <button class="btn btn-black rounded-0 edit-review-btn" type="submit">Edit Review</button>
                                         {% if request.user.is_superuser or review.user == request.user %}

@@ -109,7 +109,7 @@
                             <input type="hidden" name="redirect_url" value="{{ request.path }}">
                         </div>
                     </form>
-                    {% if already_reviewed and request.user.is_authenticated %}
+                    {% if not already_reviewed and request.user.is_authenticated %}
                         <form class="form mt-5" action="{% url 'add_product_review' product.id %}" method="POST">
                             {% csrf_token %}
                             <div class="form-row">
@@ -133,11 +133,11 @@
                                 </div>
                             </div>
                         </form>
-                    {% else %}
+                    {% elif request.user.is_authenticated %}
                         <div class="my-5">You've already reviewed this.</div>
                     {% endif %}
                     {% for review in reviews %}
-                        <div class="py-2">
+                        <div class="container-fluid py-2">
                             <div>
                                 Reviewed by: {{ review.user.username }} {{ review.review_date | date:"d M Y" }}
                             </div>
@@ -147,6 +147,21 @@
                             <div>
                                 Rating: {{ review.review_rating }} / 5
                             </div>
+                            {% if review.admin_comment %}
+                                <div class="col">
+                                    <small class="row"><strong>MC Vinyl Comment:</strong></small> 
+                                    <small class="row">{{ review.admin_comment }}</small> 
+                                </div>
+                            {% endif %}
+                            {% if request.user.username not in review.upvote_list and request.user.username != review.user.username %}
+                                <a class="review-links" href="{% url 'upvote_product_review' product.id review.user.username %}">
+                                    <i class="fas fa-thumbs-up fs-5 pe-2"></i>
+                                    {{ review.upvote_list | length }}
+                                </a>
+                            {% else %}
+                                <div><i class="fas fa-thumbs-up fs-5 pe-2"></i> {{ review.upvote_list | length }}</div>
+                            {% endif %}
+                            <hr>
                             {% if request.user == review.user %}
                                 <a class="btn btn-black rounded-0" href="{% url 'edit_product_review' product.id review.user.username %}">Edit/Delete</a>
                             {% endif %}

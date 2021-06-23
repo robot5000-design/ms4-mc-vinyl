@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     'home',
     'products',
     'bag',
@@ -53,6 +55,8 @@ INSTALLED_APPS = [
     # other
     'crispy_forms',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {'facebook': {}, 'google': {}}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -184,7 +188,7 @@ STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
 # Email Settings
 #if 'DEVELOPMENT' in os.environ:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'mc_vinyl@example.com'
+DEFAULT_FROM_EMAIL = 'admin@mc_vinyl.com'
 # else:
 #     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #     EMAIL_USE_TLS = True

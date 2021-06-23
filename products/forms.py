@@ -46,17 +46,18 @@ class ProductReviewForm(forms.ModelForm):
         fields = (
             'body',
             'review_rating',
+            'admin_comment',
         )
         widgets = {
             'body': Textarea(attrs={'rows': 4}),
+            'admin_comment': Textarea(attrs={'rows': 4}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-            'body',
-            InlineRadios('review_rating')
+            InlineRadios('review_rating'),
         )
         self.fields['review_rating'].widget.attrs['required'] = True
         for field in self.fields:
@@ -66,5 +67,9 @@ class ProductReviewForm(forms.ModelForm):
                     'placeholder'] = 'Write your review here...'
             elif field == 'review_rating':
                 self.fields[field].label = "What's your rating?"
+            elif field == 'admin_comment':
+                self.fields[field].label = False
+                self.fields[field].widget.attrs[
+                    'placeholder'] = 'Admin Comment Here...'
             self.fields[field].widget.attrs[
                 'class'] = 'border-black rounded-0 profile-form-input'

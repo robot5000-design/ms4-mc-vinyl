@@ -28,6 +28,7 @@ class ProductReviewAdmin(admin.ModelAdmin):
     list_display = (
         'body',
         'review_rating',
+        'admin_comment',
     )
 
 

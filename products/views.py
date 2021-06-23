@@ -185,15 +185,17 @@ def edit_product_review(request, product_id, review_author):
     product = get_object_or_404(Product, pk=product_id)
     review = ProductReview.objects.filter(product=product, user__username=review_author)[0]  ################
 
-    if not request.user.is_superuser or not review:
+    if request.user != review.user and not request.user.is_superuser:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))
 
     if request.method == 'POST':
         review_form = ProductReviewForm(request.POST)
-        if review_form.is_valid():            
+        if review_form.is_valid():
             review.body = request.POST['body']
             review.review_rating = request.POST['review_rating']
+            if 'admin_comment' in request.POST:
+                review.admin_comment = request.POST['admin_comment']
             review.save()
             messages.info(request, 'Review Updated!')
             return redirect(reverse('product_detail', args=[product.id]))
@@ -201,6 +203,7 @@ def edit_product_review(request, product_id, review_author):
         review_form = ProductReviewForm(initial={
             'body': review.body,
             'review_rating': review.review_rating,
+            'admin_comment': review.admin_comment,
         })
 
     template = 'products/edit_product_review.html'
@@ -218,10 +221,27 @@ def delete_product_review(request, product_id, review_author):
     product = get_object_or_404(Product, pk=product_id)
     review = ProductReview.objects.filter(product=product, user__username=review_author)[0] ################
 
-    if not request.user.is_superuser or not review:
+    if request.user != review.user and not request.user.is_superuser:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))
 
     review.delete()
     messages.info(request, 'Review deleted!')
+    return redirect(reverse('product_detail', args=[product.id]))
+
+
+@login_required
+def upvote_product_review(request, product_id, review_author):
+    """ A view to edit a product review
+    """
+    product = get_object_or_404(Product, pk=product_id)
+    review = ProductReview.objects.filter(product=product, user__username=review_author)[0]  ################
+
+    if not review:
+        messages.error(request, "Sorry, you don't have permission to do that.")
+        return redirect(reverse('home'))
+
+    review.upvote_list.append(request.user.username)
+    review.save()
+    messages.info(request, 'Liked Review!')
     return redirect(reverse('product_detail', args=[product.id]))
