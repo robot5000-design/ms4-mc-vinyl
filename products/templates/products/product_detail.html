@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
+
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
@@ -105,6 +109,37 @@
                             <input type="hidden" name="redirect_url" value="{{ request.path }}">
                         </div>
                     </form>
+                    {% if not already_reviewed and request.user.is_authenticated %}
+                        <form class="form mt-5" action="{% url 'add_product_review' product.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="col-12">                                                  
+                                    {% crispy review_form %}
+                                    <div class="text-right">
+                                        <button class="btn btn-black rounded-0" type="submit">Add Review</button>
+                                    </div>                     
+                                </div>
+                            </div>
+                        </form>
+                    {% else %}
+                        <div class="my-5">You've already reviewed this.</div>
+                    {% endif %}
+                    {% for review in reviews %}
+                        <div class="py-2">
+                            <div>
+                                Reviewed by: {{ review.user.username }} {{ review.review_date | date:"d M Y" }}
+                            </div>
+                            <div>
+                                {{ review.body }}
+                            </div>
+                            <div>
+                                Rating: {{ review.review_rating }} / 5
+                            </div>
+                            {% if request.user == review.user %}
+                                <a class="btn btn-black rounded-0" href="{% url 'edit_product_review' product.id review.user.username %}">Edit/Delete</a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

@@ -3,8 +3,8 @@ from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
-from .models import Product, Genre
-from .forms import ProductForm
+from .models import Product, Genre, ProductReview
+from .forms import ProductForm, ProductReviewForm
 
 
 def all_products(request):
@@ -58,9 +58,19 @@ def product_detail(request, product_id):
     """ A view to show individual product details """
 
     product = get_object_or_404(Product, pk=product_id)
+    reviews = ProductReview.objects.filter(product=product)
+    if request.user.is_authenticated:
+        already_reviewed = ProductReview.objects.filter(user=request.user)
+    else:
+        already_reviewed = False
+
+    review_form = ProductReviewForm()
 
     context = {
         'product': product,
+        'reviews': reviews,
+        'review_form': review_form,
+        'already_reviewed': already_reviewed,
     }
 
     return render(request, 'products/product_detail.html', context)
@@ -149,3 +159,75 @@ def delete_product(request, product_id):
     product.delete()
     messages.success(request, 'Product deleted!')
     return redirect(reverse('products'))
+
+
+@login_required
+def add_product_review(request, product_id):
+    """ A view to add a product review
+    """
+    if request.method == 'POST':
+        product = get_object_or_404(Product, pk=product_id)
+        review_form = ProductReviewForm(request.POST)
+
+        if review_form.is_valid():
+            ProductReview.objects.create(
+                product=product,
+                user=request.user,
+                body=request.POST['body'],
+                review_rating=request.POST['review_rating'],
+            )
+
+            messages.success(request, 'Successfully added a review!')
+            return redirect(reverse('product_detail', args=[product.id]))
+
+
+@login_required
+def edit_product_review(request, product_id, review_author):
+    """ A view to edit a product review
+    """
+    product = get_object_or_404(Product, pk=product_id)
+    review = ProductReview.objects.filter(product=product, user__username=review_author)[0] ################
+
+    if not request.user.is_superuser or not review:
+        messages.error(request, "Sorry, you don't have permission to do that.")
+        return redirect(reverse('home'))
+
+    if request.method == 'POST':
+        review_form = ProductReviewForm(request.POST)
+        if review_form.is_valid():
+            ProductReview.objects.create(
+                product=product,
+                user=request.user,
+                body=request.POST['body'],
+                review_rating=request.POST['review_rating'],
+            )
+            messages.success(request, 'Successfully edited review!')
+            return redirect(reverse('product_detail', args=[product.id]))
+    else:
+        review_form = ProductReviewForm(initial={
+            'body': review.body,
+            'review_rating': review.review_rating,
+        })
+
+    template = 'products/edit_product_review.html'
+    context = {
+        'review': review,
+        'review_form': review_form,
+        'product': product,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def delete_product_review(request, product_id, review_author):
+    """ A view to delete a product review """
+    product = get_object_or_404(Product, pk=product_id)
+    review = ProductReview.objects.filter(product=product, user__username=review_author)[0] ################
+
+    if not request.user.is_superuser or not review:
+        messages.error(request, "Sorry, you don't have permission to do that.")
+        return redirect(reverse('home'))
+
+    review.delete()
+    messages.success(request, 'Review deleted!')
+    return redirect(reverse('product_detail', args=[product.id]))

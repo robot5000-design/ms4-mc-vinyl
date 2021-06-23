@@ -1,6 +1,10 @@
 from django import forms
+from django.forms import Textarea
+from crispy_forms.bootstrap import InlineRadios
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout
 from .widgets import CustomClearableFileInput
-from .models import Product, Genre
+from .models import Product, Genre, ProductReview
 
 
 class ProductForm(forms.ModelForm):
@@ -14,10 +18,9 @@ class ProductForm(forms.ModelForm):
             'sku',
             'price',
             'genre',
-            'description',           
+            'description',
             'album_format',
             'color',
-            'rating',
             'image',
             'track_list',
             )
@@ -35,3 +38,33 @@ class ProductForm(forms.ModelForm):
                 field.widget.attrs['class'] = 'my-2 mr-2 border-black rounded-0'
             else:
                 field.widget.attrs['class'] = 'border-black rounded-0'
+
+
+class ProductReviewForm(forms.ModelForm):
+    class Meta:
+        model = ProductReview
+        fields = (
+            'body',
+            'review_rating',
+        )
+        widgets = {
+            'body': Textarea(attrs={'rows': 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            'body',
+            InlineRadios('review_rating')
+        )
+        self.fields['review_rating'].widget.attrs['required'] = True
+        for field in self.fields:
+            if field == 'body':
+                self.fields[field].label = False
+                self.fields[field].widget.attrs[
+                    'placeholder'] = 'Write your review here...'
+            elif field == 'review_rating':
+                self.fields[field].label = "What's your rating?"
+            self.fields[field].widget.attrs[
+                'class'] = 'border-black rounded-0 profile-form-input'

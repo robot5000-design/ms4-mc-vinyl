@@ -27,3 +27,7 @@
     width: 96px;
     height: 96px;
 }
+
+label .asteriskField {
+    display: none;
+}

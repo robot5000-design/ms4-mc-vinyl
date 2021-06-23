@@ -24,13 +24,6 @@ class Genre(models.Model):
         return self.friendly_name
 
 
-class Upvote(models.Model):
-    username = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.username
-
-
 class Product(models.Model):
     artist = models.CharField(max_length=254)
     label = models.CharField(max_length=254, blank=True)
@@ -49,7 +42,7 @@ class Product(models.Model):
     color = models.CharField(max_length=15, blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     rating = models.DecimalField(max_digits=3, decimal_places=1,
-                                         null=True, blank=True)
+                                 null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
     track_list = ArrayField(
         models.CharField(max_length=100, blank=True),
@@ -58,20 +51,35 @@ class Product(models.Model):
     )
 
     def calculate_rating(self):
-        self.rating = self.reviews.aggregate(Avg('review_rating'))['review_rating__avg']        
+        self.rating = self.reviews.aggregate(
+            Avg('review_rating'))['review_rating__avg']
+        self.save()
 
     def __str__(self):
         return f'{self.title} - {self.artist}'
 
 
 class ProductReview(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    REVIEW_RATING_CHOICES = [
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    ]
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='reviews')
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     body = models.TextField()
     review_date = models.DateTimeField(auto_now=True)
-    review_rating = models.DecimalField(max_digits=3, decimal_places=1)
-    upvotes = models.ManyToManyField(Upvote, blank=True)
+    review_rating = models.IntegerField(choices=REVIEW_RATING_CHOICES,
+                                        default=None)
+    upvote_list = ArrayField(
+        models.CharField(max_length=100, blank=True),
+        default=list,
+        blank=True
+    )
     admin_comment = models.TextField(blank=True)
 
     def __str__(self):
-        return f'{self.product.title} - {self.user.username} - {self.rating}'
+        return f'{self.product.title} - {self.user.username} - {self.review_rating}'

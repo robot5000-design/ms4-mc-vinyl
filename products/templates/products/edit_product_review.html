@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="overlay"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
+                <div class="image-container my-5">
+                    {% if product.image %}
+                        <a href="{{ product.image.url }}" target="_blank">
+                            <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
+                        </a>
+                        {% else %}
+                        <a href="">
+                            <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="product-details-container mb-5 mt-md-5">
+                    <p class="mb-0"><strong>{{ product.artist }}</strong></p>
+                    <p class="mb-0"><strong>{{ product.title }}</strong></p>
+                    <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
+                    {% if product.genre %}
+                        <p class="small mt-1 mb-0">
+                            <i class="fas fa-tag mr-1"></i>
+                            {% for genre in product.genre.all %}
+                                <a class="text-muted" href="{% url 'products' %}?genre={{ genre }}">
+                                    {{ genre.friendly_name | capfirst }}
+                                </a>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                    <div><small class="text-muted"><strong>Label: </strong> {{ product.label }}</small></div>
+                    <div><small class="text-muted"><strong>Album Format: </strong>{{ product.album_format }}</small></div>
+                    <div><small class="text-muted"><strong>Colour: </strong>{{ product.color }}</small></div>
+                    
+                    {% if product.rating %}
+                        <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                    {% else %}
+                        <small class="text-muted">No Rating</small>
+                    {% endif %}
+                    
+                    <p class="mt-3">{{ product.description }}</p>
+                    {% if request.user.is_authenticated %}
+                        <form class="form mt-5" action="#" method="POST">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="col-12">
+                                                    
+                                    {% crispy review_form %}
+                                    <div class="text-left">
+                                        <button class="btn btn-black rounded-0" type="submit">Edit Review</button>
+                                        {% if request.user.is_superuser or review.user == request.user %}
+                                            <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteReviewModal" data-product="{{ product.id }}/{{ review.user.username }}">Delete Review</a>
+                                            {% include 'products/includes/modal_review_delete.html' %}
+                                        {% endif %}                                        
+                                    </div>                                                        
+                                </div>
+                            </div>
+                        </form>                        
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script src="{% static 'products/js/products.js' %}"></script>
+{% endblock %}

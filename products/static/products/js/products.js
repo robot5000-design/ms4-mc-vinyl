@@ -27,8 +27,13 @@ $('#sort-selector').change(function() {
 // setting the href for the delete confirm modal
 $(".call-delete").click(function(event) {
     event.preventDefault();
-    var productId = $(this).attr("data-product");
-    var deleteUrl = `/products/delete/${productId}/`
+    var objectId = $(this).attr("data-product");
+    var modalId = $(this).attr("data-target");
+    if (modalId.includes("Product")) {
+        var deleteUrl = `/products/delete/${objectId}/`
+    } else {
+        var deleteUrl = `/products/delete_review/${objectId}/`
+    }    
     $("#confirm-delete").attr("href", deleteUrl);
 });
 
