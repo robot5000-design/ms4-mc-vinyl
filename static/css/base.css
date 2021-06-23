@@ -1,13 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Montserrat&display=swap');
+
 html {
     height: 100%;
 }
 
 body {
-    backgro und: url('/media/homepage_background_cropped.jpg') no-repeat center center fixed;
+    backgr ound: url('/media/homepage_background_cropped.jpg') no-repeat center center fixed;
     background-size: cover;
     height: calc(100vh - 164px);
     color: #555;
-    font-family: 'Lato';
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* from Bulma */
@@ -21,6 +23,7 @@ body {
 
 .logo-font {
     text-transform: uppercase;
+    font-family: 'Monoton', cursive;
 }
 
 .main-logo-link {
