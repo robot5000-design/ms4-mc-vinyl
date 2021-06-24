@@ -29,6 +29,7 @@ class ProductReviewAdmin(admin.ModelAdmin):
         'body',
         'review_rating',
         'admin_comment',
+        'user'
     )
 
 

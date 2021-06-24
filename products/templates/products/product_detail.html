@@ -153,19 +153,19 @@
                                     <small class="row">{{ review.admin_comment }}</small> 
                                 </div>
                             {% endif %}
-                            {% if request.user.username not in review.upvote_list and request.user.username != review.user.username %}
+                            {% if request.user.is_authenticated and request.user not in review.upvote_list.all and request.user.id != review.user.id %}
                                 <a class="review-links" href="{% url 'upvote_product_review' product.id review.user.username %}">
                                     <i class="fas fa-thumbs-up fs-5 pe-2"></i>
-                                    {{ review.upvote_list | length }}
+                                    {{ review.upvote_count }}
                                 </a>
                             {% else %}
-                                <div><i class="fas fa-thumbs-up fs-5 pe-2"></i> {{ review.upvote_list | length }}</div>
+                                <div><i class="fas fa-thumbs-up fs-5 pe-2"></i> {{ review.upvote_count }}</div>
                             {% endif %}
-                            <hr>
-                            {% if request.user == review.user %}
-                                <a class="btn btn-black rounded-0" href="{% url 'edit_product_review' product.id review.user.username %}">Edit/Delete</a>
+                            {% if request.user.id == review.user.id %}
+                                <a class="btn btn-black mt-2" href="{% url 'edit_product_review' product.id review.user.username %}">Edit/Delete</a>
                             {% endif %}
                         </div>
+                        <hr>
                     {% endfor %}
                 </div>
             </div>

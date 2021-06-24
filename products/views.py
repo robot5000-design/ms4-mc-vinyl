@@ -3,6 +3,8 @@ from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
+from django.contrib.auth.models import User
+
 from .models import Product, Genre, ProductReview
 from .forms import ProductForm, ProductReviewForm
 
@@ -235,13 +237,17 @@ def upvote_product_review(request, product_id, review_author):
     """ A view to edit a product review
     """
     product = get_object_or_404(Product, pk=product_id)
-    review = ProductReview.objects.filter(product=product, user__username=review_author)[0]  ################
+    review = ProductReview.objects.filter(product=product, user__username=review_author)[0] ################
 
     if not review:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))
 
-    review.upvote_list.append(request.user.username)
-    review.save()
-    messages.info(request, 'Liked Review!')
+    if not review.upvote_list.filter(id=request.user.id):
+        review.upvote_list.add(request.user)
+        review.upvote_count = review.upvote_list.all().count()
+        review.save()
+        messages.info(request, 'Liked Review!')
+        return redirect(reverse('product_detail', args=[product.id]))
+    messages.info(request, 'Already Liked!')
     return redirect(reverse('product_detail', args=[product.id]))

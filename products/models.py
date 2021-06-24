@@ -74,12 +74,14 @@ class ProductReview(models.Model):
     review_date = models.DateTimeField(auto_now=True)
     review_rating = models.IntegerField(choices=REVIEW_RATING_CHOICES,
                                         default=None)
-    upvote_list = ArrayField(
-        models.CharField(max_length=100, blank=True),
-        default=list,
-        blank=True
-    )
+    upvote_list = models.ManyToManyField(User, blank=True, related_name='upvote_users')
+    upvote_count = models.IntegerField(null=True, blank=True)
     admin_comment = models.TextField(blank=True)
+    # upvote_list = ArrayField(
+    #     models.CharField(max_length=100, blank=True),
+    #     default=list,
+    #     blank=True
+    # )
 
     def __str__(self):
         return f'{self.product.title} - {self.user.username} - {self.review_rating}'

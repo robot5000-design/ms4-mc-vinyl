@@ -44,19 +44,16 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
     'home',
     'products',
     'bag',
     'profiles',
     'checkout',
+    'wishlist',
 
     # other
     'crispy_forms',
 ]
-
-SOCIALACCOUNT_PROVIDERS = {'facebook': {}, 'google': {}}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
