@@ -6,6 +6,7 @@ from django.db.models.functions import Lower
 from django.contrib.auth.models import User
 
 from .models import Product, Genre, ProductReview
+from wishlist.models import Wishlist
 from .forms import ProductForm, ProductReviewForm
 
 
@@ -60,6 +61,15 @@ def product_detail(request, product_id):
 
     product = get_object_or_404(Product, pk=product_id)
     reviews = ProductReview.objects.filter(product=product)
+    try:
+        wishlist = get_object_or_404(Wishlist, user=request.user.id)
+        if product in wishlist.products.all():
+            in_wishlist = True
+        else:
+            in_wishlist = False
+    except Exception:
+        in_wishlist = False
+
     if request.user.is_authenticated:
         already_reviewed = ProductReview.objects.filter(user=request.user)
     else:
@@ -72,6 +82,7 @@ def product_detail(request, product_id):
         'reviews': reviews,
         'review_form': review_form,
         'already_reviewed': already_reviewed,
+        'in_wishlist': in_wishlist,
     }
     return render(request, 'products/product_detail.html', context)
 

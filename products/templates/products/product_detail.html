@@ -34,7 +34,14 @@
                 <div class="product-details-container mb-5 mt-md-5">
                     <p class="mb-0"><strong>{{ product.artist }}</strong></p>
                     <p class="mb-0"><strong>{{ product.title }}</strong></p>
-                    <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
+                    <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}
+                        {% if in_wishlist %}
+                            <a id="remove_{{ product.id }}" class="wishlist-remove text-danger"><i class="fas fa-heart"></i></a>
+                            {% csrf_token %}
+                        {% else %}
+                            <a href="{% url 'add_to_wishlist' product.id %}" class="text-danger"><i class="far fa-heart"></i></a>
+                        {% endif %}
+                    </p> 
                     {% if product.genre %}
                         <p class="small mt-1 mb-0">
                             <i class="fas fa-tag mr-1"></i>

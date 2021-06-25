@@ -25,29 +25,34 @@
                     <div class="d-block d-md-none">
                         <div class="row">
                             <div class="col">
-                                {% include "wishlist/wishlist-total.html" %}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                {% include "wishlist/checkout-buttons.html" %}
+                                <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
+                                    <span class="icon">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="text-uppercase">Keep Shopping</span>
+                                </a>
                                 <p class="text-muted mb-5">A summary of your wishlist contents is below</p>
                             </div>
                         </div>
                         {% for item in wishlist_items %}
                             <div class="row">
+                                <a class="col-12 col-sm-6 mb-2" href="{% url 'product_detail' item.id %}">
+                                    {% if item.image %}
+                                        <img class="img-fluid rounded" src="{{ item.image.url }}" alt="{{ item.title }}">
+                                    {% else %}
+                                        <img class="img-fluid rounded" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.title }}">
+                                    {% endif %}
+                                </a>
                                 <div class="col-12 col-sm-6 mb-2">
-                                    {% include "wishlist/product-image.html" %}
-                                </div>
-                                <div class="col-12 col-sm-6 mb-2">
-                                    {% include "wishlist/product-info.html" %}
+                                    <p class="my-0"><strong>{{ item.artist }}</strong></p>
+                                    <p class="my-0"><strong>{{ item.title }}</strong></p>
+                                    <p class="my-0 small text-muted">SKU: {{ item.sku | upper }}</p>
                                 </div>
                                 <div class="col-12 col-sm-6 order-sm-last">
-                                    <p class="my-0">Price Each: €{{ item.product.price }}</p>
-                                    <p><strong>Subtotal: </strong>€{{ item.product.price       }}</p>
+                                    <p class="my-0">Price Each: €{{ item.price }}</p>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    {% include "wishlist/quantity-form.html" %}
+                                    
                                 </div>
                             </div>
                             <div class="row"><div class="col"><hr></div></div>
@@ -65,38 +70,48 @@
                                     <th scope="col">Product Info</th>
                                     <th scope="col"></th>
                                     <th scope="col">Price</th>
-                                    <th scope="col">Qty</th>
-                                    <th scope="col">Subtotal</th>
                                 </tr>
                             </thead>
-
                             {% for item in wishlist_items %}
                                 <tr>
                                     <td class="p-3 w-25">
-                                        {% include "wishlist/product-image.html" %}
+                                        {% if item.image %}
+                                            <a href="{% url 'product_detail' item.id %}">
+                                                <img class="img-fluid rounded" src="{{ item.image.url }}" alt="{{ item.title }}">
+                                            </a>                                            
+                                        {% else %}
+                                            <a href="{% url 'product_detail' item.id %}">
+                                                <img class="img-fluid rounded" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.title }}">
+                                            </a>
+                                        {% endif %}
                                     </td>
                                     <td class="py-3">
-                                        {% include "wishlist/product-info.html" %}
+                                        <p class="my-0"><strong>{{ item.artist }}</strong></p>
+                                        <p class="my-0"><strong>{{ item.title }}</strong></p>
+                                        <p class="my-0 small text-muted">SKU: {{ item.sku | upper }}</p>
                                     </td>
                                     <td class="py-3">
-                                        <p class="my-0">€{{ item.product.price }}</p>
-                                    </td>
-                                    <td class="py-3 w-25">
-                                        {% include "wishlist/quantity-form.html" %}
-                                    </td>
-                                    <td class="py-3">
-                                        <p class="my-0">€{{ item.product.price     }}</p>
+                                        <p class="my-0">€{{ item.price }}
+                                            <a id="remove_{{ item.id }}" class="wishlist-remove text-danger"><i class="fas fa-times-circle"></i></a>
+                                            {% csrf_token %}
+                                        </p>
                                     </td>
                                 </tr>
                             {% endfor %}
                             <tr>
-                                <td colspan="5" class="pt-5 text-right">
-                                    {% include "wishlist/wishlist-total.html" %}
-                                </td>
-                            </tr>
-                            <tr>
                                 <td colspan="5" class="text-right">
-                                    {% include "wishlist/checkout-buttons.html" %}
+                                    <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
+                                        <span class="icon">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </span>
+                                        <span class="text-uppercase">Keep Shopping</span>
+                                    </a>
+                                    <a href="{% url 'checkout' %}" class="btn btn-black rounded-0 btn-lg">
+                                        <span class="text-uppercase">Secure Checkout</span>
+                                        <span class="icon">
+                                            <i class="fas fa-lock"></i>
+                                        </span>
+                                    </a>
                                 </td>
                             </tr>
                         </table>
@@ -117,5 +132,5 @@
 
 {% block postloadjs %}
     {{ block.super }}
-    <script src="{% static 'checklist/js/checklist.js' %}"></script>
+    <script src="{% static 'wishlist/js/wishlist.js' %}"></script>
 {% endblock %}

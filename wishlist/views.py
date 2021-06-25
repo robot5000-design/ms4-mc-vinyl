@@ -2,67 +2,60 @@ from django.shortcuts import (
     render, redirect, reverse,
     HttpResponse, get_object_or_404)
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
+from .models import Wishlist
 from products.models import Product
 
 
+@login_required
 def view_wishlist(request):
     """ A view that renders the wishlist contents page
     """
+    try:
+        wishlist = get_object_or_404(Wishlist, user=request.user.id)
+        wishlist_items = wishlist.products.all()
+    except Exception:
+        wishlist_items = ''
+        messages.info(request, f'Your wishlist is empty!')
+
     template = 'wishlist/wishlist.html'
+    context = {
+        'wishlist_items': wishlist_items,
+    }
+    return render(request, template, context)
 
-    return render(request, template)
 
-
-def add_to_bag(request, item_id):
+@login_required
+def add_to_wishlist(request, item_id):
     """ Add a quantity of the specified product to the shopping bag
     """
     product = get_object_or_404(Product, pk=item_id)
-    quantity = int(request.POST.get('quantity'))
-    redirect_url = request.POST.get('redirect_url')
-    # If bag is in session, get it or else create one
-    bag = request.session.get('bag', {})
+    try:
+        wishlist = get_object_or_404(Wishlist, user=request.user.id)
+        if product in wishlist.products.all():
+            messages.info(request, 'That item is already in your wishlist!')
+        else:
+            wishlist.products.add(product)
+            messages.info(request, f'Added {product.title} to your wishlist')
 
-    if item_id in list(bag.keys()):
-        bag[item_id] += quantity
-        messages.success(request, f'Updated {product.title} quantity to {bag[item_id]}')
-    else:
-        bag[item_id] = quantity
-        messages.success(request, f'Added {product.title} to your bag')
+    except Exception:
+        wishlist = Wishlist.objects.create(user=request.user)
+        wishlist.products.add(product)
+        messages.info(request, f'Added {product.title} to your wishlist')
 
-    request.session['bag'] = bag
-    return redirect(redirect_url)
-
-
-def adjust_bag(request, item_id):
-    """Adjust the quantity of the specified product to the specified amount
-    """
-    product = get_object_or_404(Product, pk=item_id)
-    quantity = int(request.POST.get('quantity'))
-    bag = request.session.get('bag', {})
-
-    if quantity > 0:
-        bag[item_id] = quantity
-        messages.success(request, f'Updated {product.title} quantity to {bag[item_id]}')
-    else:
-        bag.pop(item_id)
-        messages.success(request, f'Removed {product.title} from your bag')
-
-    request.session['bag'] = bag
-    return redirect(reverse('view_bag'))
+    return redirect(reverse('product_detail', args=[item_id]))
 
 
-def remove_from_bag(request, item_id):
-    """Remove the item from the shopping bag
+@login_required
+def remove_from_wishlist(request, item_id):
+    """Remove the item from wishlist
     """
     try:
         product = get_object_or_404(Product, pk=item_id)
-        bag = request.session.get('bag', {})
-
-        bag.pop(item_id)
-        messages.success(request, f'Removed {product.title} from your bag')
-
-        request.session['bag'] = bag
+        wishlist = get_object_or_404(Wishlist, user=request.user.id)
+        wishlist.products.remove(product)
+        messages.info(request, f'Removed {product.title} from your wishlist')
         return HttpResponse(status=200)
 
     except Exception as e:

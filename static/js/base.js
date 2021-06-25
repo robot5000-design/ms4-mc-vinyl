@@ -42,3 +42,19 @@ $('.decrement-qty').click(function(e) {
     var itemId = $(this).data('item_id');
     handleEnableDisable(itemId);
 });
+
+// Remove item and reload on click
+$('.wishlist-remove').click(function(e) {
+    $(this).prop("disabled", true);
+    var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+    var itemId = $(this).attr('id').split('remove_')[1];
+    var url = `/wishlist/remove/${itemId}/`;
+    var data = {
+        'csrfmiddlewaretoken': csrfToken
+    };
+
+    $.post(url, data)
+     .done(function() {
+         location.reload();
+     });
+})
