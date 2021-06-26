@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='order',
-            name='original_bag',
+            name='original_cart',
             field=models.TextField(default=''),
         ),
         migrations.AddField(

@@ -24,10 +24,22 @@ class Genre(models.Model):
         return self.friendly_name
 
 
+class Promotion(models.Model):
+    name = models.CharField(max_length=50)
+    friendly_name = models.CharField(max_length=50, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_friendly_name(self):
+        return self.friendly_name
+
+
 class Product(models.Model):
     artist = models.CharField(max_length=254)
     label = models.CharField(max_length=254, blank=True)
     genre = models.ManyToManyField(Genre, blank=True)
+    promotion = models.ManyToManyField(Promotion, blank=True)
     sku = models.CharField(max_length=254)
     title = models.CharField(max_length=254)
     description = models.TextField(blank=True)
@@ -56,7 +68,7 @@ class Product(models.Model):
         self.save()
 
     def __str__(self):
-        return f'{self.title} - {self.artist}'
+        return self.sku
 
 
 class ProductReview(models.Model):
@@ -71,17 +83,15 @@ class ProductReview(models.Model):
                                 related_name='reviews')
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     body = models.TextField()
-    review_date = models.DateTimeField(auto_now=True)
+    review_date = models.DateTimeField(auto_now_add=True)
     review_rating = models.IntegerField(choices=REVIEW_RATING_CHOICES,
                                         default=None)
     upvote_list = models.ManyToManyField(User, blank=True, related_name='upvote_users')
     upvote_count = models.IntegerField(null=True, blank=True)
     admin_comment = models.TextField(blank=True)
-    # upvote_list = ArrayField(
-    #     models.CharField(max_length=100, blank=True),
-    #     default=list,
-    #     blank=True
-    # )
+
+    class Meta:
+        ordering = ["-review_date"]
 
     def __str__(self):
         return f'{self.product.title} - {self.user.username} - {self.review_rating}'

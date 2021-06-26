@@ -15,13 +15,18 @@
 
 {% block content %}
     <div class="overlay"></div>
-    <div class="container-fluid">
+    <div class="container-fluid mb-5 pb-5">
         <div class="row">
             <div class="col text-center mt-3">
                 <h2 class="logo-font">Products</h2>
                 {% for genre in current_genres %}
                     <a class="category-badge text-decoration-none" href="{% url 'products' %}?genre={{ genre.name }}">
                         <span class="p-2 mt-2 badge badge-white text-black rounded-0 border border-dark">{{ genre.friendly_name }}</span>
+                    </a>
+                {% endfor %}
+                {% for promotion in current_promotions %}
+                    <a class="category-badge text-decoration-none" href="{% url 'products' %}?promotion={{ promotion.name }}">
+                        <span class="p-2 mt-2 badge badge-white text-black rounded-0 border border-dark">{{ promotion.friendly_name }}</span>
                     </a>
                 {% endfor %}
                 <hr class="w-50 mb-1">

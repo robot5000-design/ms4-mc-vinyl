@@ -3,9 +3,8 @@ from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
-from django.contrib.auth.models import User
 
-from .models import Product, Genre, ProductReview
+from .models import Product, Genre, ProductReview, Promotion
 from wishlist.models import Wishlist
 from .forms import ProductForm, ProductReviewForm
 
@@ -15,6 +14,7 @@ def all_products(request):
     products = Product.objects.all()
     query = None
     genres = None
+    promotions = None
     sort = None
     direction = None
 
@@ -30,18 +30,23 @@ def all_products(request):
                 if direction == 'desc':
                     sortkey = f'-{sortkey}'
             products = products.order_by(sortkey)
-            
+
         if 'genre' in request.GET:
             genres = request.GET['genre'].split(',')
             products = products.filter(genre__name__in=genres)
             genres = Genre.objects.filter(name__in=genres)
+
+        if 'promotion' in request.GET:
+            promotions = request.GET['promotion'].split(',')
+            products = products.filter(promotion__name__in=promotions)
+            promotions = Promotion.objects.filter(name__in=promotions)
 
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
                 messages.error(request, "You didn't enter any search criteria!")
                 return redirect(reverse('products'))
-            
+
             queries = Q(artist__icontains=query) | Q(title__icontains=query) | Q(genre__name__icontains=query)
             products = products.filter(queries)
 
@@ -52,6 +57,7 @@ def all_products(request):
         'search_term': query,
         'current_genres': genres,
         'current_sorting': current_sorting,
+        'current_promotions': promotions,
     }
     return render(request, 'products/products.html', context)
 
@@ -61,6 +67,24 @@ def product_detail(request, product_id):
 
     product = get_object_or_404(Product, pk=product_id)
     reviews = ProductReview.objects.filter(product=product)
+    current_sorting = 'date_desc'
+
+    if 'sort' in request.GET:
+        sortkey = request.GET['sort']
+        sort = sortkey
+        if sortkey == 'date':
+            sortkey = 'review_date'
+        if sortkey == 'likes':
+            sortkey = 'upvote_count'
+        if sortkey == 'rating':
+            sortkey = 'review_rating'
+        if 'direction' in request.GET:
+            direction = request.GET['direction']
+            if direction == 'desc':
+                sortkey = f'-{sortkey}'
+        reviews = reviews.order_by(sortkey)
+        current_sorting = f'{sort}_{direction}'
+
     try:
         wishlist = get_object_or_404(Wishlist, user=request.user.id)
         if product in wishlist.products.all():
@@ -83,6 +107,7 @@ def product_detail(request, product_id):
         'review_form': review_form,
         'already_reviewed': already_reviewed,
         'in_wishlist': in_wishlist,
+        'current_sorting': current_sorting,
     }
     return render(request, 'products/product_detail.html', context)
 

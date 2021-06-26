@@ -10,7 +10,24 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="text-success">index.html</h1>
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="offset-md-3 offset-lg-5 col-12 col-md-8 col-lg-6 my-auto">
+                <div class="container-fluid shop-entry">
+                    <div class="row">
+                        <h1 class="col-lg-6 offset-1 offset-sm-3 offset-lg-2 display-4 logo-font text-white my-4">
+                            MC<br>Vinyl<br>Record<br>Store
+                        </h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 offset-1 offset-sm-3 offset-lg-2 my-4">
+                            <h4>
+                                <a href="{% url 'products' %}" class="shop-now-button btn btn-lg rounded-0 text-uppercase py-3">Shop Now</a>
+                            </h4>
+                        </div>
+                    </div>                    
+                </div>                
+            </div>
+        </div>
     </div>
 {% endblock %}

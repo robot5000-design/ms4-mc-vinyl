@@ -54,8 +54,7 @@
                     {% endif %}
                     <div><small class="text-muted"><strong>Label: </strong> {{ product.label }}</small></div>
                     <div><small class="text-muted"><strong>Album Format: </strong>{{ product.album_format }}</small></div>
-                    <div><small class="text-muted"><strong>Colour: </strong>{{ product.color }}</small></div>
-                    
+                    <div><small class="text-muted"><strong>Colour: </strong>{{ product.color }}</small></div>                    
                     {% if product.rating %}
                         <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
                     {% else %}
@@ -74,7 +73,7 @@
                             <div class="col">{{ track }}</div>
                         </div>
                     {% endfor %}
-                    <form class="form" action="{% url 'add_to_bag' product.id %}" method="POST">
+                    <form class="form" action="{% url 'add_to_cart' product.id %}" method="POST">
                         {% csrf_token %}
                         <div class="form-row">
                             <div class="col-12">
@@ -111,7 +110,7 @@
                                     </span>
                                     <span class="text-uppercase">Keep Shopping</span>
                                 </a>
-                                <input type="submit" class="btn btn-black rounded-0 text-uppercase mt-5" value="Add to Bag">
+                                <input type="submit" class="btn btn-black rounded-0 text-uppercase mt-5" value="Add to Cart">
                             </div>
                             <input type="hidden" name="redirect_url" value="{{ request.path }}">
                         </div>
@@ -143,6 +142,18 @@
                     {% elif request.user.is_authenticated %}
                         <div class="my-5">You've already reviewed this.</div>
                     {% endif %}
+                    {% if reviews %}
+                        <div class="col-12 my-auto order-md-last d-flex">
+                            <div class="sort-select-wrapper">
+                                <select id="sort-selector" class="custom-select custom-select-sm rounded-0 border-black">
+                                    <option value="date_desc" {% if current_sorting == 'date_desc' %}selected{% endif %}>Sort By: Most Recent</option>
+                                    <option value="rating_desc" {% if current_sorting == 'rating_desc' %}selected{% endif %}>Sort By: Highest Rating</option>
+                                    <option value="rating_asc" {% if current_sorting == 'rating_asc' %}selected{% endif %}>Sort By: Lowest Rating</option>
+                                    <option value="likes_desc" {% if current_sorting == 'likes_desc' %}selected{% endif %}>Sort By: Most Likes</option>
+                                </select>
+                            </div>
+                        </div>
+                    {% endif %}
                     {% for review in reviews %}
                         <div class="container-fluid py-2">
                             <div>
@@ -162,13 +173,14 @@
                             {% endif %}
                             {% if request.user.is_authenticated and request.user not in review.upvote_list.all and request.user.id != review.user.id %}
                                 <a class="review-links" href="{% url 'upvote_product_review' product.id review.user.username %}">
-                                    <i class="fas fa-thumbs-up fs-5 pe-2"></i>
-                                    {{ review.upvote_count }}
+                                    <i class="fas fa-thumbs-up fs-5 pe-2"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
                                 </a>
                             {% else %}
-                                <div><i class="fas fa-thumbs-up fs-5 pe-2"></i> {{ review.upvote_count }}</div>
+                                <div>
+                                    <i class="fas fa-thumbs-up fs-5 pe-2"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
+                                </div>
                             {% endif %}
-                            {% if request.user.id == review.user.id %}
+                            {% if request.user.id == review.user.id or request.user.is_superuser %}
                                 <a class="btn btn-black mt-2" href="{% url 'edit_product_review' product.id review.user.username %}">Edit/Delete</a>
                             {% endif %}
                         </div>

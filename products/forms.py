@@ -4,7 +4,7 @@ from crispy_forms.bootstrap import InlineRadios
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout
 from .widgets import CustomClearableFileInput
-from .models import Product, Genre, ProductReview
+from .models import Product, Genre, ProductReview, Promotion
 
 
 class ProductForm(forms.ModelForm):
@@ -14,6 +14,7 @@ class ProductForm(forms.ModelForm):
         fields = (
             'artist',
             'title',
+            'promotion',
             'release_date',
             'sku',
             'price',
@@ -33,6 +34,11 @@ class ProductForm(forms.ModelForm):
         genres = Genre.objects.all()
         genres_friendly_names = [(genre.id, genre.get_friendly_name()) for genre in genres]
         self.fields['genre'].choices = genres_friendly_names
+
+        promotions = Promotion.objects.all()
+        promotions_friendly_names = [(promotion.id, promotion.get_friendly_name()) for promotion in promotions]
+        self.fields['promotion'].choices = promotions_friendly_names
+
         for field_name, field in self.fields.items():
             if field_name == 'track_list':
                 field.widget.attrs['class'] = 'my-2 mr-2 border-black rounded-0'

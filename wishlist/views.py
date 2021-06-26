@@ -28,12 +28,14 @@ def view_wishlist(request):
 
 @login_required
 def add_to_wishlist(request, item_id):
-    """ Add a quantity of the specified product to the shopping bag
+    """ Add a quantity of the specified product to the shopping cart
     """
     product = get_object_or_404(Product, pk=item_id)
     try:
         wishlist = get_object_or_404(Wishlist, user=request.user.id)
-        if product in wishlist.products.all():
+        if wishlist.products.all().count() > 9:
+            messages.info(request, 'Your wishlist is full!')
+        elif product in wishlist.products.all():
             messages.info(request, 'That item is already in your wishlist!')
         else:
             wishlist.products.add(product)
@@ -61,3 +63,28 @@ def remove_from_wishlist(request, item_id):
     except Exception as e:
         messages.error(request, f'Error removing item: {e}')
         return HttpResponse(status=500)
+
+
+def transfer_all_to_cart(request):
+    """ Add a quantity of the specified product to the shopping cart
+    """
+    # If cart is in session, get it or else create one
+    cart = request.session.get('cart', {})
+    try:
+        wishlist = get_object_or_404(Wishlist, user=request.user.id)
+        wishlist_items = wishlist.products.all()
+    except Exception:
+        wishlist_items = ''
+        messages.info(request, f'Your wishlist is empty!')
+
+    for item in wishlist_items:
+        product = get_object_or_404(Product, sku=item)
+        quantity = 1
+        if str(product.id) in list(cart.keys()):
+            cart[str(product.id)] += quantity
+        else:
+            cart[str(product.id)] = quantity
+    messages.success(request, 'Added all items to your cart')
+
+    request.session['cart'] = cart
+    return redirect(reverse('view_cart'))
