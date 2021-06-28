@@ -15,6 +15,7 @@ class ProductForm(forms.ModelForm):
             'artist',
             'title',
             'promotion',
+            'label',
             'release_date',
             'sku',
             'price',
@@ -47,6 +48,7 @@ class ProductForm(forms.ModelForm):
 
 
 class ProductReviewForm(forms.ModelForm):
+
     class Meta:
         model = ProductReview
         fields = (
@@ -79,3 +81,25 @@ class ProductReviewForm(forms.ModelForm):
                     'placeholder'] = 'Admin Comment Here...'
             self.fields[field].widget.attrs[
                 'class'] = 'border-black rounded-0 profile-form-input'
+
+
+class GenreForm(forms.ModelForm):
+
+    class Meta:
+        model = Genre
+        fields = (
+            'name',
+            'friendly_name',
+            )
+        
+        geeks_field = forms.RegexField(regex = "G.*s")
+
+
+class PromotionForm(forms.ModelForm):
+
+    class Meta:
+        model = Promotion
+        fields = (
+            'name',
+            'friendly_name',
+            )

@@ -11,4 +11,5 @@ urlpatterns = [
     path('edit_review/<int:product_id>/<str:review_author>/', views.edit_product_review, name='edit_product_review'),
     path('delete_review/<int:product_id>/<str:review_author>/', views.delete_product_review, name='delete_product_review'),
     path('upvote_review/<int:product_id>/<str:review_author>/', views.upvote_product_review, name='upvote_product_review'),
+    path('product_fields_admin/', views.product_fields_admin, name='product_fields_admin'),
 ]

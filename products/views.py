@@ -3,10 +3,11 @@ from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
+from django.core.exceptions import ValidationError
 
 from .models import Product, Genre, ProductReview, Promotion
 from wishlist.models import Wishlist
-from .forms import ProductForm, ProductReviewForm
+from .forms import ProductForm, ProductReviewForm, GenreForm, PromotionForm
 
 
 def all_products(request):
@@ -183,8 +184,8 @@ def add_product(request):
 
 @login_required
 def delete_product(request, product_id):
-    """ A view to delete individual product details """
-
+    """ A view to delete individual product details
+    """
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -211,21 +212,22 @@ def add_product_review(request, product_id):
                 body=request.POST['body'],
                 review_rating=request.POST['review_rating'],
             )
-
             messages.info(request, 'Successfully added a review!')
             return redirect(reverse('product_detail', args=[product.id]))
-
+        else:
+            messages.error(request, 'Failed to add product review. Please ensure the \
+                           form is valid.')
 
 @login_required
 def edit_product_review(request, product_id, review_author):
     """ A view to edit a product review
     """
-    product = get_object_or_404(Product, pk=product_id)
-    review = ProductReview.objects.filter(product=product, user__username=review_author)[0]  ################
-
     if request.user != review.user and not request.user.is_superuser:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))
+
+    product = get_object_or_404(Product, pk=product_id)
+    review = ProductReview.objects.filter(product=product, user__username=review_author)[0]  ################
 
     if request.method == 'POST':
         review_form = ProductReviewForm(request.POST)
@@ -237,6 +239,9 @@ def edit_product_review(request, product_id, review_author):
             review.save()
             messages.info(request, 'Review Updated!')
             return redirect(reverse('product_detail', args=[product.id]))
+        else:
+            messages.error(request, 'Failed to edit review. Please ensure the \
+                           form is valid.')
     else:
         review_form = ProductReviewForm(initial={
             'body': review.body,
@@ -256,12 +261,12 @@ def edit_product_review(request, product_id, review_author):
 @login_required
 def delete_product_review(request, product_id, review_author):
     """ A view to delete a product review """
-    product = get_object_or_404(Product, pk=product_id)
-    review = ProductReview.objects.filter(product=product, user__username=review_author)[0] ################
-
     if request.user != review.user and not request.user.is_superuser:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))
+
+    product = get_object_or_404(Product, pk=product_id)
+    review = ProductReview.objects.filter(product=product, user__username=review_author)[0] ################
 
     review.delete()
     messages.info(request, 'Review deleted!')
@@ -287,3 +292,46 @@ def upvote_product_review(request, product_id, review_author):
         return redirect(reverse('product_detail', args=[product.id]))
     messages.info(request, 'Already Liked!')
     return redirect(reverse('product_detail', args=[product.id]))
+
+
+@login_required
+def product_fields_admin(request):
+    """ A view to render product genres and promotions fields
+    """
+    if not request.user.is_superuser:
+        messages.error(request, "Sorry, you don't have permission to do that.")
+        return redirect(reverse('home'))
+
+    if request.method == 'POST':
+        if 'genre' in request.POST:
+            genre_form = GenreForm(request.POST)
+            if genre_form.is_valid():
+                genre_form.save()
+                messages.info(request, 'Genre Added!')
+            else:
+                messages.error(request, 'Failed to add genre. Please ensure the \
+                            form is valid.')
+        if 'promotion' in request.POST:
+            promotion_form = PromotionForm(request.POST)
+            if promotion_form.is_valid():
+                promotion_form.save()
+                messages.info(request, 'Promotion Added!')
+            else:
+                messages.error(request, 'Failed to add promotion. Please ensure the \
+                            form is valid.')
+        return redirect(reverse('product_fields_admin'))
+
+    genres = Genre.objects.all()
+    promotions = Promotion.objects.all()
+
+    genre_form = GenreForm()
+    promotion_form = PromotionForm()
+
+    template = 'products/product_fields_admin.html'
+    context = {
+        'genres': genres,
+        'promotions': promotions,
+        'genre_form': genre_form,
+        'promotion_form': promotion_form,
+    }
+    return render(request, template, context)
