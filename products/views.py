@@ -120,7 +120,7 @@ def edit_product(request, product_id):
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
-    product = get_object_or_404(Product, pk=product_id)    
+    product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
         current_title = product.title
         form = ProductForm(request.POST, request.FILES, instance=product)
@@ -222,12 +222,12 @@ def add_product_review(request, product_id):
 def edit_product_review(request, product_id, review_author):
     """ A view to edit a product review
     """
+    product = get_object_or_404(Product, pk=product_id)
+    review = ProductReview.objects.filter(product=product, user__username=review_author)[0]  ################
+
     if request.user != review.user and not request.user.is_superuser:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))
-
-    product = get_object_or_404(Product, pk=product_id)
-    review = ProductReview.objects.filter(product=product, user__username=review_author)[0]  ################
 
     if request.method == 'POST':
         review_form = ProductReviewForm(request.POST)

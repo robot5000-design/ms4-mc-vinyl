@@ -15,7 +15,7 @@ def current_year():
 
 class Genre(models.Model):
     name = models.CharField(max_length=50)
-    friendly_name = models.CharField(max_length=50, blank=True)
+    friendly_name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -26,7 +26,7 @@ class Genre(models.Model):
 
 class Promotion(models.Model):
     name = models.CharField(max_length=50)
-    friendly_name = models.CharField(max_length=50, blank=True)
+    friendly_name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name

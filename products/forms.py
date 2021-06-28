@@ -91,8 +91,6 @@ class GenreForm(forms.ModelForm):
             'name',
             'friendly_name',
             )
-        
-        geeks_field = forms.RegexField(regex = "G.*s")
 
 
 class PromotionForm(forms.ModelForm):
