@@ -195,8 +195,18 @@
                 <form class="form mt-5" action="{% url 'add_user_message' order.order_number %}" method="POST">
                     {% csrf_token %}
                     <div class="form-row">
-                        <div class="col-12">                                                  
-                            {{ user_message_form | crispy }}
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col">
+                                    Ref. Number:
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col small">
+                                    {{ order.order_number}}
+                                </div>
+                            </div>                                                                          
+                            {{ message_form | crispy }}
                             <div class="text-right">
                                 <button class="btn btn-black rounded-0 add-review" type="submit">Add Message</button>
                             </div>                     

@@ -1,6 +1,5 @@
 from django import forms
-from django.forms import Textarea
-from .models import UserProfile, UserMessage, AdminMessage
+from .models import UserProfile
 
 
 class UserProfileForm(forms.ModelForm):
@@ -33,32 +32,3 @@ class UserProfileForm(forms.ModelForm):
                 self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = 'border-black rounded-0 profile-form-input'
             self.fields[field].label = False
-
-
-class UserMessageForm(forms.ModelForm):
-    class Meta:
-        model = UserMessage
-        fields = (
-            'ref_number',
-            'user_message',
-        )
-        widgets = {
-            'user_message': Textarea(attrs={'rows': 5}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        """ 
-        """
-        super().__init__(*args, **kwargs)
-
-        if self.initial:
-            self.fields['ref_number'].widget.attrs['disabled'] = True
-
-
-class AdminMessageForm(forms.ModelForm):
-    class Meta:
-        model = AdminMessage
-        fields = (
-            'ref_number',
-            'admin_message',
-        )

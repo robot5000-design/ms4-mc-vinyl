@@ -26,34 +26,6 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-class AdminMessage(models.Model):
-    """ An admin reply relating to a reference number
-    """
-    ref_number = models.CharField(max_length=32)
-    admin_message = models.TextField()
-    message_date = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-message_date"]
-
-    def __str__(self):
-        return self.message[:30]
-
-
-class UserMessage(models.Model):
-    """ A user message relating to a reference number
-    """
-    ref_number = models.CharField(max_length=32)
-    user_message = models.TextField()
-    message_date = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-message_date"]
-
-    def __str__(self):
-        return self.user_message[:30]
-
-
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     """ Create or update the user profile

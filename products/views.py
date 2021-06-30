@@ -128,7 +128,6 @@ def edit_product(request, product_id):
             current_sku = request.POST['sku']            
             sku_exists = Product.objects.filter(
                 sku=current_sku).exclude(title=current_title)
-            print(current_title)
             if sku_exists:
                 messages.error(request,
                                'Another title with that SKU already exists!')
