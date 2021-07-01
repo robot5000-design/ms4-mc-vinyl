@@ -6,6 +6,7 @@ class UserMessageAdmin(admin.ModelAdmin):
     list_display = (
         'ref_number',
         'user_message',
+        'user',
         'message_date',
     )
 

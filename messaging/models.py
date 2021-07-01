@@ -11,8 +11,5 @@ class UserMessage(models.Model):
     message_date = models.DateTimeField(auto_now_add=True)
     read = models.BooleanField(default=False)
 
-    class Meta:
-        ordering = ["-message_date"]
-
     def __str__(self):
         return self.user_message[:30]

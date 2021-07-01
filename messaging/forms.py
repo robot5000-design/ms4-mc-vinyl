@@ -14,6 +14,11 @@ class UserMessageForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        """
+        """ Remove Label and add placeholder from user message form
         """
         super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].label = False
+            if field == 'user_message':
+                self.fields[field].widget.attrs[
+                    'placeholder'] = 'Reply to this thread here...'

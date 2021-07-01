@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
     path('', views.messaging, name='messaging'),
-    path('view_message_thread/<ref_number>/', views.view_message_thread,
+    path('message_thread/<ref_number>/', views.view_message_thread,
          name='view_message_thread'),
+    path('admin_reply/<ref_number>/', views.add_admin_reply,
+         name='add_admin_reply'),
 ]

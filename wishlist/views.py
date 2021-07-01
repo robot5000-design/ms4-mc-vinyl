@@ -39,12 +39,12 @@ def add_to_wishlist(request, item_id):
             messages.info(request, 'That item is already in your wishlist!')
         else:
             wishlist.products.add(product)
-            messages.info(request, f'Added {product.title} to your wishlist')
+            messages.info(request, 'Added item to your wishlist')
 
     except Exception:
         wishlist = Wishlist.objects.create(user=request.user)
         wishlist.products.add(product)
-        messages.info(request, f'Added {product.title} to your wishlist')
+        messages.info(request, 'Added item to your wishlist')
 
     return redirect(reverse('product_detail', args=[item_id]))
 
@@ -57,7 +57,7 @@ def remove_from_wishlist(request, item_id):
         product = get_object_or_404(Product, pk=item_id)
         wishlist = get_object_or_404(Wishlist, user=request.user.id)
         wishlist.products.remove(product)
-        messages.info(request, f'Removed {product.title} from your wishlist')
+        messages.info(request, 'Removed item from your wishlist')
         return HttpResponse(status=200)
 
     except Exception as e:
@@ -75,7 +75,7 @@ def transfer_all_to_cart(request):
         wishlist_items = wishlist.products.all()
     except Exception:
         wishlist_items = ''
-        messages.info(request, f'Your wishlist is empty!')
+        messages.info(request, 'Your wishlist is empty!')
 
     for item in wishlist_items:
         product = get_object_or_404(Product, sku=item)
