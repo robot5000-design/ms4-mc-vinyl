@@ -33,7 +33,10 @@ def messaging(request):
 def view_message_thread(request, ref_number):
     """ Display a thread of messages
     """
-    message_thread = UserMessage.objects.filter(ref_number=ref_number)
+    message_thread = (UserMessage.objects
+                      .filter(ref_number=ref_number)
+                      .order_by('-message_date')
+                      )
     for message in message_thread:
         message.read = True
         message.save()
@@ -63,8 +66,8 @@ def add_admin_reply(request, ref_number):
                 user_message=request.POST['user_message'],
             )
             messages.info(request, 'Successfully added a message!')
-            return redirect(reverse('messages', args=[ref_number]))
+            return redirect(reverse('view_message_thread', args=[ref_number]))
         else:
             messages.error(request, 'Failed to add message. Please ensure the \
                            form is valid.')
-        return redirect(reverse('order_history', args=[ref_number]))
+        return redirect(reverse('view_message_thread', args=[ref_number]))

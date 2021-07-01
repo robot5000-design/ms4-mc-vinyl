@@ -15,7 +15,7 @@
 
 {% block content %}
 <div class="overlay"></div>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col">
             <hr>
@@ -25,7 +25,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-6 px-0">
                 <form class="form mt-5" action="{% url 'add_admin_reply' ref_number %}" method="POST">
                     {% csrf_token %}
                     <div class="form-row">
@@ -62,17 +62,24 @@
     </div>
     <div class="row messages-wrapper">
         <div class="col">
-            <div class="row">
-                <div class="col">
-                    <p>Messages from: {{ user }}</p>
-                </div>                
-            </div>
             {% for message in message_thread %}
-            <div class="row">
-                <div class="col">{{ message.user }} {{message.message_date}}
-                    <p>{{ message }}</p>
-                </div>
-            </div>
+                {% if message.user.is_superuser %}
+                    <div class="card text-white bg-secondary mb-3 col-11 offset-1">
+                        <div class="card-header">Sent by Admin: {{ message.user }} {{message.message_date}}</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Primary card title</h5>
+                            <p class="card-text">{{ message }}</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card text-white bg-info mb-3 col-11 col-sm-10">
+                        <div class="card-header">Received from: {{ message.user }} {{message.message_date}}</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Primary card title</h5>
+                            <p class="card-text">{{ message }}</p>
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
