@@ -24,12 +24,13 @@
         </div>
     </div>
     <div class="row messages-wrapper">
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
             <thead>
                 <tr>
                     <th scope="col">Ref Number</th>
+                    <th scope="col">Read</th>
                     <th scope="col">Date</th>
-                    <th scope="col">User</th>
+                    <th scope="col">From User</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,10 +38,20 @@
                 <tr class="{% if not message.read %}font-weight-bold{% endif %}">
                     <td>
                         <a href="{% url 'view_message_thread' message.ref_number %}" title="{{ message.ref_number }}">
-                            {{ message.ref_number }}
+                            {{ message.ref_number | truncatechars:10 }}
                         </a>
                     </td>
-                    <td>{{ message.message_date }}</td>
+                    <td>
+                        {% if message.read %}
+                            <i class="fas fa-check text-success"></i>
+                        {% else %}
+                            <i class="fas fa-times text-warning"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div>{{ message.message_date | date:'d/m/y' }}</div>
+                        <div>{{ message.message_date | date:'H:i' }}</div>
+                    </td>
                     <td>{{ message.user.username }}</td>
                 </tr>
                 {% endfor %}
@@ -48,7 +59,7 @@
         </table>
     </div>
     <div class="row">
-        <div class="col-12 col-lg-7 text-right">
+        <div class="col text-right">
             <a href="{% url 'profile' %}" class="btn btn-black rounded-0 my-2">
                 <span class="icon mr-2">
                     <i class="fas fa-angle-left"></i>

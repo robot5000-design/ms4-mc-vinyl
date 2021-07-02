@@ -24,73 +24,69 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <div class="col-12 col-lg-6 px-0">
-                <form class="form mt-5" action="{% url 'add_admin_reply' ref_number %}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-row">
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col">
-                                    User:
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <strong>{{ user }}</strong>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    Ref. Number:
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col small">
-                                    <strong>{{ ref_number}}</strong>
-                                </div>
-                            </div>                                                                          
-                            {{ message_form | crispy }}
-                            <div class="text-right">
-                                <button class="btn btn-black rounded-0 add-review" type="submit">Add Message</button>
-                            </div>                     
-                        </div>
-                    </div>
-                </form>
+        <div class="col col-lg-8">
+            <div class="row">
+                <div class="col">
+                    <a href="{% url 'messaging' %}" class="btn btn-black rounded-0 my-2">
+                        <span class="icon mr-2">
+                            <i class="fas fa-angle-left"></i>
+                        </span>
+                        <span class="text-uppercase">Back to Messages</span>
+                    </a>
+                </div>
             </div>
+            <form class="form mt-5" action="{% url 'add_admin_reply' ref_number %}" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col">
+                                User:
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <strong>{{ user }}</strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                Ref. Number:
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col small">
+                                <strong>{{ ref_number}}</strong>
+                            </div>
+                        </div>                                                                          
+                        {{ message_form | crispy }}
+                        <div class="mb-5">
+                            <button class="btn btn-black rounded-0 add-review" type="submit">Add Message</button>
+                        </div>                     
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="row messages-wrapper">
-        <div class="col">
+        <div class="col col-lg-8">
             {% for message in message_thread %}
                 {% if message.user.is_superuser %}
-                    <div class="card text-white bg-secondary mb-3 col-11 offset-1">
-                        <div class="card-header">Sent by Admin: {{ message.user }} {{message.message_date}}</div>
+                    <div class="card text-white bg-secondary mb-3 col-11 col-lg-10">
+                        <div class="card-header">Sent by Admin: {{ message.user }} on {{ message.message_date | date:'d/m/y H:i' }}</div>
                         <div class="card-body">
-                            <h5 class="card-title">Primary card title</h5>
                             <p class="card-text">{{ message }}</p>
                         </div>
                     </div>
                 {% else %}
-                    <div class="card text-white bg-info mb-3 col-11 col-sm-10">
-                        <div class="card-header">Received from: {{ message.user }} {{message.message_date}}</div>
+                    <div class="card text-white bg-info mb-3 col-11 offset-1 col-lg-10 offset-lg-2">
+                        <div class="card-header">Received from: <strong class="text-warning">{{ message.user }}</strong> on {{ message.message_date | date:'d/m/y H:i' }}</div>
                         <div class="card-body">
-                            <h5 class="card-title">Primary card title</h5>
                             <p class="card-text">{{ message }}</p>
                         </div>
                     </div>
                 {% endif %}
             {% endfor %}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-lg-7 text-right">
-            <a href="{% url 'profile' %}" class="btn btn-black rounded-0 my-2">
-                <span class="icon mr-2">
-                    <i class="fas fa-angle-left"></i>
-                </span>
-                <span class="text-uppercase">Back to Profile</span>
-            </a>
         </div>
     </div>
 </div>

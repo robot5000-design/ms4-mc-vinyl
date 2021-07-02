@@ -1,3 +1,15 @@
 .messages-wrapper {
     min-height: 50vh;
 }
+
+.table {
+    font-size: 3.4vw;
+}
+
+/* -------------------------------- Media Queries */
+
+@media (min-width: 412px) {
+    .table {
+        font-size: 1em;
+    }
+}
