@@ -1,0 +1,12 @@
+Hello!
+
+You have received a new reply in this conversation ref no. {{ ref_number }}.
+
+Please log in to view all messages in the thread and to reply.
+
+Thank you for your custom!
+
+Sincerely,
+
+{{ user }}
+MC-Vinyl

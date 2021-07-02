@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
+from utils.helper_functions import send_confirmation_email
 
 from .models import UserMessage
 from .forms import UserMessageForm
+from checkout.models import Order
 
 
 @login_required
@@ -67,6 +69,17 @@ def add_admin_reply(request, ref_number):
                 user_message=request.POST['user_message'],
             )
             messages.info(request, 'Successfully added a message!')
+
+            order = get_object_or_404(Order, order_number=ref_number)
+            customer_email = order.email
+            subject_context = {'ref_number': ref_number}
+            body_context = {
+                    'user': request.user,
+                    'ref_number': ref_number,
+                }
+            path = 'messaging/confirmation_emails/'
+            send_confirmation_email(customer_email, subject_context,
+                                    body_context, path)
             return redirect(reverse('view_message_thread', args=[ref_number]))
         else:
             messages.error(request, 'Failed to add message. Please ensure the \

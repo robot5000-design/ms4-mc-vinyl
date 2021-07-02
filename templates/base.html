@@ -79,7 +79,6 @@
                                         <a href="{% url 'add_product' %}" class="dropdown-item">Add a New Product</a>
                                         <a href="{% url 'product_fields_admin' %}" class="dropdown-item">Product Fields Admin</a>
                                     {% endif %}
-                                    <a href="{% url 'view_wishlist' %}" class="dropdown-item d-md-none">Wishlist <i class="fas fa-heart text-danger"></i></a>
                                     <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
                                     <a href="{% url 'account_change_password' %}" class="dropdown-item">Change Password</a>
                                     <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
@@ -93,7 +92,13 @@
                             <a class="text-black nav-link" href="{% url 'view_wishlist' %}">
                                 <div class="text-center">
                                     <div><i class="fas fa-heart fa-lg text-danger"></i></div>
-                                    <p class="my-0">Wishlist</p>
+                                    <p class="my-0">
+                                        {% if wishlist_count %}
+                                            Wishlist({{ wishlist_count }})
+                                        {% else %}
+                                            Wishlist(0)
+                                        {% endif %}
+                                    </p>
                                 </div>
                             </a>
                         </li>

@@ -1,0 +1,8 @@
+Hello Admin!
+
+You have received a new message in a conversation with ref no. {{ ref_number }}.
+
+Message from {{ user }}:
+"{{ message }}"
+
+Please log in and go to Messaging to reply.

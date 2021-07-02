@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 
+from utils.helper_functions import send_confirmation_email
+from mc_vinyl import settings
 from .models import UserProfile
 from .forms import UserProfileForm
 from messaging.forms import UserMessageForm
@@ -68,6 +70,17 @@ def add_user_message(request, order_number):
                 user_message=request.POST['user_message'],
             )
             messages.info(request, 'Successfully added a message!')
+
+            customer_email = settings.DEFAULT_FROM_EMAIL
+            subject_context = {'ref_number': order_number}
+            body_context = {
+                    'user': request.user,
+                    'ref_number': order_number,
+                    'message': request.POST['user_message']
+                }
+            path = 'profiles/confirmation_emails/'
+            send_confirmation_email(customer_email, subject_context,
+                                    body_context, path)
             return redirect(reverse('order_history', args=[order_number]))
         else:
             messages.error(request, 'Failed to add message. Please ensure the \

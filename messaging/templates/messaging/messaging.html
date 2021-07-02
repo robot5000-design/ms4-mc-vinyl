@@ -23,6 +23,16 @@
             <hr>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <a href="{% url 'messaging' %}" class="btn btn-black rounded-0 my-2">
+                <span class="icon mr-2">
+                    <i class="fas fa-sync-alt"></i>
+                </span>
+                <span class="text-uppercase">Refresh</span>
+            </a>
+        </div>
+    </div>
     <div class="row messages-wrapper">
         <table class="table table-hover text-center">
             <thead>
@@ -57,16 +67,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-    <div class="row">
-        <div class="col text-right">
-            <a href="{% url 'profile' %}" class="btn btn-black rounded-0 my-2">
-                <span class="icon mr-2">
-                    <i class="fas fa-angle-left"></i>
-                </span>
-                <span class="text-uppercase">Back to Profile</span>
-            </a>
-        </div>
     </div>
 </div>
 {% endblock %}

@@ -1,6 +1,4 @@
 from django.http import HttpResponse
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
 from mc_vinyl import settings
 from django.shortcuts import get_object_or_404
 
@@ -18,25 +16,6 @@ class StripeWH_Handler:
 
     def __init__(self, request):
         self.request = request
-
-    def _send_confirmation_email(self, order, cart_items):
-        """Send the user a confirmation email"""
-        customer_email = order.email
-        subject = render_to_string(
-            'checkout/confirmation_emails/confirmation_email_subject.txt',
-            {'order': order})
-        body = render_to_string(
-            'checkout/confirmation_emails/confirmation_email_body.txt', {
-                'order': order,
-                'cart_items': cart_items,
-                'contact_email': settings.DEFAULT_FROM_EMAIL
-            })
-        send_mail(
-            subject,
-            body,
-            settings.DEFAULT_FROM_EMAIL,
-            [customer_email]
-        )
 
     def handle_event(self, event):
         """
@@ -115,19 +94,16 @@ class StripeWH_Handler:
                 attempt += 1
                 time.sleep(1)
         if order_exists:
-            # subject = (
-            #     'checkout/confirmation_emails/confirmation_email_subject.txt',
-            #     {'order': order}
-            #     )
-            # body = (
-            #     'checkout/confirmation_emails/confirmation_email_body.txt',
-            #     {
-            #         'order': order,
-            #         'cart_items': cart_items,
-            #         'contact_email': settings.DEFAULT_FROM_EMAIL
-            #     })
-            # send_confirmation_email(order.email, subject, body)
-            self._send_confirmation_email(order)
+            subject_context = {'order': order}
+            body_context = {
+                    'order': order,
+                    'cart_items': cart_items,
+                    'contact_email': settings.DEFAULT_FROM_EMAIL
+                }
+            path = 'checkout/confirmation_emails/'
+            send_confirmation_email(order.email, subject_context,
+                                    body_context, path)
+            #self._send_confirmation_email(order, cart_items)
             return HttpResponse(
                 content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
                 status=200)
@@ -162,20 +138,15 @@ class StripeWH_Handler:
                 return HttpResponse(
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
                     status=500)
-            # subject = (
-            #     'checkout/confirmation_emails/confirmation_email_subject.txt',
-            #     {'order': order}
-            #     )
-            # body = (
-            #     'checkout/confirmation_emails/confirmation_email_body.txt',
-            #     {
-            #         'order': order,
-            #         'cart_items': cart_items,
-            #         'contact_email': settings.DEFAULT_FROM_EMAIL
-            #     })
-            # send_confirmation_email(order.email, subject, body)
-            self._send_confirmation_email(order)
-            
+            subject_context = {'order': order}
+            body_context = {
+                    'order': order,
+                    'cart_items': cart_items,
+                    'contact_email': settings.DEFAULT_FROM_EMAIL
+                }
+            path = 'checkout/confirmation_emails/'
+            send_confirmation_email(order.email, subject_context,
+                                    body_context, path)
         return HttpResponse(
             content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
             status=200)
