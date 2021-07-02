@@ -85,3 +85,12 @@ def add_admin_reply(request, ref_number):
             messages.error(request, 'Failed to add message. Please ensure the \
                            form is valid.')
         return redirect(reverse('view_message_thread', args=[ref_number]))
+
+
+@login_required
+def delete_thread(request, ref_number):
+    """ Removes all messages in a thread
+    """
+    UserMessage.objects.filter(ref_number=ref_number).delete()
+
+    return redirect(reverse('messaging'))

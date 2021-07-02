@@ -41,6 +41,7 @@
                     <th scope="col">Read</th>
                     <th scope="col">Date</th>
                     <th scope="col">From User</th>
+                    <th scope="col"><i class="fas fa-times-circle text-secondary"></i></th>
                 </tr>
             </thead>
             <tbody>
@@ -63,10 +64,21 @@
                         <div>{{ message.message_date | date:'H:i' }}</div>
                     </td>
                     <td>{{ message.user.username }}</td>
+                    <td>
+                        <a href="#" class="call-delete" data-messages="{{ message.ref_number }}" data-toggle="modal" data-target="#deleteMessagesModal"
+                            ><i class="fas fa-times-circle text-danger"></i>
+                        </a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+{% include 'messaging/includes/modal_delete.html' %}
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script src="{% static 'messaging/js/messaging.js' %}"></script>
 {% endblock %}

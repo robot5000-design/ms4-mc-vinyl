@@ -3,12 +3,18 @@
 }
 
 .table {
-    font-size: 3.4vw;
+    font-size: 2.7vw;
 }
 
 /* -------------------------------- Media Queries */
 
-@media (min-width: 412px) {
+@media (min-width: 420px) {
+    .table {
+        font-size: .8em;
+    }
+}
+
+@media (min-width: 576px) {
     .table {
         font-size: 1em;
     }
