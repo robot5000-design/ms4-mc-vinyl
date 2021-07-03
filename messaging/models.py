@@ -10,6 +10,7 @@ class UserMessage(models.Model):
     user_message = models.TextField()
     message_date = models.DateTimeField(auto_now_add=True)
     read = models.BooleanField(default=False)
+    closed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user_message[:30]

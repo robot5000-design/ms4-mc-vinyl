@@ -22,13 +22,29 @@ body {
 }
 
 .logo-font {
-    text-transform: uppercase;
     font-family: 'Monoton', cursive;
     width: fit-content;
 }
 
+.records-logo {
+    height: 30px;
+    margin-bottom: 15px;
+}
+
 .mobile-logo {
-    font-size: .8em;
+    font-size: 1.4em;
+}
+
+.heading {
+    font-size: 1.5em;
+}
+
+.main-container {
+    min-height: 90vh;
+}
+
+.nav-items {
+    font-size: .9em;
 }
 
 .shop-now-button {
@@ -276,7 +292,6 @@ input[name='q']::placeholder {
     background-color: #000;
     min-height: 90px;
     text-align: center;
-    position: relative;
 }
 
 .footer-container li a i {
@@ -316,7 +331,7 @@ input[name='q']::placeholder {
 /* pad the top a bit when navbar is collapsed on mobile */
 @media (max-width: 991px) {
     .header-container {
-        padding-top: 116px;
+        padding-top: 140px;
     }
 
     body {
@@ -325,10 +340,6 @@ input[name='q']::placeholder {
 
     .my-account-dropdown {
         transform: translate3d(-60px, 0, 0);
-    }
-
-    .logo-font {
-        font-size: 2rem;
     }
 
     .nav-link {
@@ -362,6 +373,12 @@ input[name='q']::placeholder {
     .increment-qty,
     .decrement-qty {
         padding: .25rem .5rem !important;
+    }
+}
+
+@media (min-width: 576px) {
+    .heading {
+        font-size: 2rem;
     }
 }
 

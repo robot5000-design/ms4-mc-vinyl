@@ -6,3 +6,15 @@ $(".call-delete").click(function(event) {
 
     $("#confirm-delete").attr("href", deleteUrl);
 });
+
+// Show open threads only
+$('.open-threads-btn').on('click', function() {
+    $('.open-threads').show();
+    $('.closed-threads').hide();
+})
+
+// Show closed threads only
+$('.closed-threads-btn').on('click', function() {
+    $('.closed-threads').show();
+    $('.open-threads').hide();
+})

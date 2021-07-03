@@ -19,13 +19,13 @@
         <div class="row">
             <div class="col">
                 <hr>
-                <h2 class="logo-font mb-4">Past Order:</h2>
+                <h2 class="heading logo-font">Past Order:</h2>
                 <hr>
                 <p class="text-black">Your order information is below.</p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 col-lg-6">
+        <div class="row mb-5">
+            <div class="col-12 col-lg-6 mb-3">
                 <div class="order-confirmation-wrapper p-2 border">
                     <div class="row">
                         <div class="col">
@@ -192,10 +192,20 @@
                 </div>
             </div>
             <div class="col-12 col-lg-6">
-                <form class="form mt-5" action="{% url 'add_user_message' order.order_number %}" method="POST">
+                <form class="form" action="{% url 'add_user_message' order.order_number %}" method="POST">
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="col-12">
+                            <div class="row">
+                                <div class="col">
+                                    Customer:
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <strong>{{ user }}</strong>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col">
                                     Ref. Number:
@@ -203,18 +213,36 @@
                             </div>
                             <div class="row">
                                 <div class="col small">
-                                    {{ order.order_number}}
+                                    <strong>{{ order.order_number}}</strong>
                                 </div>
-                            </div>                                                                          
-                            {{ message_form | crispy }}
-                            <div class="text-right">
+                            </div>
+                            <div class="mt-3">{{ message_form | crispy }}</div>
+                            <div>
                                 <button class="btn btn-black rounded-0 add-review" type="submit">Add Message</button>
                             </div>                     
                         </div>
                     </div>
                 </form>
-                {% for message in user_messages %}
-                <div>{{message}}</div>
+            </div>
+        </div>
+        <div class="row messages-wrapper">
+            <div class="col col-lg-10 offset-lg-1">
+                {% for message in message_thread %}
+                    {% if message.user.is_superuser %}
+                        <div class="card text-white bg-secondary mb-3 col-11 offset-1 col-lg-10 offset-lg-2">
+                            <div class="card-header">Sent by Admin: {{ message.user }} on {{ message.message_date | date:'d/m/y H:i' }}</div>
+                            <div class="card-body">
+                                <p class="card-text">{{ message.user_message }}</p>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="card text-white bg-info mb-3 col-11 col-lg-10">
+                            <div class="card-header">Received from: <strong class="text-warning">{{ message.user }}</strong> on {{ message.message_date | date:'d/m/y H:i' }}</div>
+                            <div class="card-body">
+                                <p class="card-text">{{ message.user_message }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

@@ -6,6 +6,10 @@
     font-size: 2.7vw;
 }
 
+.table-caption {
+    font-size: 1.3em;
+}
+
 /* -------------------------------- Media Queries */
 
 @media (min-width: 420px) {

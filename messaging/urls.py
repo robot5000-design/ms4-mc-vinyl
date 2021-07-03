@@ -9,4 +9,6 @@ urlpatterns = [
          name='add_admin_reply'),
     path('delete_thread/<ref_number>/', views.delete_thread,
          name='delete_thread'),
+    path('change_thread_status/<ref_number>/', views.change_thread_status,
+         name='change_thread_status'),
 ]

@@ -10,7 +10,7 @@ class UserMessageForm(forms.ModelForm):
             'user_message',
         )
         widgets = {
-            'user_message': Textarea(attrs={'rows': 5}),
+            'user_message': Textarea(attrs={'rows': 8}),
         }
 
     def __init__(self, *args, **kwargs):

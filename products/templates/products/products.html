@@ -18,7 +18,9 @@
     <div class="container-fluid mb-5 pb-5">
         <div class="row">
             <div class="col text-center mt-3">
-                <h2 class="logo-font">Products</h2>
+                <hr>
+                <h2 class="heading logo-font">Products</h2>
+                <hr class="mb-1">
                 {% for genre in current_genres %}
                     <a class="category-badge text-decoration-none" href="{% url 'products' %}?genre={{ genre.name }}">
                         <span class="p-2 mt-2 badge badge-white text-black rounded-0 border border-dark">{{ genre.friendly_name }}</span>
@@ -29,7 +31,6 @@
                         <span class="p-2 mt-2 badge badge-white text-black rounded-0 border border-dark">{{ promotion.friendly_name }}</span>
                     </a>
                 {% endfor %}
-                <hr class="w-50 mb-1">
             </div>
         </div>
         <div class="row">

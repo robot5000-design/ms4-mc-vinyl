@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
 
 from utils.helper_functions import send_confirmation_email
 from mc_vinyl import settings
@@ -39,6 +38,7 @@ def profile(request):
     return render(request, template, context)
 
 
+@login_required
 def order_history(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)
 
@@ -46,19 +46,22 @@ def order_history(request, order_number):
         f'This is a past confirmation for order number {order_number}. '
         'A confirmation email was sent on the order date.'
     ))
-    user_messages = UserMessage.objects.filter(ref_number=order_number)
-
+    message_thread = (UserMessage.objects
+                      .filter(ref_number=order_number)
+                      .order_by('-message_date')
+                      )
     message_form = UserMessageForm()
 
     template = 'profiles/past_order.html'
     context = {
         'order': order,
-        'user_messages': user_messages,
+        'message_thread': message_thread,
         'message_form': message_form,
     }
     return render(request, template, context)
 
 
+@login_required
 def add_user_message(request, order_number):
     if request.method == 'POST':
         message_form = UserMessageForm(request.POST)
