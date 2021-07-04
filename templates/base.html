@@ -35,27 +35,27 @@
         <title>MC Vinyl {% block extra_title %}{% endblock %}</title>
     </head>
     <body>
-        <header class="container-fluid fixed-top">
+        <header class="container-fluid fixed-top-desktop-only">
             <div class="row d-lg-none">
-                <div class="col bg-black">
+                <div class="col bg-dark">
                     <a href="{% url 'home' %}" class="nav-link logo-font text-white mx-auto">
                         <h2 class="mobile-logo my-1">MC Vinyl</h2>
                     </a>                
                 </div>            
             </div>
-            <div id="topnav" class="row bg-white pt-lg-2 d-none d-lg-flex">
+            <div id="topnav" class="row bg-light pt-lg-2 d-none d-lg-flex">
                 <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
                     <a href="{% url 'home' %}" class="nav-link main-logo-link">
                         <img src="{{ MEDIA_URL }}records.png" class="d-inline records-logo" alt="records-logo">
-                        <h2 class="logo-font text-black my-0 d-inline"><strong>MC</strong> Vinyl</h2>
+                        <h2 class="logo-font text-dark my-0 d-inline"><strong>MC</strong> Vinyl</h2>
                     </a>
                 </div>
                 <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
                     <form method="GET" action="{% url 'products' %}">
                         <div class="input-group w-100">
-                            <input class="form-control border border-black rounded-0" type="text" name="q" placeholder="Search our site" required>
+                            <input class="form-control border border-dark" type="text" name="q" placeholder="Search our site" required>
                             <div class="input-group-append">
-                                <button class="form-control btn btn-black border border-black rounded-0" type="submit">
+                                <button class="form-control btn btn-dark border border-dark " type="submit">
                                     <span class="icon">
                                         <i class="fas fa-search"></i>
                                     </span>
@@ -67,7 +67,7 @@
                 <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 pl-lg-0 nav-items">
                     <ul class="list-inline list-unstyled text-center text-lg-right my-0">
                         <li class="list-inline-item dropdown">
-                            <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="text-dark nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="text-center">
                                     <div><i class="fas fa-user fa-lg"></i></div>
                                     <p class="my-0">My Account</p>
@@ -90,7 +90,7 @@
                             </div>
                         </li>
                         <li class="list-inline-item">
-                            <a class="text-black nav-link" href="{% url 'view_wishlist' %}">
+                            <a class="text-dark nav-link" href="{% url 'view_wishlist' %}">
                                 <div class="text-center">
                                     {% if wishlist_count %}
                                         <div><i class="fas fa-heart fa-lg text-danger"></i></div>
@@ -107,7 +107,7 @@
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="{% url 'view_cart' %}">
+                            <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-dark{% endif %} nav-link" href="{% url 'view_cart' %}">
                                 <div class="text-center">
                                     <div><i class="fas fa-shopping-cart fa-lg"></i></i></div>
                                     <p class="my-0">
@@ -123,7 +123,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="row bg-white">
+            <div class="row bg-light">
                 <nav class="navbar navbar-expand-lg navbar-light w-100">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -133,7 +133,7 @@
                 </nav>
             </div>
             <div id="delivery-banner" class="row text-center">
-                <div class="col bg-black text-white">
+                <div class="col bg-dark text-white">
                     <h4 class="logo-font my-1 mx-auto">Free delivery on orders over €{{ free_delivery_threshold }}!</h4>                
                 </div>            
             </div>
@@ -182,17 +182,9 @@
                         </ul>
                     </div>
                 </div>
-                <div class="row footer-terms">
-                    <div class="col-12 footer-terms-item">
-                        <a href="#">Contact Us</a>
-                    </div>
-                </div>
-                <div class="row pt-3 tmdb-disclaimer">
+                <div class="row pt-3 footer-terms">
                     <div class="col-12">
                         <p>For Educational Purposes Only</p>
-                    </div>
-                    <div class="col-12">
-                        <p>sdfsdfds</p>
                     </div>
                 </div>
             </div>

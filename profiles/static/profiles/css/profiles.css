@@ -19,3 +19,12 @@
 #id_default_country option:first-child {
     color: #aab7c4;
 }
+
+.update-info-btn {
+    width: 230px;
+}
+
+.back-btn,
+.add-message-btn {
+    width: 211px;
+}

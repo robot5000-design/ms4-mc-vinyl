@@ -42,9 +42,9 @@ class ProductForm(forms.ModelForm):
 
         for field_name, field in self.fields.items():
             if field_name == 'track_list':
-                field.widget.attrs['class'] = 'my-2 mr-2 border-black rounded-0'
+                field.widget.attrs['class'] = 'my-2 mr-2 border-dark '
             else:
-                field.widget.attrs['class'] = 'border-black rounded-0'
+                field.widget.attrs['class'] = 'border-dark '
 
 
 class ProductReviewForm(forms.ModelForm):
@@ -80,7 +80,7 @@ class ProductReviewForm(forms.ModelForm):
                 self.fields[field].widget.attrs[
                     'placeholder'] = 'Admin Comment Here...'
             self.fields[field].widget.attrs[
-                'class'] = 'border-black rounded-0 profile-form-input'
+                'class'] = 'border-dark  profile-form-input'
 
 
 class GenreForm(forms.ModelForm):

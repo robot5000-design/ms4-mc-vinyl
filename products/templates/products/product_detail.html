@@ -32,7 +32,14 @@
             </div>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="product-details-container mb-5 mt-md-5">
-                    <p class="mb-0"><strong>{{ product.artist }}</strong></p>
+                    {% if request.user.is_superuser %}
+                        <div class="pb-4">
+                            <a class="btn btn-dark edit-product-btn" href="{% url 'edit_product' product.id %}">Edit</a>
+                            <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteProductModal" data-product="{{ product.id }}">Delete</a>
+                        </div>
+                        {% include 'products/includes/modal_delete.html' %}
+                    {% endif %}
+                    <p class="mb-0 logo-font">{{ product.artist }}</p>
                     <p class="mb-0"><strong>{{ product.title }}</strong></p>
                     <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}
                         {% if in_wishlist %}
@@ -46,26 +53,19 @@
                         <p class="small mt-1 mb-0">
                             <i class="fas fa-tag mr-1"></i>
                             {% for genre in product.genre.all %}
-                                <a class="text-muted" href="{% url 'products' %}?genre={{ genre }}">
+                                <a class="" href="{% url 'products' %}?genre={{ genre }}">
                                     {{ genre.friendly_name | capfirst }}
                                 </a>
                             {% endfor %}
                         </p>
                     {% endif %}
-                    <div><small class="text-muted"><strong>Label: </strong> {{ product.label }}</small></div>
-                    <div><small class="text-muted"><strong>Album Format: </strong>{{ product.album_format }}</small></div>
-                    <div><small class="text-muted"><strong>Colour: </strong>{{ product.color }}</small></div>                    
+                    <div><small class=""><strong>Label: </strong> {{ product.label }}</small></div>
+                    <div><small class=""><strong>Album Format: </strong>{{ product.album_format }}</small></div>
+                    <div><small class=""><strong>Colour: </strong>{{ product.color }}</small></div>                    
                     {% if product.rating %}
-                        <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                        <small class=""><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
                     {% else %}
-                        <small class="text-muted">No Rating</small>
-                    {% endif %}
-                    {% if request.user.is_superuser %}
-                        <small class="ml-3">
-                            <a class="btn btn-black" href="{% url 'edit_product' product.id %}">Edit</a> | 
-                            <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteProductModal" data-product="{{ product.id }}">Delete</a>
-                        </small>
-                        {% include 'products/includes/modal_delete.html' %}
+                        <small class="">No Rating</small>
                     {% endif %}
                     <p class="mt-3">{{ product.description }}</p>
                     {% for track in product.track_list %}
@@ -73,7 +73,7 @@
                             <div class="col">{{ track }}</div>
                         </div>
                     {% endfor %}
-                    <form class="form" action="{% url 'add_to_cart' product.id %}" method="POST">
+                    <form class="form my-3" action="{% url 'add_to_cart' product.id %}" method="POST">
                         {% csrf_token %}
                         <div class="form-row">
                             <div class="col-12">
@@ -81,7 +81,7 @@
                                 <div class="form-group w-50">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <button class="decrement-qty btn btn-black rounded-0" 
+                                            <button class="decrement-qty btn btn-dark " 
                                                 data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
                                                 <span class="icon">
                                                     <i class="fas fa-minus"></i>
@@ -93,7 +93,7 @@
                                             data-item_id="{{ product.id }}"
                                             id="id_qty_{{ product.id }}">
                                         <div class="input-group-append">
-                                            <button class="increment-qty btn btn-black rounded-0"
+                                            <button class="increment-qty btn btn-dark "
                                                 data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
                                                 <span class="icon">
                                                     <i class="fas fa-plus"></i>
@@ -103,14 +103,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col{% if s %}-12 mt-2{% endif %}">
-                                <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 mt-5">
+                            <div class="col mt-2">
+                                <a href="{% url 'products' %}" class="btn btn-outline-dark my-3">
                                     <span class="icon">
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
-                                    <span class="text-uppercase">Keep Shopping</span>
+                                    <span class="text-uppercase keep-btn">Keep Shopping</span>
                                 </a>
-                                <input type="submit" class="btn btn-black rounded-0 text-uppercase mt-5" value="Add to Cart">
+                                <input type="submit" class="btn btn-dark text-uppercase add-cart-btn" value="Add to Cart">
                             </div>
                             <input type="hidden" name="redirect_url" value="{{ request.path }}">
                         </div>
@@ -133,59 +133,74 @@
                                         <input id="rating1" type="radio" name="review_rating" value="1" required>
                                         <label for="rating1">1</label>
                                     </span>
-                                    <div class="text-right">
-                                        <button class="btn btn-black rounded-0 add-review" type="submit">Add Review</button>
+                                    <div class="mt-3 mb-5">
+                                        <button class="btn btn-dark  add-review" type="submit">Add Review</button>
                                     </div>                     
                                 </div>
                             </div>
                         </form>
                     {% elif request.user.is_authenticated %}
                         <div class="my-5">You've already reviewed this.</div>
+                    {% else %}
+                        <div class="my-5"><a href="{% url 'account_login' %}" class="">Log-In</a> to submit a review.</div>
                     {% endif %}
-                    {% if reviews %}
+                    <div class="row mb-4">
+                    {% if reviews %}                    
                         <div class="col-12 my-auto order-md-last d-flex">
                             <div class="sort-select-wrapper">
-                                <select id="sort-selector" class="custom-select custom-select-sm rounded-0 border-black">
+                                <select id="sort-selector" class="custom-select custom-select-sm  border-dark">
                                     <option value="date_desc" {% if current_sorting == 'date_desc' %}selected{% endif %}>Sort By: Most Recent</option>
                                     <option value="rating_desc" {% if current_sorting == 'rating_desc' %}selected{% endif %}>Sort By: Highest Rating</option>
                                     <option value="rating_asc" {% if current_sorting == 'rating_asc' %}selected{% endif %}>Sort By: Lowest Rating</option>
                                     <option value="likes_desc" {% if current_sorting == 'likes_desc' %}selected{% endif %}>Sort By: Most Likes</option>
                                 </select>
                             </div>
-                        </div>
+                        </div>                    
                     {% endif %}
+                    </div>
+                    <div class="row">
                     {% for review in reviews %}
-                        <div class="container-fluid py-2">
-                            <div>
+                        <div class="col-12 py-2">
+                            <div class="small">
                                 Reviewed by: {{ review.user.username }} {{ review.review_date | date:"d M Y" }}
                             </div>
-                            <div>
+                            <div class="my-2">
                                 {{ review.body }}
                             </div>
-                            <div>
-                                Rating: {{ review.review_rating }} / 5
+                            <div class="">
+                                Rating:
+                                {% with ''|center:review.review_rating as range %}
+                                    {% for _ in range %}
+                                        <i class="fas fa-star"></i>
+                                    {% endfor %}
+                                {% endwith %}
+                            </div>
+                            <div class="my-2">
+                                {% if request.user.is_authenticated and request.user not in review.upvote_list.all and request.user.id != review.user.id %}
+                                    <a class="review-links" href="{% url 'upvote_product_review' product.id review.user.username %}">
+                                        <i class="fas fa-thumbs-up fs-5 pe-2"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
+                                    </a>
+                                {% else %}
+                                    <i class="fas fa-thumbs-up"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
+                                {% endif %}
                             </div>
                             {% if review.admin_comment %}
                                 <div class="col">
-                                    <small class="row"><strong>MC Vinyl Comment:</strong></small> 
-                                    <small class="row">{{ review.admin_comment }}</small> 
-                                </div>
-                            {% endif %}
-                            {% if request.user.is_authenticated and request.user not in review.upvote_list.all and request.user.id != review.user.id %}
-                                <a class="review-links" href="{% url 'upvote_product_review' product.id review.user.username %}">
-                                    <i class="fas fa-thumbs-up fs-5 pe-2"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
-                                </a>
-                            {% else %}
-                                <div>
-                                    <i class="fas fa-thumbs-up fs-5 pe-2"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
+                                    <small class="row mt-4"><strong>MC Vinyl Comment:</strong></small> 
+                                    <small class="row my-2">{{ review.admin_comment }}</small> 
                                 </div>
                             {% endif %}
                             {% if request.user.id == review.user.id or request.user.is_superuser %}
-                                <a class="btn btn-black mt-2" href="{% url 'edit_product_review' product.id review.user.username %}">Edit/Delete</a>
+                            <div class="row">
+                                <div class="col">
+                                    <a class="btn btn-dark mt-2 edit-review-btn" href="{% url 'edit_product_review' product.id review.user.username %}">Edit/Delete</a>
+                                </div>
+                            </div>
                             {% endif %}
                         </div>
-                        <hr>
+                        <hr class="w-100">
                     {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>

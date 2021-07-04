@@ -8,7 +8,6 @@ from .models import UserMessage
 from .forms import UserMessageForm
 from checkout.models import Order
 
-
 @login_required
 def messaging(request):
     """ Display messages

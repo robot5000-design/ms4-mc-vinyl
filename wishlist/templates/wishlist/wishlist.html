@@ -25,13 +25,13 @@
                     <div class="d-block d-md-none">
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
+                                <a href="{% url 'products' %}" class="btn btn-outline-dark  btn-lg">
                                     <span class="icon">
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
                                     <span class="text-uppercase">Keep Shopping</span>
                                 </a>
-                                <p class="text-muted mb-5">A summary of your wishlist contents is below</p>
+                                <p class=" mb-5">A summary of your wishlist contents is below</p>
                             </div>
                         </div>
                         {% for item in wishlist_items %}
@@ -46,12 +46,12 @@
                                 <div class="col-12 col-sm-6 mb-2">
                                     <p class="my-0"><strong>{{ item.artist }}</strong></p>
                                     <p class="my-0"><strong>{{ item.title }}</strong></p>
-                                    <p class="my-0 small text-muted">SKU: {{ item.sku | upper }}</p>
+                                    <p class="my-0 small ">SKU: {{ item.sku | upper }}</p>
                                 </div>
                                 <div class="col-12 col-sm-6 order-sm-last">
                                     <p class="my-0">Price Each: €{{ item.price }}
                                         <a id="remove_{{ item.id }}" class="wishlist-remove text-danger"><i class="fas fa-times-circle"></i></a>
-                                        <a href="{% url 'add_to_cart' item.id %}" class="wishlist-to-cart text-black"><i class="fas fa-cart-plus"></i></i></a>
+                                        <a href="{% url 'add_to_cart' item.id %}" class="wishlist-to-cart text-dark"><i class="fas fa-cart-plus"></i></i></a>
                                     </p>                                    
                                 </div>
                                 <div class="col-12 col-sm-6">
@@ -60,15 +60,15 @@
                             </div>
                             <div class="row"><div class="col"><hr></div></div>
                         {% endfor %}
-                        <div class="btt-button shadow-sm rounded-0 border border-black">
+                        <div class="btt-button shadow-sm  border border-dark">
                             <a class="btt-link d-flex h-100">
-                                <i class="fas fa-arrow-up text-black mx-auto my-auto"></i>
+                                <i class="fas fa-arrow-up text-dark mx-auto my-auto"></i>
                             </a>	
                         </div>
                     </div>
                     <div class="table-responsive rounded d-none d-md-block">
                         <table class="table table-sm table-borderless">
-                            <thead class="text-black">
+                            <thead class="text-dark">
                                 <tr>
                                     <th scope="col">Product Info</th>
                                     <th scope="col"></th>
@@ -92,25 +92,25 @@
                                     <td class="py-3">
                                         <p class="my-0"><strong>{{ item.artist }}</strong></p>
                                         <p class="my-0"><strong>{{ item.title }}</strong></p>
-                                        <p class="my-0 small text-muted">SKU: {{ item.sku | upper }}</p>
+                                        <p class="my-0 small ">SKU: {{ item.sku | upper }}</p>
                                     </td>
                                     <td class="py-3">
                                         <p class="my-0">€{{ item.price }}
                                             <a id="remove_{{ item.id }}" class="wishlist-remove text-danger"><i class="fas fa-times-circle"></i></a>
-                                            <a href="{% url 'add_to_cart' item.id %}" class="wishlist-to-cart text-black"><i class="fas fa-cart-plus"></i></i></a>
+                                            <a href="{% url 'add_to_cart' item.id %}" class="wishlist-to-cart text-dark"><i class="fas fa-cart-plus"></i></i></a>
                                         </p>
                                     </td>
                                 </tr>
                             {% endfor %}
                             <tr>
                                 <td colspan="5" class="text-right">
-                                    <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
+                                    <a href="{% url 'products' %}" class="btn btn-outline-dark  btn-lg">
                                         <span class="icon">
                                             <i class="fas fa-chevron-left"></i>
                                         </span>
                                         <span class="text-uppercase">Keep Shopping</span>
                                     </a>
-                                    <a href="{% url 'transfer_all_to_cart' %}" class="btn btn-black rounded-0 btn-lg">
+                                    <a href="{% url 'transfer_all_to_cart' %}" class="btn btn-dark  btn-lg">
                                         <span class="text-uppercase">Add All to Cart</span>
                                         <span class="icon">
                                             <i class="fas fa-cart-plus"></i>
@@ -122,7 +122,7 @@
                     </div>
                 {% else %}
                     <p class="lead mb-5">Your wishlist is empty.</p>
-                    <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
+                    <a href="{% url 'products' %}" class="btn btn-outline-dark  btn-lg">
                         <span class="icon">
                             <i class="fas fa-chevron-left"></i>
                         </span>

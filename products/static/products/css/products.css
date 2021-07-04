@@ -78,3 +78,21 @@ label .asteriskField {
 .media .image-container {
     width: 40%;
 }
+
+.edit-product-btn,
+.edit-review-btn,
+.call-delete {
+    width: 141px;
+}
+
+.add-cart-btn,
+.keep-btn,
+.input-group,
+.add-review,
+.edit-review-btn {
+    width: 190px;
+}
+
+.card-album-title {
+    min-height: 80px;
+}

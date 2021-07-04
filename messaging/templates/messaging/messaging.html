@@ -25,30 +25,29 @@
     </div>
     <div class="row">
         <div class="col">
-            <a href="{% url 'messaging' %}" class="btn btn-black rounded-0 my-2">
-                <span class="icon mr-2">
+            <a href="{% url 'messaging' %}" class="btn btn-dark  my-2">
+                <span class="icon">
                     <i class="fas fa-sync-alt"></i>
                 </span>
-                <span class="text-uppercase">Refresh</span>
             </a>
-            <div class="btn btn-black rounded-0 my-2 open-threads-btn">
-                <span class="icon mr-2">
+            <div class="btn btn-dark  my-2 open-threads-btn">
+                <span class="icon">
                     <i class="far fa-square"></i>
                 </span>
                 <span class="text-uppercase">Open</span>
             </div>
-            <div class="btn btn-black rounded-0 my-2 closed-threads-btn">
-                <span class="icon mr-2">
+            <div class="btn btn-dark  my-2 closed-threads-btn">
+                <span class="icon">
                     <i class="far fa-check-square"></i>
                 </span>
                 <span class="text-uppercase">Closed</span>
             </div>
         </div>
     </div>
-    <div class="row messages-wrapper">
+    <div class="row messages-wrapper mt-5">
         <div class="open-threads col-12 px-0 px-sm-3">
-            <h2 class="table-caption">Open Threads:</h2>      
-            <table class="table table-hover text-center border">
+            <h2 class="table-caption font-weight-bold">Open Threads:</h2>      
+            <table class="table table-hover text-center border open-threads-table">
                 <thead>
                     <tr>
                         <th scope="col">Ref Number</th>
@@ -88,8 +87,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="closed-threads col-12 px-0 px-sm-3">
-            <h2 class="table-caption">Closed Threads:</h2>
+        <div class="closed-threads col-12 px-0 px-sm-3 mt-3">
+            <h2 class="table-caption font-weight-bold">Closed Threads:</h2>
             <table class="table table-hover text-center mt-3 border table-dark">
                 <thead>
                     <tr>

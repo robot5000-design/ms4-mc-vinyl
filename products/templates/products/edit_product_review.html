@@ -17,9 +17,16 @@
     <div class="overlay"></div>
     <div class="container-fluid edit-review-container">
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
+            <div class="col">
+                <hr>
+                <h2 class="heading logo-font mb-4">Edit Review:</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-xl-4 mb-5">
                 {% if request.user.is_authenticated %}
-                        <form class="form mt-5" action="#" method="POST">
+                        <form class="form" action="#" method="POST">
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="col-12">                                                    
@@ -61,8 +68,8 @@
                                             {{ review_form.admin_comment | as_crispy_field }}
                                         {% endif %}
                                     {% endif %}
-                                    <div class="text-left">
-                                        <button class="btn btn-black rounded-0 edit-review-btn" type="submit">Edit Review</button>
+                                    <div class="text-left mt-4">
+                                        <button class="btn btn-dark  edit-review-btn my-3" type="submit">Edit Review</button>
                                         {% if request.user.is_superuser or review.user == request.user %}
                                             <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteReviewModal" data-product="{{ product.id }}/{{ review.user.username }}">Delete Review</a>
                                             {% include 'products/includes/modal_review_delete.html' %}
@@ -73,42 +80,42 @@
                         </form>                        
                     {% endif %}
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-12 col-md-6 col-xl-4">
                 <div class="media">
-                <div class="image-container mr-4">
-                    {% if product.image %}
-                        <a href="{{ product.image.url }}" target="_blank">
-                            <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
-                        </a>
+                    <div class="image-container mr-4">
+                        {% if product.image %}
+                            <a href="{{ product.image.url }}" target="_blank">
+                                <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
+                            </a>
+                            {% else %}
+                            <a href="">
+                                <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="product-details-container media-body">
+                        <p class="mb-0"><strong>{{ product.artist }}</strong></p>
+                        <p class="mb-0"><strong>{{ product.title }}</strong></p>
+                        <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
+                        {% if product.genre %}
+                            <p class="small mt-1 mb-0">
+                                <i class="fas fa-tag mr-1"></i>
+                                {% for genre in product.genre.all %}
+                                    <a class="" href="{% url 'products' %}?genre={{ genre }}">
+                                        {{ genre.friendly_name | capfirst }}
+                                    </a>
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+                        <div><small class=""><strong>Label: </strong> {{ product.label }}</small></div>
+                        <div><small class=""><strong>Album Format: </strong>{{ product.album_format }}</small></div>
+                        <div><small class=""><strong>Colour: </strong>{{ product.color }}</small></div>                    
+                        {% if product.rating %}
+                            <small class=""><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
                         {% else %}
-                        <a href="">
-                            <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                        </a>
-                    {% endif %}
-                </div>
-                <div class="product-details-container media-body">
-                    <p class="mb-0"><strong>{{ product.artist }}</strong></p>
-                    <p class="mb-0"><strong>{{ product.title }}</strong></p>
-                    <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
-                    {% if product.genre %}
-                        <p class="small mt-1 mb-0">
-                            <i class="fas fa-tag mr-1"></i>
-                            {% for genre in product.genre.all %}
-                                <a class="text-muted" href="{% url 'products' %}?genre={{ genre }}">
-                                    {{ genre.friendly_name | capfirst }}
-                                </a>
-                            {% endfor %}
-                        </p>
-                    {% endif %}
-                    <div><small class="text-muted"><strong>Label: </strong> {{ product.label }}</small></div>
-                    <div><small class="text-muted"><strong>Album Format: </strong>{{ product.album_format }}</small></div>
-                    <div><small class="text-muted"><strong>Colour: </strong>{{ product.color }}</small></div>                    
-                    {% if product.rating %}
-                        <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
-                    {% else %}
-                        <small class="text-muted">No Rating</small>
-                    {% endif %}                    
-                </div>
+                            <small class="">No Rating</small>
+                        {% endif %}                    
+                    </div>
                 </div>
                 <div>
                     <p class="mt-3">{{ product.description }}</p>

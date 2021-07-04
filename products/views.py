@@ -96,7 +96,8 @@ def product_detail(request, product_id):
         in_wishlist = False
 
     if request.user.is_authenticated:
-        already_reviewed = ProductReview.objects.filter(user=request.user)
+        already_reviewed = ProductReview.objects.filter(pk=product_id,
+                                                        user=request.user)
     else:
         already_reviewed = False
 
