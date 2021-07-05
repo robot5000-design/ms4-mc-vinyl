@@ -35,21 +35,27 @@ def all_products(request):
         if 'genre' in request.GET:
             genres = request.GET['genre'].split(',')
             products = products.filter(genre__name__in=genres)
-            genres = Genre.objects.filter(name__in=genres)
+            genres = Genre.objects.filter(name__in=genres).order_by('name')
 
         if 'promotion' in request.GET:
             promotions = request.GET['promotion'].split(',')
             products = products.filter(promotion__name__in=promotions)
-            promotions = Promotion.objects.filter(name__in=promotions)
+            promotions = Promotion.objects.filter(
+                name__in=promotions).order_by('name')
 
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
-                messages.error(request, "You didn't enter any search criteria!")
+                messages.error(
+                    request, "You didn't enter any search criteria!")
                 return redirect(reverse('products'))
 
-            queries = Q(artist__icontains=query) | Q(title__icontains=query) | Q(genre__name__icontains=query)
-            products = products.filter(queries)
+            queries = (
+                Q(artist__icontains=query) |
+                Q(title__icontains=query) |
+                Q(genre__name__icontains=query)
+            )
+            products = products.filter(queries).distinct()
 
     current_sorting = f'{sort}_{direction}'
 
