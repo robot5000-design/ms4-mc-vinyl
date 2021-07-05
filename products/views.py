@@ -321,16 +321,11 @@ def product_fields_admin(request):
                             form is valid.')
         return redirect(reverse('product_fields_admin'))
 
-    genres = Genre.objects.all()
-    promotions = Promotion.objects.all()
-
     genre_form = GenreForm()
     promotion_form = PromotionForm()
 
     template = 'products/product_fields_admin.html'
     context = {
-        'genres': genres,
-        'promotions': promotions,
         'genre_form': genre_form,
         'promotion_form': promotion_form,
     }

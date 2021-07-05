@@ -76,9 +76,7 @@ class ProductReviewForm(forms.ModelForm):
             elif field == 'review_rating':
                 self.fields[field].label = "What's your rating?"
             elif field == 'admin_comment':
-                self.fields[field].label = False
-                self.fields[field].widget.attrs[
-                    'placeholder'] = 'Admin Comment Here...'
+                self.fields[field].label = 'MC Vinyl Admin Comment:'
             self.fields[field].widget.attrs[
                 'class'] = 'border-dark  profile-form-input'
 
@@ -92,6 +90,10 @@ class GenreForm(forms.ModelForm):
             'friendly_name',
             )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['friendly_name'].label = 'Display Name:'
+
 
 class PromotionForm(forms.ModelForm):
 
@@ -101,3 +103,7 @@ class PromotionForm(forms.ModelForm):
             'name',
             'friendly_name',
             )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['friendly_name'].label = 'Display Name:'

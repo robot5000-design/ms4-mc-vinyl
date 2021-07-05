@@ -21,22 +21,20 @@
                 Genre
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="clothing-link">
-                <a href="{% url 'products' %}?genre=rock" class="dropdown-item">Rock</a>
-                <a href="{% url 'products' %}?genre=hip-hop" class="dropdown-item">Hip Hop</a>
-                <a href="{% url 'products' %}?genre=instrumental" class="dropdown-item">Instrumental</a>
-                <a href="{% url 'products' %}?genre=pop" class="dropdown-item">Pop</a>
+                {% for genre in genres %}
+                    <a href="{% url 'products' %}?genre={{ genre }}" class="dropdown-item">{{ genre.friendly_name | capfirst }}</a>
+                {% endfor %}
             </div>
         </li>
-
         <li class="nav-item dropdown">
             <a class="logo-font font-weight-bold nav-link text-dark" href="#" id="specials-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Special Offers
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="specials-link">
-                <a href="{% url 'products' %}?promotion=new_arrivals" class="dropdown-item">New Arrivals</a>
-                <a href="{% url 'products' %}?promotion=deals" class="dropdown-item">Deals</a>
-                <a href="{% url 'products' %}?promotion=clearance" class="dropdown-item">Clearance</a>
-                <a href="{% url 'products' %}?promotion=new_arrivals,deals,clearance" class="dropdown-item">All Specials</a>
+                {% for promotion in promotions %}
+                    <a href="{% url 'products' %}?promotion={{ promotion }}" class="dropdown-item">{{ promotion.friendly_name | capfirst }}</a>
+                {% endfor %}
+                <a href="{% url 'products' %}?promotion={% for promotion in promotions %}{{ promotion }},{% endfor %}" class="dropdown-item">All Specials</a>
             </div>
         </li>
     </ul>

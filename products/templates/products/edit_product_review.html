@@ -63,12 +63,16 @@
                                         {% endif %}
                                         <label for="rating1">1</label>
                                     </span>
-                                    {% if request.user.is_superuser %}
-                                        {% if review_form.admin_comment %}
-                                            {{ review_form.admin_comment | as_crispy_field }}
-                                        {% endif %}
-                                    {% endif %}
-                                    <div class="text-left mt-4">
+                                    <div class="row mt-5">
+                                        <div class="col">
+                                            {% if request.user.is_superuser %}
+                                                {% if review_form.admin_comment %}
+                                                    {{ review_form.admin_comment | as_crispy_field }}
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="text-left mt-2">
                                         <button class="btn btn-dark  edit-review-btn my-3" type="submit">Edit Review</button>
                                         {% if request.user.is_superuser or review.user == request.user %}
                                             <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteReviewModal" data-product="{{ product.id }}/{{ review.user.username }}">Delete Review</a>

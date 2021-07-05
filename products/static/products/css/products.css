@@ -88,11 +88,18 @@ label .asteriskField {
 .add-cart-btn,
 .keep-btn,
 .input-group,
-.add-review,
-.edit-review-btn {
+.add-review {
     width: 190px;
 }
 
 .card-album-title {
-    min-height: 80px;
+    min-height: 70px;
+}
+
+.card-img-top {
+    height: 100%;
+}
+
+.genre-wrapper {
+    min-height: 40px;
 }

@@ -57,6 +57,7 @@ def order_history(request, order_number):
         'order': order,
         'message_thread': message_thread,
         'message_form': message_form,
+        'from_profile': True,
     }
     return render(request, template, context)
 

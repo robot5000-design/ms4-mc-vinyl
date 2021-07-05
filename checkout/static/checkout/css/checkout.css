@@ -63,4 +63,14 @@ select option[value=""] {
     justify-content: center;
     margin: 0;
     height: 100%;
-} 
+}
+
+.checkout-items {
+    font-size: .8em;
+}
+
+@media (min-width: 576px) {
+    .checkout-items {
+        font-size: 1em;
+    }
+}

@@ -60,29 +60,51 @@
                 </div>
                 <div class="row mt-4">
                     {% for product in products %}
-                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                            <div class="card h-100 border-0">
+                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 bg-light">
+                            {% if request.user.is_superuser %}
+                                <div class="row mx-auto mb-1">
+                                    <div class="col-6 px-0">
+                                        <a class="btn btn-dark edit-product-btn w-100" href="{% url 'edit_product' product.id %}"><small>Edit</small></a>
+                                    </div>
+                                    <div class="col-6 px-0">
+                                        <a class="btn btn-danger call-delete w-100" data-toggle="modal" data-target="#deleteProductModal" data-product="{{ product.id }}"><small>Delete</small></a>
+                                    </div>
+                                </div>
+                                {% include 'products/includes/modal_delete.html' %}
+                            {% endif %}
+                            <div class="card h-100 border-0 bg-light">                                
                                 {% if product.image %}
-                                <a href="{% url 'product_detail' product.id %}">
-                                    <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.title }}">
-                                </a>
+                                    <a href="{% url 'product_detail' product.id %}">
+                                        <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.title }}">
+                                    </a>
                                 {% else %}
-                                <a href="{% url 'product_detail' product.id %}">
-                                    <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.title }}">
-                                </a>
+                                    <a href="{% url 'product_detail' product.id %}">
+                                        <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.title }}">
+                                    </a>
                                 {% endif %}
-                                <div class="card-body bg-light pb-0">
+                                <div class="card-body pb-2">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="lead font-weight-bold">€{{ product.price }}</p>
+                                        </div>
+                                        <div class="col text-right">
+                                            {% if product.rating %}
+                                            <small class=""><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                                        {% else %}
+                                            <small class="">No Rating</small>
+                                        {% endif %}
+                                        </div>
+                                    </div>
                                     <div class="row card-album-title">
                                         <div class="col-12">
-                                            <p class="mb-0 logo-font">{{ product.artist }}</p>
+                                            <p class="mb-2 logo-font">{{ product.artist }}</p>
                                             <p class="mb-0 font-weight-bold">{{ product.title }}</p>
                                         </div>
                                     </div>               
                                     <div class="row">
-                                        <div class="col">
-                                            <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
+                                        <div class="col">                                            
                                             {% if product.genre %}
-                                            <p class="small mt-1 mb-0">
+                                            <p class="small mt-1 mb-0 genre-wrapper">
                                                 <i class="fas fa-tag mr-1"></i>
                                                 {% for genre in product.genre.all %}
                                                     <a class="" href="{% url 'products' %}?genre={{ genre }}">
@@ -90,22 +112,6 @@
                                                     </a>
                                                 {% endfor %}
                                             </p>
-                                            {% endif %}
-                                            {% if product.rating %}
-                                                <small class=""><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
-                                            {% else %}
-                                                <small class="">No Rating</small>
-                                            {% endif %}
-                                            {% if request.user.is_superuser %}
-                                                <div class="row mx-auto">
-                                                    <div class="col-6 px-0">
-                                                        <a class="btn btn-dark edit-product-btn w-100" href="{% url 'edit_product' product.id %}"><small>Edit</small></a>
-                                                    </div>
-                                                    <div class="col-6 px-0">
-                                                        <a class="btn btn-danger call-delete w-100" data-toggle="modal" data-target="#deleteProductModal" data-product="{{ product.id }}"><small>Delete</small></a>
-                                                    </div>
-                                                </div>
-                                                {% include 'products/includes/modal_delete.html' %}
                                             {% endif %}
                                         </div>
                                     </div>

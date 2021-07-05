@@ -2,6 +2,10 @@
 {% load static %}
 {% load cart_tools %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}">
+{% endblock %}
+
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
@@ -24,7 +28,7 @@
             <div class="col">
                 {% if cart_items %}
                     <div class="d-block d-md-none">
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col">
                                 {% include "cart/cart-total.html" %}
                             </div>
@@ -32,7 +36,7 @@
                         <div class="row">
                             <div class="col">
                                 {% include "cart/checkout-buttons.html" %}
-                                <p class=" mb-5">A summary of your cart contents is below</p>
+                                <p class=" my-5">A summary of your cart contents is below:</p>
                             </div>
                         </div>
                         {% for item in cart_items %}
@@ -70,7 +74,6 @@
                                     <th scope="col">Subtotal</th>
                                 </tr>
                             </thead>
-
                             {% for item in cart_items %}
                                 <tr>
                                     <td class="p-3 w-25">
@@ -82,7 +85,7 @@
                                     <td class="py-3">
                                         <p class="my-0">€{{ item.product.price }}</p>
                                     </td>
-                                    <td class="py-3 w-25">
+                                    <td class="py-3 w-25 pr-5">
                                         {% include "cart/quantity-form.html" %}
                                     </td>
                                     <td class="py-3">
