@@ -69,6 +69,15 @@ select option[value=""] {
     font-size: .8em;
 }
 
+.order-history {
+    max-height: 800px; /* height of profile form + submit button */
+    overflow-y: auto;
+}
+
+.orders-container {
+    min-height: 140vh;
+}
+
 @media (min-width: 576px) {
     .checkout-items {
         font-size: 1em;

@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'messaging/css/messaging.css' %}">
-{% endblock %}
-
 {% block page_header %}
 <div class="container header-container">
     <div class="row">
@@ -19,7 +15,7 @@
     <div class="row">
         <div class="col">
             <hr>
-            <h2 class="heading logo-font my-4">Messages in this thread:</h2>
+            <h1 class="heading logo-font my-4">Order Detail:</h1>
             <hr>
         </div>
     </div>
@@ -27,27 +23,12 @@
         <div class="col col-lg-8">
             <div class="row">
                 <div class="col">
-                    <a href="{% url 'messaging' %}" class="btn btn-dark  my-2">
+                    <a href="{% url 'view_all_orders' %}" class="btn btn-dark  my-2">
                         <span class="icon mr-2">
                             <i class="fas fa-angle-left"></i>
                         </span>
-                        <span class="text-uppercase">Back to Messages</span>
+                        <span class="text-uppercase">Back to Orders</span>
                     </a>
-                    {% if thread_status %}
-                        <a href="{% url 'change_thread_status' ref_number %}" class="btn btn-dark  my-2">
-                            <span class="icon mr-2">
-                                <i class="far fa-check-square"></i>
-                            </span>
-                            <span class="text-uppercase">Open Thread</span>
-                        </a>
-                    {% else %}
-                        <a href="{% url 'change_thread_status' ref_number %}" class="btn btn-dark  my-2">
-                            <span class="icon mr-2">
-                                <i class="far fa-square"></i>
-                            </span>
-                            <span class="text-uppercase">Close Thread</span>
-                        </a>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -60,7 +41,6 @@
                         <small class="">Order Info:</small>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <p class="mb-0 text-dark font-weight-bold">Order Number</p>
@@ -69,7 +49,6 @@
                         <p class="mb-0 small">{{ order.order_number }}</p>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <p class="mb-0 text-dark font-weight-bold">Order Date</p>
@@ -78,13 +57,11 @@
                         <p class="mb-0">{{ order.date }}</p>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col">
                         <small class="">Order Details:</small>
                     </div>
                 </div>
-
                 {% for item in order.lineitems.all %}
                 <div class="row">
                     <div class="col-12 col-md-4">
@@ -100,13 +77,11 @@
                     </div>
                 </div>
                 {% endfor %}
-
                 <div class="row">
                     <div class="col">
                         <small class="">Delivering To:</small>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <p class="mb-0 text-dark font-weight-bold">Full Name</p>
@@ -115,7 +90,6 @@
                         <p class="mb-0">{{ order.full_name }}</p>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <p class="mb-0 text-dark font-weight-bold">Address 1</p>
@@ -124,7 +98,6 @@
                         <p class="mb-0">{{ order.street_address1 }}</p>
                     </div>
                 </div>
-
                 {% if order.street_address2 %}
                 <div class="row">
                     <div class="col-12 col-md-4">
@@ -135,7 +108,6 @@
                     </div>
                 </div>
                 {% endif %}
-
                 {% if order.county %}
                 <div class="row">
                     <div class="col-12 col-md-4">
@@ -146,7 +118,6 @@
                     </div>
                 </div>
                 {% endif %}
-
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <p class="mb-0 text-dark font-weight-bold">Town or City</p>
@@ -155,7 +126,6 @@
                         <p class="mb-0">{{ order.town_or_city }}</p>
                     </div>
                 </div>
-
                 {% if order.postcode %}
                 <div class="row">
                     <div class="col-12 col-md-4">
@@ -166,7 +136,6 @@
                     </div>
                 </div>
                 {% endif %}
-
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <p class="mb-0 text-dark font-weight-bold">Country</p>
@@ -175,7 +144,6 @@
                         <p class="mb-0">{{ order.country }}</p>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <p class="mb-0 text-dark font-weight-bold">Phone Number</p>
@@ -184,13 +152,11 @@
                         <p class="mb-0">{{ order.phone_number }}</p>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col">
                         <small class="">Billing Info:</small>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <p class="mb-0 text-dark font-weight-bold">Order Total</p>
@@ -199,7 +165,6 @@
                         <p class="mb-0">{{ order.order_total }}</p>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <p class="mb-0 text-dark font-weight-bold">Delivery</p>
@@ -208,7 +173,6 @@
                         <p class="mb-0">{{ order.delivery_cost }}</p>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <p class="mb-0 text-dark font-weight-bold">Grand Total</p>
@@ -219,59 +183,28 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-6">
-            <form class="form" action="{% url 'add_admin_reply' ref_number %}" method="POST">
-                {% csrf_token %}
-                <div class="form-row">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="col">
-                                Customer:
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <strong>{{ user }}</strong>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                Ref. Number:
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col small">
-                                <strong>{{ ref_number}}</strong>
-                            </div>
-                        </div>                                                                          
-                        <div class="mt-3">{{ message_form|crispy }}</div>
-                        <div class="mb-5">
-                            <button class="btn btn-dark  add-review" type="submit">Add Message</button>
-                        </div>                     
-                    </div>
-                </div>
-            </form>
-        </div>
     </div>
     <div class="row messages-wrapper">
         <div class="col col-lg-10 offset-lg-1">
-            {% for message in message_thread %}
-                {% if message.user.is_superuser %}
-                    <div class="card text-white bg-secondary mb-3 col-11 col-lg-10">
-                        <div class="card-header">Sent by Admin: {{ message.user }} on {{ message.message_date|date:'d/m/y H:i' }}</div>
-                        <div class="card-body">
-                            <p class="card-text">{{ message.user_message }}</p>
+            {% if message_thread %}
+                {% for message in message_thread %}
+                    {% if message.user.is_superuser %}
+                        <div class="card text-white bg-secondary mb-3 col-11 col-lg-10">
+                            <div class="card-header">Sent by Admin: {{ message.user }} on {{ message.message_date|date:'d/m/y H:i' }}</div>
+                            <div class="card-body">
+                                <p class="card-text">{{ message.user_message }}</p>
+                            </div>
                         </div>
-                    </div>
-                {% else %}
-                    <div class="card text-white bg-info mb-3 col-11 offset-1 col-lg-10 offset-lg-2">
-                        <div class="card-header">Received from: <strong class="text-warning">{{ message.user }}</strong> on {{ message.message_date|date:'d/m/y H:i' }}</div>
-                        <div class="card-body">
-                            <p class="card-text">{{ message.user_message }}</p>
+                    {% else %}
+                        <div class="card text-white bg-info mb-3 col-11 offset-1 col-lg-10 offset-lg-2">
+                            <div class="card-header">Received from: <strong class="text-warning">{{ message.user }}</strong> on {{ message.message_date|date:'d/m/y H:i' }}</div>
+                            <div class="card-body">
+                                <p class="card-text">{{ message.user_message }}</p>
+                            </div>
                         </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>

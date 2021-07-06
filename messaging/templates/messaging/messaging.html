@@ -62,7 +62,7 @@
                     <tr class="{% if not message.read %}font-weight-bold{% endif %}">
                         <td>
                             <a href="{% url 'view_message_thread' message.ref_number %}" title="{{ message.ref_number }}">
-                                {{ message.ref_number | truncatechars:10 }}
+                                {{ message.ref_number|truncatechars:10 }}
                             </a>
                         </td>
                         <td>
@@ -73,8 +73,8 @@
                             {% endif %}
                         </td>
                         <td>
-                            <div>{{ message.message_date | date:'d/m/y' }}</div>
-                            <div>{{ message.message_date | date:'H:i' }}</div>
+                            <div>{{ message.message_date|date:'d/m/y' }}</div>
+                            <div>{{ message.message_date|date:'H:i' }}</div>
                         </td>
                         <td>{{ message.user.username }}</td>
                         <td>
@@ -104,7 +104,7 @@
                     <tr class="{% if not message.read %}font-weight-bold{% endif %} closed-thread">
                         <td>
                             <a href="{% url 'view_message_thread' message.ref_number %}" title="{{ message.ref_number }}" class="text-warning">
-                                {{ message.ref_number | truncatechars:10 }}
+                                {{ message.ref_number|truncatechars:10 }}
                             </a>
                         </td>
                         <td>
@@ -115,8 +115,8 @@
                             {% endif %}
                         </td>
                         <td>
-                            <div>{{ message.message_date | date:'d/m/y' }}</div>
-                            <div>{{ message.message_date | date:'H:i' }}</div>
+                            <div>{{ message.message_date|date:'d/m/y' }}</div>
+                            <div>{{ message.message_date|date:'H:i' }}</div>
                         </td>
                         <td>{{ message.user.username }}</td>
                         <td>

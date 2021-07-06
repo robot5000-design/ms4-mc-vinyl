@@ -30,7 +30,7 @@
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="col-12">                                                    
-                                    {{ review_form.body | as_crispy_field }}
+                                    {{ review_form.body|as_crispy_field }}
                                     <span class="rating">
                                         {% if review.review_rating == 5 %}
                                             <input id="rating_5" type="radio" name="review_rating" value="5" checked required>
@@ -67,7 +67,7 @@
                                         <div class="col">
                                             {% if request.user.is_superuser %}
                                                 {% if review_form.admin_comment %}
-                                                    {{ review_form.admin_comment | as_crispy_field }}
+                                                    {{ review_form.admin_comment|as_crispy_field }}
                                                 {% endif %}
                                             {% endif %}
                                         </div>
@@ -106,7 +106,7 @@
                                 <i class="fas fa-tag mr-1"></i>
                                 {% for genre in product.genre.all %}
                                     <a class="" href="{% url 'products' %}?genre={{ genre }}">
-                                        {{ genre.friendly_name | capfirst }}
+                                        {{ genre.friendly_name|capfirst }}
                                     </a>
                                 {% endfor %}
                             </p>

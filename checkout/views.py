@@ -7,6 +7,7 @@ from django.shortcuts import (
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 from .forms import OrderForm
 from .models import Order, OrderLineItem
@@ -14,6 +15,7 @@ from products.models import Product
 from profiles.models import UserProfile
 from profiles.forms import UserProfileForm
 from cart.contexts import cart_contents
+from messaging.models import UserMessage
 
 
 @require_POST
@@ -175,6 +177,45 @@ def checkout_success(request, order_number):
 
     template = 'checkout/checkout_success.html'
     context = {
+        'order': order,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def view_all_orders(request):
+    """
+    Allows the admin to view all orders
+    """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+
+    orders = Order.objects.all().order_by('-date')
+    template = 'checkout/all_orders.html'
+    context = {
+        'orders': orders,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def view_order_detail(request, order_number):
+    """ Display order detail
+    """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+
+    message_thread = (UserMessage.objects
+                      .filter(ref_number=order_number)
+                      .order_by('-message_date')
+                      )
+    order = get_object_or_404(Order, order_number=order_number)
+
+    template = 'checkout/order_detail.html'
+    context = {
+        'message_thread': message_thread,
         'order': order,
     }
     return render(request, template, context)

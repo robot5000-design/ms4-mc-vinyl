@@ -54,8 +54,8 @@
                             <i class="fas fa-tag mr-1"></i>
                             {% for genre in product.genre.all %}
                                 <a class="" href="{% url 'products' %}?genre={{ genre }}">
-                                    {{ genre.friendly_name | capfirst }}
-                                </a>
+                                    {{ genre.friendly_name|capfirst }}
+                                </a>{% if product.genre.all|length > 1 and forloop.counter != product.genre.all|length %} | {% endif %}
                             {% endfor %}
                         </p>
                     {% endif %}
@@ -120,7 +120,7 @@
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="col-12">                                                  
-                                    {{ review_form.body | as_crispy_field }}
+                                    {{ review_form.body|as_crispy_field }}
                                     <span class="rating">
                                         <input id="rating5" type="radio" name="review_rating" value="5" required>
                                         <label for="rating5">5</label>
@@ -162,7 +162,7 @@
                     {% for review in reviews %}
                         <div class="col-12 py-2">
                             <div class="small">
-                                Reviewed by: {{ review.user.username }} {{ review.review_date | date:"d M Y" }}
+                                Reviewed by: {{ review.user.username }} {{ review.review_date|date:"d M Y" }}
                             </div>
                             <div class="my-2">
                                 {{ review.body }}

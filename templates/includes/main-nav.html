@@ -22,7 +22,7 @@
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="clothing-link">
                 {% for genre in genres %}
-                    <a href="{% url 'products' %}?genre={{ genre }}" class="dropdown-item">{{ genre.friendly_name | capfirst }}</a>
+                    <a href="{% url 'products' %}?genre={{ genre }}" class="dropdown-item">{{ genre.friendly_name|capfirst }}</a>
                 {% endfor %}
             </div>
         </li>
@@ -32,7 +32,7 @@
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="specials-link">
                 {% for promotion in promotions %}
-                    <a href="{% url 'products' %}?promotion={{ promotion }}" class="dropdown-item">{{ promotion.friendly_name | capfirst }}</a>
+                    <a href="{% url 'products' %}?promotion={{ promotion }}" class="dropdown-item">{{ promotion.friendly_name|capfirst }}</a>
                 {% endfor %}
                 <a href="{% url 'products' %}?promotion={% for promotion in promotions %}{{ promotion }},{% endfor %}" class="dropdown-item">All Specials</a>
             </div>
