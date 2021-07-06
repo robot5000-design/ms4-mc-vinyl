@@ -145,6 +145,19 @@ input[name='q']::placeholder {
     color: #aab7c4;
 }
 
+.checkout-btn,
+.keep-shopping-btn {
+    width: 218px;
+}
+
+.dropdown-menu {
+    background-color: #f8f5f5;
+}
+
+.nav-item {
+    padding: 10px 0;
+}
+
 /* ------------------------------- bootstrap toasts */
 
 .message-container {
@@ -268,6 +281,11 @@ input[name='q']::placeholder {
     /* text-info */
 }
 
+.password_change button,
+.password_change a {
+    width: 175px;
+}
+
 /* Product Form */
 
 .btn-file {
@@ -378,7 +396,7 @@ input[name='q']::placeholder {
     }
 
     .header-container {
-        padding-top: 164px;
+        padding-top: 180px;
     }
 
     .nav-link {

@@ -1,6 +1,7 @@
 .order-history {
     max-height: 416px; /* height of profile form + submit button */
     overflow-y: auto;
+    font-size: 3vw;
 }
 
 #profile-update-form .form-control {
@@ -27,4 +28,10 @@
 .back-btn,
 .add-message-btn {
     width: 211px;
+}
+
+@media (min-width: 576px) {
+    .order-history {
+        font-size: 1em;
+    }
 }

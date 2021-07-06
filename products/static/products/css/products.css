@@ -103,3 +103,10 @@ label .asteriskField {
 .genre-wrapper {
     min-height: 40px;
 }
+
+.card-wrapper {
+    border-radius: 10px;
+    background: #e0e0e0;
+    box-shadow:  12px 12px 9px #d3d3d3,
+                -12px -1px 9px #ededed;
+}

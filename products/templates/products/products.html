@@ -17,7 +17,7 @@
     <div class="overlay"></div>
     <div class="container-fluid mb-5 pb-5 px-0">
         <div class="row">
-            <div class="col text-center mt-3">
+            <div class="col text-center">
                 <hr>
                 <h2 class="heading logo-font">Products</h2>
                 <hr class="mb-1">
@@ -58,11 +58,11 @@
                         </p>
                     </div>
                 </div>
-                <div class="row mt-4">
+                <div class="row pt-4 mt-5">
                     {% for product in products %}
-                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 bg-light">
+                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 bg-light mb-5 pb-3">
                             {% if request.user.is_superuser %}
-                                <div class="row mx-auto mb-1">
+                                <div class="row mx-auto pb-1 admin-buttons-row">
                                     <div class="col-6 px-0">
                                         <a class="btn btn-dark edit-product-btn w-100" href="{% url 'edit_product' product.id %}"><small>Edit</small></a>
                                     </div>
@@ -72,7 +72,7 @@
                                 </div>
                                 {% include 'products/includes/modal_delete.html' %}
                             {% endif %}
-                            <div class="card h-100 border-0 bg-light">                                
+                            <div class="card h-100 border-0 bg-light card-wrapper">                                
                                 {% if product.image %}
                                     <a href="{% url 'product_detail' product.id %}">
                                         <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.title }}">
@@ -117,27 +117,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        {% if forloop.counter|divisibleby:1 %}
-                            <div class="col-12 d-sm-none mb-5">
-                                <hr>
-                            </div>
-                        {% endif %}                        
-                        {% if forloop.counter|divisibleby:2 %}
-                            <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
-                                <hr>
-                            </div>
-                        {% endif %}
-                        {% if forloop.counter|divisibleby:3 %}
-                            <div class="col-12 d-none d-lg-block d-xl-none mb-5">
-                                <hr>
-                            </div>
-                        {% endif %}
-                        {% if forloop.counter|divisibleby:4 %}
-                            <div class="col-12 d-none d-xl-block mb-5">
-                                <hr>
-                            </div>
-                        {% endif %}
+                        </div>                        
                     {% endfor %}
                 </div>
             </div>

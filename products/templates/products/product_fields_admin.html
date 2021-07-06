@@ -17,13 +17,13 @@
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12">
                 <hr>
-                <h2 class="heading logo-font mb-4">Product Management</h2>
+                <h1 class="heading logo-font mb-4">Product Management</h1>
                 <hr>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-12 col-md-6">
                 <div class="row mb-4">
                     <div class="col">
@@ -44,14 +44,15 @@
                         <button class="btn btn-dark " name="genre" type="submit">Add Genre Tag</button>
                     </div>
                 </form>
-                <div class="row">
+                <div class="row mt-4">
                     <div class="col mb-5">
-                        <div>Existing Genres:</div>
+                        <div class="font-weight-bold">Existing Genres: *</div>
                         {% if genres %}
                             {% for genre in genres %}
                             <div class="row">
                                 <div class="col">
-                                    {{ genre.friendly_name }}
+                                    {{ genre.name }}
+                                    ({{ genre.friendly_name }})
                                 </div>
                             </div>
                             {% endfor %}
@@ -81,14 +82,15 @@
                         <button class="btn btn-dark " name="promotion" type="submit">Add Promotion Tag</button>
                     </div>
                 </form>
-                <div class="row">
+                <div class="row mt-4">
                     <div class="col">
-                        <div>Existing Promotions:</div>
+                        <div class="font-weight-bold">Existing Promotions: *</div>
                         {% if promotions %}
                             {% for promotion in promotions %}
                                 <div class="row">
                                     <div class="col">
-                                        {{ promotion.friendly_name }}
+                                        {{ promotion.name }}
+                                        ({{ promotion.friendly_name }})
                                     </div>
                                 </div>
                             {% endfor %}
@@ -98,6 +100,11 @@
                     </div>                    
                 </div>
             </div>            
+        </div>
+        <div class="row text-center pb-5">
+            <div class="col">
+                <div class="font-weight-bold">* Display Name Shown In Brackets</div>
+            </div>
         </div>
     </div>
 {% endblock %}

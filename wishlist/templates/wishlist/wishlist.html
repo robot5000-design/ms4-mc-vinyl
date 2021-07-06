@@ -25,13 +25,19 @@
                     <div class="d-block d-md-none">
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'products' %}" class="btn btn-outline-dark  btn-lg">
+                                <a href="{% url 'products' %}" class="btn btn-outline-dark keep-shopping-btn">
                                     <span class="icon">
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
                                     <span class="text-uppercase">Keep Shopping</span>
                                 </a>
-                                <p class=" mb-5">A summary of your wishlist contents is below</p>
+                                <a href="{% url 'transfer_all_to_cart' %}" class="btn btn-dark checkout-btn my-3">
+                                    <span class="text-uppercase">Add All to Cart</span>
+                                    <span class="icon">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </span>
+                                </a>
+                                <p class=" mb-5">A summary of your wishlist contents is below:</p>
                             </div>
                         </div>
                         {% for item in wishlist_items %}
@@ -44,18 +50,15 @@
                                     {% endif %}
                                 </a>
                                 <div class="col-12 col-sm-6 mb-2">
-                                    <p class="my-0"><strong>{{ item.artist }}</strong></p>
+                                    <p class="my-0 logo-font">{{ item.artist }}</p>
                                     <p class="my-0"><strong>{{ item.title }}</strong></p>
                                     <p class="my-0 small ">SKU: {{ item.sku|upper }}</p>
                                 </div>
                                 <div class="col-12 col-sm-6 order-sm-last">
                                     <p class="my-0">Price Each: €{{ item.price }}
-                                        <a id="remove_{{ item.id }}" class="wishlist-remove text-danger"><i class="fas fa-times-circle"></i></a>
+                                        <a id="remove_{{ item.id }}" class="wishlist-remove text-danger mx-2"><i class="fas fa-times-circle"></i></a>
                                         <a href="{% url 'add_to_cart' item.id %}" class="wishlist-to-cart text-dark"><i class="fas fa-cart-plus"></i></i></a>
                                     </p>                                    
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    
                                 </div>
                             </div>
                             <div class="row"><div class="col"><hr></div></div>
@@ -75,7 +78,6 @@
                                     <th scope="col">Price</th>
                                 </tr>
                             </thead>
-                            {% csrf_token %}
                             {% for item in wishlist_items %}
                                 <tr>
                                     <td class="p-3 w-25">
@@ -90,27 +92,27 @@
                                         {% endif %}
                                     </td>
                                     <td class="py-3">
-                                        <p class="my-0"><strong>{{ item.artist }}</strong></p>
+                                        <p class="my-0 logo-font">{{ item.artist }}</p>
                                         <p class="my-0"><strong>{{ item.title }}</strong></p>
                                         <p class="my-0 small ">SKU: {{ item.sku|upper }}</p>
                                     </td>
                                     <td class="py-3">
                                         <p class="my-0">€{{ item.price }}
-                                            <a id="remove_{{ item.id }}" class="wishlist-remove text-danger"><i class="fas fa-times-circle"></i></a>
+                                            <a id="remove_{{ item.id }}" class="wishlist-remove text-danger mx-2"><i class="fas fa-times-circle"></i></a>
                                             <a href="{% url 'add_to_cart' item.id %}" class="wishlist-to-cart text-dark"><i class="fas fa-cart-plus"></i></i></a>
                                         </p>
                                     </td>
                                 </tr>
                             {% endfor %}
                             <tr>
-                                <td colspan="5" class="text-right">
-                                    <a href="{% url 'products' %}" class="btn btn-outline-dark  btn-lg">
+                                <td colspan="5" class="text-right pt-5">
+                                    <a href="{% url 'products' %}" class="btn btn-outline-dark">
                                         <span class="icon">
                                             <i class="fas fa-chevron-left"></i>
                                         </span>
                                         <span class="text-uppercase">Keep Shopping</span>
                                     </a>
-                                    <a href="{% url 'transfer_all_to_cart' %}" class="btn btn-dark  btn-lg">
+                                    <a href="{% url 'transfer_all_to_cart' %}" class="btn btn-dark">
                                         <span class="text-uppercase">Add All to Cart</span>
                                         <span class="icon">
                                             <i class="fas fa-cart-plus"></i>
@@ -122,7 +124,7 @@
                     </div>
                 {% else %}
                     <p class="lead mb-5">Your wishlist is empty.</p>
-                    <a href="{% url 'products' %}" class="btn btn-outline-dark  btn-lg">
+                    <a href="{% url 'products' %}" class="btn btn-outline-dark">
                         <span class="icon">
                             <i class="fas fa-chevron-left"></i>
                         </span>

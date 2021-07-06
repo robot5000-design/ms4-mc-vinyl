@@ -15,7 +15,7 @@
 
 {% block content %}
     <div class="overlay"></div>
-    <div class="container orders-container">
+    <div class="container-fluid px-0 orders-container">
         <div class="row">
             <div class="col">
                 <hr>
@@ -41,7 +41,7 @@
                                 <tr>
                                     <td>
                                         <a href="{% url 'view_order_detail' order.order_number %}" title="{{ order.order_number }}">
-                                            {{ order.order_number|truncatechars:6 }}
+                                            {{ order.order_number|truncatechars:8 }}
                                         </a>
                                     </td>
                                     <td>
