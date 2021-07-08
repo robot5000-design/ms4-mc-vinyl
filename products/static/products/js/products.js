@@ -1,7 +1,3 @@
-$(".btt-link").click(function(e) {
-    window.scrollTo(0,0);
-});
-
 // disable buttons after form submission to prevent multiple submissions
 $(".edit-review-form").on("submit", function() {
     $(".edit-review-btn").prop("disabled", "true");

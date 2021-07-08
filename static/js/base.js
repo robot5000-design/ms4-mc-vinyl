@@ -1,6 +1,11 @@
 // show toasts
 $('.toast').toast('show');
 
+// back to top button
+$(".btt-link").click(function(e) {
+    window.scrollTo(0,0);
+});
+
 // Disable form submit button to prevent multiple entries
 $(".add-message-form").on("submit", function() {
     $(".add-message-btn").prop("disabled", "true");

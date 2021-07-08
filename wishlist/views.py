@@ -58,11 +58,11 @@ def remove_from_wishlist(request, item_id):
         wishlist = get_object_or_404(Wishlist, user=request.user.id)
         wishlist.products.remove(product)
         messages.info(request, 'Removed item from your wishlist')
-        return HttpResponse(status=200)
+        return redirect(reverse('view_wishlist'))
 
     except Exception as e:
         messages.error(request, f'Error removing item: {e}')
-        return HttpResponse(status=500)
+        return redirect(reverse('view_wishlist'))
 
 
 def transfer_all_to_cart(request):

@@ -63,11 +63,6 @@
                             </div>
                             <div class="row"><div class="col"><hr></div></div>
                         {% endfor %}
-                        <div class="btt-button shadow-sm  border border-dark">
-                            <a class="btt-link d-flex h-100">
-                                <i class="fas fa-arrow-up text-dark mx-auto my-auto"></i>
-                            </a>	
-                        </div>
                     </div>
                     <div class="table-responsive rounded d-none d-md-block">
                         <table class="table table-sm table-borderless">
@@ -98,7 +93,7 @@
                                     </td>
                                     <td class="py-3">
                                         <p class="my-0">€{{ item.price }}
-                                            <a id="remove_{{ item.id }}" class="wishlist-remove text-danger mx-2"><i class="fas fa-times-circle"></i></a>
+                                            <a href="{% url 'remove_from_wishlist' item.id %}" class="wishlist-remove text-danger mx-2"><i class="fas fa-times-circle"></i></a>
                                             <a href="{% url 'add_to_cart' item.id %}" class="wishlist-to-cart text-dark"><i class="fas fa-cart-plus"></i></i></a>
                                         </p>
                                     </td>
@@ -132,6 +127,11 @@
                     </a>
                 {% endif %}
             </div>
+        </div>
+        <div class="btt-button">
+            <a class="btt-link d-flex h-100">
+                <i class="fas fa-arrow-up mx-auto my-auto"></i>
+            </a>	
         </div>
     </div>
 {% endblock %}
