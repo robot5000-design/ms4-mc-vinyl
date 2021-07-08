@@ -20,6 +20,10 @@ a {
     color: #201ec0;
 }
 
+header {
+    border-bottom: 3px solid;
+}
+
 /* from Bulma */
 .icon {
     align-items: center;
@@ -45,6 +49,10 @@ a {
 
 .heading {
     font-size: 1.5em;
+}
+
+.delivery-banner {
+    background-color: #ec5a16;
 }
 
 .main-container {
@@ -373,7 +381,7 @@ input[name='q']::placeholder {
         font-size: 1rem;
     }
 
-    #delivery-banner h4 {
+    .delivery-banner h4 {
         font-size: .9rem;
     }
 
@@ -400,7 +408,7 @@ input[name='q']::placeholder {
     }
 
     .header-container {
-        padding-top: 180px;
+        padding-top: 200px;
     }
 
     .nav-link {
