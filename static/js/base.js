@@ -1,6 +1,11 @@
 // show toasts
 $('.toast').toast('show');
 
+// Disable form submit button to prevent multiple entries
+$(".add-message-form").on("submit", function() {
+    $(".add-message-btn").prop("disabled", "true");
+});
+
 // Disable +/- buttons outside 1-99 range
 function handleEnableDisable(itemId, currentValue) {
     var currentValue = currentValue;
@@ -58,10 +63,10 @@ $('.wishlist-remove').click(function(e) {
     var url = `/wishlist/remove/${itemId}/`;
     var data = {
         'csrfmiddlewaretoken': csrfToken
-    };
+    }
 
     $.post(url, data)
-     .done(function() {
-         location.reload();
-     });
-})
+        .done(function() {
+            location.reload();
+        });
+});

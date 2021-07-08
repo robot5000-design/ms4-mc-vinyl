@@ -73,7 +73,7 @@
                             <div class="col">{{ track }}</div>
                         </div>
                     {% endfor %}
-                    <form class="form my-3" action="{% url 'add_to_cart' product.id %}" method="POST">
+                    <form class="form my-3 add-cart-form" action="{% url 'add_to_cart' product.id %}" method="POST">
                         {% csrf_token %}
                         <div class="form-row">
                             <div class="col-12">
@@ -116,7 +116,7 @@
                         </div>
                     </form>
                     {% if not already_reviewed and request.user.is_authenticated %}
-                        <form class="form mt-5" action="{% url 'add_product_review' product.id %}" method="POST">
+                        <form class="form mt-5 add-review-form" action="{% url 'add_product_review' product.id %}" method="POST">
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="col-12">                                                  
@@ -134,7 +134,7 @@
                                         <label for="rating1">1</label>
                                     </span>
                                     <div class="mt-3 mb-5">
-                                        <button class="btn btn-dark  add-review" type="submit">Add Review</button>
+                                        <button class="btn btn-dark add-review" type="submit">Add Review</button>
                                     </div>                     
                                 </div>
                             </div>

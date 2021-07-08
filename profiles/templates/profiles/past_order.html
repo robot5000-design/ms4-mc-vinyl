@@ -192,7 +192,7 @@
                 </div>
             </div>
             <div class="col-12 col-lg-6">
-                <form class="form" action="{% url 'add_user_message' order.order_number %}" method="POST">
+                <form class="form add-message-form" action="{% url 'add_user_message' order.order_number %}" method="POST">
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="col-12">

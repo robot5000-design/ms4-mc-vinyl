@@ -93,6 +93,8 @@ class GenreForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['friendly_name'].label = 'Display Name:'
+        self.fields['friendly_name'].widget.attrs[
+                    'placeholder'] = 'See examples below...'
 
 
 class PromotionForm(forms.ModelForm):
@@ -107,3 +109,5 @@ class PromotionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['friendly_name'].label = 'Display Name:'
+        self.fields['friendly_name'].widget.attrs[
+                    'placeholder'] = 'See examples below...'

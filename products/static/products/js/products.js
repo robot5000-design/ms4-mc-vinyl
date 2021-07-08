@@ -1,9 +1,30 @@
-$('.btt-link').click(function(e) {
-    window.scrollTo(0,0)
-})
+$(".btt-link").click(function(e) {
+    window.scrollTo(0,0);
+});
+
+// disable buttons after form submission to prevent multiple submissions
+$(".edit-review-form").on("submit", function() {
+    $(".edit-review-btn").prop("disabled", "true");
+});
+
+$(".add-review-form").on("submit", function() {
+    $(".add-review").prop("disabled", "true");
+});
+
+$(".add-cart-form").on("submit", function() {
+    $(".add-cart-btn").prop("disabled", "true");
+});
+
+$(".add-product-form").on("submit", function() {
+    $(".add-product-btn").prop("disabled", "true");
+});
+
+$("#confirm-delete").on("click", function() {
+    $(this).addClass("disable-element");
+});
 
 // change the sort dropdown to match the current chosen option
-$('#sort-selector').change(function() {
+$("#sort-selector").change(function() {
     var selector = $(this);
     var currentUrl = new URL(window.location);
 
@@ -38,12 +59,12 @@ $(".call-delete").click(function(event) {
 });
 
 // listen for image field change in product management form
-$('#new-image').change(function() {
-    var file = $('#new-image')[0].files[0];
-    $('#filename').text(`Image will be set to: ${file.name}`);
+$("#new-image").change(function() {
+    var file = $("#new-image")[0].files[0];
+    $("#filename").text(`Image will be set to: ${file.name}`);
 });
 
-// for the dynamic array for track listing
+// for the dynamic array for track listing on add a product page
 window.addEventListener("load", function() {
     function a(a) {
         a.querySelectorAll(".remove").forEach(a=>{
@@ -81,20 +102,20 @@ window.addEventListener("load", function() {
     })
 });
 
-// Example starter JavaScript for disabling form submissions if there are invalid fields
+// from Bootstrap, for disabling form submissions if there are invalid fields
 (function() {
-    'use strict';
-    window.addEventListener('load', function() {
+    "use strict";
+    window.addEventListener("load", function() {
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
+      var forms = document.getElementsByClassName("needs-validation");
       // Loop over them and prevent submission
       var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
+        form.addEventListener("submit", function(event) {
           if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
           }
-          form.classList.add('was-validated');
+          form.classList.add("was-validated");
         }, false);
       });
     }, false);

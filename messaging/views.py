@@ -95,6 +95,7 @@ def add_admin_reply(request, ref_number):
             )
             messages.info(request, 'Successfully added a message!')
 
+            # send an email to customer
             order = get_object_or_404(Order, order_number=ref_number)
             customer_email = order.email
             subject_context = {'ref_number': ref_number}
@@ -105,6 +106,7 @@ def add_admin_reply(request, ref_number):
             path = 'messaging/confirmation_emails/'
             send_confirmation_email(customer_email, subject_context,
                                     body_context, path)
+
             return redirect(reverse('view_message_thread', args=[ref_number]))
         else:
             messages.error(request, 'Failed to add message. Please ensure the \
@@ -133,9 +135,11 @@ def change_thread_status(request, ref_number):
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
-    messages = UserMessage.objects.filter(ref_number=ref_number)
+    messages = UserMessage.objects.filter(
+        ref_number=ref_number).order_by('-message_date')
+
     if messages[0].closed is False:
         UserMessage.objects.filter(ref_number=ref_number).update(closed=True)
     else:
         UserMessage.objects.filter(ref_number=ref_number).update(closed=False)
-    return redirect(reverse('messaging'))
+    return redirect(reverse('view_message_thread', args=[ref_number]))

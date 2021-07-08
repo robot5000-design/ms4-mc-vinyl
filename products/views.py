@@ -266,12 +266,16 @@ def edit_product_review(request, product_id, review_author):
 @login_required
 def delete_product_review(request, product_id, review_author):
     """ A view to delete a product review """
+    product = get_object_or_404(Product, pk=product_id)
+    try:
+        review = ProductReview.objects.filter(product=product, user__username=review_author)[0] ################
+    except IndexError:
+        messages.error(request, 'Oops, Something went wrong!')
+        return redirect(reverse('product_detail', args=[product.id]))
+
     if request.user != review.user and not request.user.is_superuser:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))
-
-    product = get_object_or_404(Product, pk=product_id)
-    review = ProductReview.objects.filter(product=product, user__username=review_author)[0] ################
 
     review.delete()
     messages.info(request, 'Review deleted!')
@@ -309,16 +313,26 @@ def product_fields_admin(request):
 
     if request.method == 'POST':
         if 'genre' in request.POST:
+            new_genre = request.POST['name']
+            genres = Genre.objects.filter(name=new_genre)
             genre_form = GenreForm(request.POST)
-            if genre_form.is_valid():
+
+            if genres:
+                messages.error(request, 'Genre already exists!')
+            elif genre_form.is_valid():
                 genre_form.save()
                 messages.info(request, 'Genre Added!')
             else:
                 messages.error(request, 'Failed to add genre. Please ensure the \
                             form is valid.')
         if 'promotion' in request.POST:
+            new_promotion = request.POST['name']
+            promotions = Promotion.objects.filter(name=new_promotion)
             promotion_form = PromotionForm(request.POST)
-            if promotion_form.is_valid():
+
+            if promotions:
+                messages.error(request, 'Promotion already exists!')
+            elif promotion_form.is_valid():
                 promotion_form.save()
                 messages.info(request, 'Promotion Added!')
             else:
