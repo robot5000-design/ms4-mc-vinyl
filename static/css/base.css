@@ -1,15 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Monoton&family=Montserrat&display=swap');
 
-ht ml {
-    height: 100%;
+body {
+    background-color: #f4f0f0;
+    font-family: 'Montserrat', sans-serif;
 }
 
-body {
+.home-container {
     background: url('/media/record_store.jpg') no-repeat center center fixed;
     background-size: cover;
-    height: calc(100vh - 164px);
-    color: #555;
-    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
 }
 
 button {
@@ -56,7 +55,7 @@ header {
 }
 
 .main-container {
-    min-height: 90vh;
+    min-height: 60vh;
 }
 
 .nav-items {
@@ -65,7 +64,7 @@ header {
 
 .shop-now-button {
     background: #451d1d;
-    color: white;
+    color: #f4f0f0;
     min-width: 200px;
 }
 
@@ -181,8 +180,8 @@ input[name='q']::placeholder {
 
 .message-container {
     position: fixed;
-    top: 72px;
-    right: 15px;
+    top: 120px;
+    right: 9px;
     z-index: 99999999999;
 }
 

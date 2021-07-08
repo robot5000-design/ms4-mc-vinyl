@@ -26,65 +26,65 @@
         <div class="row">
             <div class="col-12 col-md-6 col-xl-4 mb-5">
                 {% if request.user.is_authenticated %}
-                        <form class="form edit-review-form" action="#" method="POST">
-                            {% csrf_token %}
-                            <div class="form-row">
-                                <div class="col-12">                                                    
-                                    {{ review_form.body|as_crispy_field }}
-                                    <span class="rating">
-                                        {% if review.review_rating == 5 %}
-                                            <input id="rating_5" type="radio" name="review_rating" value="5" checked required>
-                                        {% else %}
-                                            <input id="rating_5" type="radio" name="review_rating" value="5" required>
-                                        {% endif %}
-                                        <label for="rating_5">5</label>
-                                        {% if review.review_rating == 4 %}
-                                            <input id="rating4" type="radio" name="review_rating" value="4" checked required>
-                                        {% else %}
-                                            <input id="rating4" type="radio" name="review_rating" value="4" required>
-                                        {% endif %}
-                                        <label for="rating4">4</label>
-                                        {% if review.review_rating == 3 %}
-                                            <input id="rating3" type="radio" name="review_rating" value="3" checked required>
-                                        {% else %}
-                                            <input id="rating3" type="radio" name="review_rating" value="3" required>
-                                        {% endif %}
-                                        <label for="rating3">3</label>
-                                        {% if review.review_rating == 2 %}
-                                            <input id="rating2" type="radio" name="review_rating" value="2" checked required>
-                                        {% else %}
-                                            <input id="rating2" type="radio" name="review_rating" value="2" required>
-                                        {% endif %}
-                                        <label for="rating2">2</label>
-                                        {% if review.review_rating == 1 %}
-                                            <input id="rating1" type="radio" name="review_rating" value="1" checked required>
-                                        {% else %}
-                                            <input id="rating1" type="radio" name="review_rating" value="1" required>
-                                        {% endif %}
-                                        <label for="rating1">1</label>
-                                    </span>
-                                    <div class="row mt-5">
-                                        <div class="col">
-                                            {% if request.user.is_superuser %}
-                                                {% if review_form.admin_comment %}
-                                                    {{ review_form.admin_comment|as_crispy_field }}
-                                                {% endif %}
+                    <form class="form edit-review-form" action="#" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-12">                                                    
+                                {{ review_form.body|as_crispy_field }}
+                                <span class="rating">
+                                    {% if review.review_rating == 5 %}
+                                        <input id="rating_5" type="radio" name="review_rating" value="5" checked required>
+                                    {% else %}
+                                        <input id="rating_5" type="radio" name="review_rating" value="5" required>
+                                    {% endif %}
+                                    <label for="rating_5">5</label>
+                                    {% if review.review_rating == 4 %}
+                                        <input id="rating4" type="radio" name="review_rating" value="4" checked required>
+                                    {% else %}
+                                        <input id="rating4" type="radio" name="review_rating" value="4" required>
+                                    {% endif %}
+                                    <label for="rating4">4</label>
+                                    {% if review.review_rating == 3 %}
+                                        <input id="rating3" type="radio" name="review_rating" value="3" checked required>
+                                    {% else %}
+                                        <input id="rating3" type="radio" name="review_rating" value="3" required>
+                                    {% endif %}
+                                    <label for="rating3">3</label>
+                                    {% if review.review_rating == 2 %}
+                                        <input id="rating2" type="radio" name="review_rating" value="2" checked required>
+                                    {% else %}
+                                        <input id="rating2" type="radio" name="review_rating" value="2" required>
+                                    {% endif %}
+                                    <label for="rating2">2</label>
+                                    {% if review.review_rating == 1 %}
+                                        <input id="rating1" type="radio" name="review_rating" value="1" checked required>
+                                    {% else %}
+                                        <input id="rating1" type="radio" name="review_rating" value="1" required>
+                                    {% endif %}
+                                    <label for="rating1">1</label>
+                                </span>
+                                <div class="row mt-5">
+                                    <div class="col">
+                                        {% if request.user.is_superuser %}
+                                            {% if review_form.admin_comment %}
+                                                {{ review_form.admin_comment|as_crispy_field }}
                                             {% endif %}
-                                        </div>
+                                        {% endif %}
                                     </div>
-                                    <div class="text-left mt-2">
-                                        <button class="btn btn-dark  edit-review-btn my-3" type="submit">Edit Review</button>
-                                        {% if request.user.is_superuser or review.user == request.user %}
-                                            <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteReviewModal" data-product="{{ product.id }}/{{ review.user.username }}">Delete Review</a>
-                                            {% include 'products/includes/modal_review_delete.html' %}
-                                        {% endif %}                                        
-                                    </div>                                                        
                                 </div>
+                                <div class="text-left mt-2">
+                                    <button class="btn btn-dark  edit-review-btn my-3" type="submit">Edit Review</button>
+                                    {% if request.user.is_superuser or review.user == request.user %}
+                                        <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteReviewModal" data-product="{{ product.id }}/{{ review.user.username }}">Delete Review</a>
+                                        {% include 'products/includes/modal_review_delete.html' %}
+                                    {% endif %}                                        
+                                </div>                                                        
                             </div>
-                        </form>                        
-                    {% endif %}
+                        </div>
+                    </form>                        
+                {% endif %}
             </div>
-            <div class="col-12 col-md-6 col-xl-4">
+            <div class="col-12 col-md-6 col-xl-5 ml-xl-5">
                 <div class="media">
                     <div class="image-container mr-4">
                         {% if product.image %}
@@ -98,9 +98,9 @@
                         {% endif %}
                     </div>
                     <div class="product-details-container media-body">
-                        <p class="mb-0"><strong>{{ product.artist }}</strong></p>
-                        <p class="mb-0"><strong>{{ product.title }}</strong></p>
-                        <p class="lead mb-0 text-left font-weight-bold">€{{ product.price }}</p>
+                        <p class="mb-0 logo-font">{{ product.artist }}</p>
+                        <p class="my-1"><strong>{{ product.title }}</strong></p>
+                        <p class="lead mb-2 text-left font-weight-bold">€{{ product.price }}</p>
                         {% if product.genre %}
                             <p class="small mt-1 mb-0">
                                 <i class="fas fa-tag mr-1"></i>

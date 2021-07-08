@@ -110,3 +110,7 @@ label .asteriskField {
     box-shadow:  12px 12px 9px #d3d3d3,
                 -12px -1px 9px #ededed;
 }
+
+.detail-artist {
+    font-size: 1.5em;
+}

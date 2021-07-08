@@ -10,8 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="overlay"></div>
-    <div class="container mb-2">
+    <div class="container mb-5">
         <div class="row">
             <div class="col">
                 <hr>
@@ -134,9 +133,4 @@
             </a>	
         </div>
     </div>
-{% endblock %}
-
-{% block postloadjs %}
-    {{ block.super }}
-    <script src="{% static 'wishlist/js/wishlist.js' %}"></script>
 {% endblock %}

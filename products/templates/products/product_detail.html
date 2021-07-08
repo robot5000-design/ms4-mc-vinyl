@@ -14,7 +14,6 @@
 {% endblock %}
 
 {% block content %}
-    <div class="overlay"></div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
@@ -39,7 +38,7 @@
                         </div>
                         {% include 'products/includes/modal_delete.html' %}
                     {% endif %}
-                    <p class="logo-font">{{ product.artist }}</p>
+                    <p class="logo-font detail-artist">{{ product.artist }}</p>
                     <p class="my-3"><strong>{{ product.title }}</strong></p>
                     <p class="lead mb-3 text-left font-weight-bold">€{{ product.price }}
                         {% if in_wishlist %}
