@@ -20,7 +20,7 @@ a {
 }
 
 header {
-    border-bottom: 3px solid;
+    border-bottom: 3px solid #451d1d;
 }
 
 /* from Bulma */
@@ -55,7 +55,7 @@ header {
 }
 
 .main-container {
-    min-height: 60vh;
+    min-height: 80vh;
 }
 
 .nav-items {
@@ -119,16 +119,6 @@ header {
 
 .bg-light {
     background: #f4f0f0 !important;
-}
-
-.overlay {
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    position: fixed;
-    background: #f4f0f0;
-    z-index: -1;
 }
 
 a.category-badge>span.badge:hover {
