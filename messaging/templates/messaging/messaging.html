@@ -24,7 +24,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <a href="{% url 'messaging' %}" class="btn btn-dark  my-2">
+            <a href="{% url 'messaging' %}" class="btn btn-dark  my-2" aria-label="refresh-messages">
                 <span class="icon">
                     <i class="fas fa-sync-alt"></i>
                 </span>
@@ -78,7 +78,7 @@
                         <td>{{ message.user.username }}</td>
                         <td>
                             <a href="#" class="call-delete" data-messages="{{ message.ref_number }}" data-toggle="modal" data-target="#deleteMessagesModal"
-                                ><i class="fas fa-times-circle text-danger"></i>
+                                aria-label="delete-message"><i class="fas fa-times-circle text-danger"></i>
                             </a>
                         </td>
                     </tr>
@@ -119,8 +119,8 @@
                         </td>
                         <td>{{ message.user.username }}</td>
                         <td>
-                            <a href="#" class="call-delete" data-messages="{{ message.ref_number }}" data-toggle="modal" data-target="#deleteMessagesModal"
-                                ><i class="fas fa-times-circle text-danger"></i>
+                            <a class="call-delete" data-messages="{{ message.ref_number }}" data-toggle="modal" data-target="#deleteMessagesModal"
+                                aria-label="delete-message"><i class="fas fa-times-circle text-danger"></i>
                             </a>
                         </td>
                     </tr>

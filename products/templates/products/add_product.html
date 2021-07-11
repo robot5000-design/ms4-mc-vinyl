@@ -19,7 +19,7 @@
             <div class="col-12 col-md-6">
                 <hr>
                 <h2 class="heading logo-font mb-4">Product Management</h2>
-                <h5 class="">Add a Product</h5>
+                <h3 class="">Add a Product</h3>
                 <hr>
             </div>
         </div>
@@ -28,10 +28,13 @@
                 <form method="POST" action="{% url 'add_product' %}" class="form mb-2 add-product-form" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form %}
-                        {% if field.name != 'image' %}
-                            {{ field|as_crispy_field }}
-                        {% else %}
+                        {% if field.name == 'image' %}
                             {{ field }}
+                        {% elif field.name == 'track_list' %}
+                            <div class="mb-2 mt-4">Track List:</div>
+                            {{ field }}
+                        {% else %}
+                            {{ field|as_crispy_field }}
                         {% endif %}
                     {% endfor %}
                     <div class="text-right mt-5">

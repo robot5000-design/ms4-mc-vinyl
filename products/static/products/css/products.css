@@ -114,3 +114,7 @@ label .asteriskField {
 .detail-artist {
     font-size: 1.5em;
 }
+
+.custom-control-label {
+    color: #ca1919;
+}

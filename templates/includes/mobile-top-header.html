@@ -1,5 +1,5 @@
-<li class="list-inline-item">
-    <a class="text-dark nav-link d-block d-lg-none" href="#" id="mobile-search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<div class="list-inline-item">
+    <a href="#" aria-label="search" class="text-dark nav-link d-block d-lg-none" id="mobile-search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="text-center">
             <div><i class="fas fa-search fa-2x"></i></div>
         </div>
@@ -9,7 +9,7 @@
             <div class="input-group w-100">
                 <input class="form-control border-dark" type="text" name="q" placeholder="Search our site" required>
                 <div class="input-group-append">
-                    <button class="form-control form-control btn btn-outline-dark" type="submit">
+                    <button class="form-control form-control btn btn-outline-dark" type="submit" aria-label="search">
                         <span class="icon">
                             <i class="fas fa-search"></i>
                         </span>
@@ -18,21 +18,21 @@
             </div>
         </form>
     </div>
-</li>
-<li class="list-inline-item dropdown">
-    <a class="text-dark nav-link d-block d-lg-none" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+</div>
+<div class="list-inline-item dropdown">
+    <a href="#" class="text-dark nav-link d-block d-lg-none" id="user-options-2" aria-label="my-account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="text-center">
             <div><i class="fas fa-user fa-2x"></i></div>
         </div>
     </a>
-    <div class="dropdown-menu border-0 my-account-dropdown" aria-labelledby="user-options">
+    <div class="dropdown-menu border-0 my-account-dropdown" aria-labelledby="user-options-2">
         {% if wishlist_count %}
             <a href="{% url 'view_wishlist' %}" class="dropdown-item">
-                <i class="fas fa-heart text-danger"></i> My Wishlist</i>({{ wishlist_count }})
+                <i class="fas fa-heart text-danger"></i> My Wishlist({{ wishlist_count }})
             </a>
         {% else %}
             <a href="{% url 'view_wishlist' %}" class="dropdown-item">
-                <i class="far fa-heart text-danger"></i> My Wishlist</i>(0)
+                <i class="far fa-heart text-danger"></i> My Wishlist(0)
             </a>
         {% endif %}
         {% if request.user.is_authenticated %}
@@ -50,11 +50,11 @@
             <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
         {% endif %}
     </div>
-</li>
-<li class="list-inline-item">
-    <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-dark{% endif %} nav-link d-block d-lg-none" href="{% url 'view_cart' %}">
+</div>
+<div class="list-inline-item">
+    <a class="{% if grand_total %}cart-has-items font-weight-bold{% else %}text-dark{% endif %} nav-link d-block d-lg-none" href="{% url 'view_cart' %}">
         <div class="text-center">
-            <div><i class="fas fa-shopping-cart fa-lg"></i></i></div>
+            <div><i class="fas fa-shopping-cart fa-lg"></i></div>
             <p class="my-0">
                 {% if grand_total %}
                     €{{ grand_total|floatformat:2 }}
@@ -64,4 +64,4 @@
             </p>
         </div>
     </a>
-</li>
+</div>

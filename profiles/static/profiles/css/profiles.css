@@ -30,6 +30,28 @@
     width: 211px;
 }
 
+.arrow-left {
+    width: 0;
+    height: 0;
+    border-top: 0px solid transparent;
+    border-bottom: 31px solid transparent;
+    border-right: 31px solid #1f7055;
+    position: absolute;
+    left: -30px;
+    top: -1px;
+}
+
+.arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 0px solid transparent;
+    border-bottom: 31px solid transparent;
+    border-left: 31px solid #6c757d;
+    position: absolute;
+    right: -30px;
+    top: -1px;
+}
+
 @media (min-width: 576px) {
     .order-history {
         font-size: 1em;

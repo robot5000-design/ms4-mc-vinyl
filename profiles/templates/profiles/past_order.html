@@ -225,18 +225,20 @@
             </div>
         </div>
         <div class="row messages-wrapper mb-5">
-            <div class="col col-lg-10 offset-lg-1">
+            <div class="col col-lg-10 mx-lg-auto px-4 mx-2">
                 {% for message in message_thread %}
                     {% if message.user.is_superuser %}
                         <div class="card text-white bg-secondary mb-3 col-11 offset-1 col-lg-10 offset-lg-2">
+                            <div class="arrow-right"></div>
                             <div class="card-header">Received from Admin: {{ message.user }} on {{ message.message_date|date:'d/m/y H:i' }}</div>
                             <div class="card-body">
                                 <p class="card-text">{{ message.user_message }}</p>
                             </div>
                         </div>
                     {% else %}
-                        <div class="card text-white bg-info mb-3 col-11 col-lg-10">
-                            <div class="card-header">Sent by: <strong class="text-warning">{{ message.user }}</strong> on {{ message.message_date|date:'d/m/y H:i' }}</div>
+                        <div class="card text-white customer-card mb-3 col-11 col-lg-10">
+                            <div class="arrow-left"></div>
+                            <div class="card-header">Sent by: <strong class="customer-name">{{ message.user }}</strong> on {{ message.message_date|date:'d/m/y H:i' }}</div>
                             <div class="card-body">
                                 <p class="card-text">{{ message.user_message }}</p>
                             </div>

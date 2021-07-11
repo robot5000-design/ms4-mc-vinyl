@@ -27,24 +27,33 @@ class ProductForm(forms.ModelForm):
             'track_list',
             )
 
-    image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput)
+    image = forms.ImageField(label='Image', required=False,
+                             widget=CustomClearableFileInput)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         genres = Genre.objects.all()
-        genres_friendly_names = [(genre.id, genre.get_friendly_name()) for genre in genres]
+        genres_friendly_names = [
+            (genre.id, genre.get_friendly_name()) for genre in genres]
         self.fields['genre'].choices = genres_friendly_names
 
         promotions = Promotion.objects.all()
-        promotions_friendly_names = [(promotion.id, promotion.get_friendly_name()) for promotion in promotions]
+        promotions_friendly_names = [
+            (promotion.id, promotion.get_friendly_name())
+            for promotion in promotions
+            ]
         self.fields['promotion'].choices = promotions_friendly_names
 
         for field_name, field in self.fields.items():
             if field_name == 'track_list':
-                field.widget.attrs['class'] = 'my-2 mr-2 border-dark '
+                field.widget.attrs[
+                    'class'] = 'p-2 my-2 mr-2 border-dark w-100 rounded-sm'
+                field.widget.attrs['aria-label'] = 'track-list-item'
+            elif field_name == 'image':
+                field.widget.attrs['aria-label'] = 'image-input'
             else:
-                field.widget.attrs['class'] = 'border-dark '
+                field.widget.attrs['class'] = 'border-dark'
 
 
 class ProductReviewForm(forms.ModelForm):
@@ -90,12 +99,6 @@ class GenreForm(forms.ModelForm):
             'friendly_name',
             )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['friendly_name'].label = 'Display Name:'
-        self.fields['friendly_name'].widget.attrs[
-                    'placeholder'] = 'See examples below...'
-
 
 class PromotionForm(forms.ModelForm):
 
@@ -105,9 +108,3 @@ class PromotionForm(forms.ModelForm):
             'name',
             'friendly_name',
             )
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['friendly_name'].label = 'Display Name:'
-        self.fields['friendly_name'].widget.attrs[
-                    'placeholder'] = 'See examples below...'

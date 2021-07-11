@@ -19,25 +19,27 @@
             <div class="col-12 col-md-6">
                 <hr>
                 <h2 class="heading logo-font mb-4">Product Management</h2>
-                <h5 class="">Edit a Product</h5>
+                <h3 class="">Edit a Product</h3>
                 <hr>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12 col-md-6">
                 <form method="POST" action="{% url 'edit_product' product.id %}" class="form mb-2" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form %}
-                        {% if field.name != 'image' %}
-                            {{ field|as_crispy_field }}
-                        {% else %}
+                        {% if field.name == 'image' %}
                             {{ field }}
+                        {% elif field.name == 'track_list' %}
+                            <div class="mb-2 mt-4">Track List:</div>
+                            {{ field }}
+                        {% else %}
+                            {{ field|as_crispy_field }}
                         {% endif %}
                     {% endfor %}
                     <div class="text-right mt-5">
                         <a class="btn btn-outline-dark " href="{% url 'products' %}">Cancel</a>
-                        <button class="btn btn-dark " type="submit">Update Product</button>
+                        <button class="btn btn-dark" type="submit">Update Product</button>
                     </div>
                 </form>
             </div>            

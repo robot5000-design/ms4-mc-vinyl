@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
 {% block page_header %}
 <div class="container header-container">
     <div class="row">
@@ -183,28 +187,7 @@
             </div>
         </div>
     </div>
-    <div class="row messages-wrapper">
-        <div class="col col-lg-10 offset-lg-1">
-            {% if message_thread %}
-                {% for message in message_thread %}
-                    {% if message.user.is_superuser %}
-                        <div class="card text-white bg-secondary mb-3 col-11 col-lg-10">
-                            <div class="card-header">Sent by Admin: {{ message.user }} on {{ message.message_date|date:'d/m/y H:i' }}</div>
-                            <div class="card-body">
-                                <p class="card-text">{{ message.user_message }}</p>
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="card text-white bg-info mb-3 col-11 offset-1 col-lg-10 offset-lg-2">
-                            <div class="card-header">Received from: <strong class="text-warning">{{ message.user }}</strong> on {{ message.message_date|date:'d/m/y H:i' }}</div>
-                            <div class="card-body">
-                                <p class="card-text">{{ message.user_message }}</p>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        </div>
+    {% include 'messaging/includes/message_cards.html' %}
     </div>
 </div>
 {% endblock %}
