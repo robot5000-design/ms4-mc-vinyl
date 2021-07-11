@@ -46,6 +46,11 @@ select option[value=""] {
     color: #aab7c4 !important;
 }
 
+#card-errors,
+.card-charge-info {
+    color: #CA1919;
+}
+
 #loading-overlay {
 	display: none;
 	position: fixed;

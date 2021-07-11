@@ -40,9 +40,9 @@
                         </div>
                         {% for item in cart_items %}
                             <div class="row">
-                                <div class="col-12 col-sm-6 mb-2">
+                                <a href="{% url 'product_detail' item.product.id %}" class="col-12 col-sm-6 mb-2">
                                     {% include "cart/product-image.html" %}
-                                </div>
+                                </a>
                                 <div class="col-12 col-sm-6 mb-2">
                                     {% include "cart/product-info.html" %}
                                 </div>
@@ -51,7 +51,7 @@
                                     <p><strong>Subtotal: </strong>€{{ item.product.price|calc_subtotal:item.quantity }}</p>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    {% include "cart/quantity-form.html" %}
+                                    {% include "cart/quantity-form-mobile.html" %}
                                 </div>
                             </div>
                             <div class="row"><div class="col"><hr></div></div>
@@ -71,7 +71,9 @@
                             {% for item in cart_items %}
                                 <tr>
                                     <td class="p-3 w-25">
-                                        {% include "cart/product-image.html" %}
+                                        <a href="{% url 'product_detail' item.product.id %}">
+                                            {% include "cart/product-image.html" %}
+                                        </a>                                        
                                     </td>
                                     <td class="py-3">
                                         {% include "cart/product-info.html" %}

@@ -17,7 +17,9 @@ function handleEnableDisable(itemId, currentValue) {
     var minusDisabled = currentValue < 2;
     var plusDisabled = currentValue > 98;
     $(`form #decrement-qty_${itemId}`).prop('disabled', minusDisabled);
+    $(`form #mobile-decrement-qty_${itemId}`).prop('disabled', minusDisabled);
     $(`form #increment-qty_${itemId}`).prop('disabled', plusDisabled);
+    $(`form #mobile-increment-qty_${itemId}`).prop('disabled', plusDisabled);
 }
 
 // Ensure proper enabling/disabling of all inputs on page load
@@ -25,15 +27,18 @@ var allQtyInputs = $('.qty_input');
 for(var i = 0; i < allQtyInputs.length; i++){
     var itemId = $(allQtyInputs[i]).data('item_id');
     var currentValue = parseInt($(`#id_qty_${itemId}`).val());
+    var mobileCurrentValue = parseInt($(`#mobile_id_qty_${itemId}`).val());
     handleEnableDisable(itemId, currentValue);
+    handleEnableDisable(itemId, mobileCurrentValue);
 }
 
 // Check enable/disable every time the input is changed
 $('.qty_input').change(function() {
     var itemId = $(this).data('item_id');
     var currentValue = parseInt($(`#id_qty_${itemId}`).val());
-    console.log(currentValue)
+    var mobileCurrentValue = parseInt($(`#mobile_id_qty_${itemId}`).val());
     handleEnableDisable(itemId, currentValue);
+    handleEnableDisable(itemId, mobileCurrentValue);
 });
 
 // Increment quantity
