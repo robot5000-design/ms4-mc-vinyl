@@ -142,7 +142,7 @@ a.category-badge>span.badge:hover {
 }
 
 .btt-link,
-.update-link,
+.update-quantity,
 .remove-item,
 .wishlist-remove,
 .wishlist-to-cart,
@@ -185,8 +185,8 @@ input[name='q']::placeholder {
 
 .message-container {
     position: fixed;
-    top: 120px;
-    right: 9px;
+    top: 140px;
+    right: 30px;
     z-index: 99999999999;
 }
 

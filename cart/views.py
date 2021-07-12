@@ -8,6 +8,11 @@ from products.models import Product
 
 def view_cart(request):
     """ A view that renders the cart contents page
+
+    Args:
+        request (object): HTTP request object.
+    Returns:
+        Render of a template.
     """
     template = 'cart/cart.html'
 
@@ -16,6 +21,12 @@ def view_cart(request):
 
 def add_to_cart(request, item_id):
     """ Add a quantity of the specified product to the shopping cart
+
+    Args:
+        request (object): HTTP request object.
+        item_id (int): numerical id which identifies a product
+    Returns:
+        A redirect to a specific url.
     """
     if request.POST.get('quantity'):
         quantity = int(request.POST.get('quantity'))
@@ -40,7 +51,13 @@ def add_to_cart(request, item_id):
 
 
 def adjust_cart(request, item_id):
-    """Adjust the quantity of the specified product to the specified amount
+    """Adjust the quantity of the specified product to the specified amount.
+
+    Args:
+        request (object): HTTP request object.
+        item_id (int): numerical id which identifies a product
+    Returns:
+        A redirect to a specific url.
     """
     quantity = int(request.POST.get('quantity'))
     cart = request.session.get('cart', {})
@@ -61,6 +78,12 @@ def adjust_cart(request, item_id):
 
 def remove_from_cart(request, item_id):
     """Remove the item from the shopping cart
+
+    Args:
+        request (object): HTTP request object.
+        item_id (int): numerical id which identifies a product
+    Returns:
+        A redirect to a specific url.
     """
     cart = request.session.get('cart', {})
     try:

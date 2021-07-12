@@ -65,18 +65,13 @@ $('.decrement-qty').click(function(e) {
     handleEnableDisable(itemId, currentValue -= 1);
 });
 
-// Remove item from wishlist and reload on click
-$('.wishlist-remove').click(function(e) {
-    $(this).prop("disabled", true);
-    var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-    var itemId = $(this).attr('id').split('remove_')[1];
-    var url = `/wishlist/remove/${itemId}/`;
-    var data = {
-        'csrfmiddlewaretoken': csrfToken
-    }
+/**
+ * When the go-back button is clicked the browser returns to the
+ * previous page in history
+ */
+ function goBack() {
+    window.history.back();
+}
 
-    $.post(url, data)
-        .done(function() {
-            location.reload();
-        });
-});
+// Call the goBack function which goes back to the previous page in history
+$(".go-back").click(goBack);

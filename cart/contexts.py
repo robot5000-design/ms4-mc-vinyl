@@ -5,7 +5,15 @@ from products.models import Product
 
 
 def cart_contents(request):
+    """ Facilitates the contents of the cart to be accessible from
+    any template.
 
+    Args:
+        request (object): HTTP request object.
+    Returns:
+        A context of items including cart contents which are needed
+        to be accessible from multiple template locations.
+    """
     cart_items = []
     total = 0
     product_count = 0

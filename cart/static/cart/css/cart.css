@@ -1,9 +1,10 @@
+/* Cart quantity form */
 .decrement-qty,
 .increment-qty {
     border-color: #adb5bd;
 }
 
-.update-link {
+.update-quantity {
     color: #0C5D6A;
 }
 

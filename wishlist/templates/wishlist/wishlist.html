@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6 order-sm-last">
                                     <p class="my-0">Price Each: €{{ item.price }}
-                                        <a id="remove_{{ item.id }}" class="wishlist-remove text-danger mx-2"><i class="fas fa-times-circle"></i></a>
+                                        <a href="{% url 'remove_from_wishlist' item.id 'wishlist' %}" class="wishlist-remove text-danger mx-2"><i class="fas fa-times-circle"></i></a>
                                         <a href="{% url 'add_to_cart' item.id %}" class="wishlist-to-cart text-dark"><i class="fas fa-cart-plus"></i></a>
                                     </p>                                    
                                 </div>
@@ -96,7 +96,7 @@
                                     </td>
                                     <td class="py-3">
                                         <p class="my-0">€{{ item.price }}
-                                            <a href="{% url 'remove_from_wishlist' item.id %}" class="wishlist-remove text-danger mx-2" aria-label="remove-from-wishlist">
+                                            <a href="{% url 'remove_from_wishlist' item.id 'wishlist' %}" class="wishlist-remove text-danger mx-2" aria-label="remove-from-wishlist">
                                                 <i class="fas fa-times-circle"></i>
                                             </a>
                                             <a href="{% url 'add_to_cart' item.id %}" class="wishlist-to-cart text-dark" aria-label="add-to-cart">
