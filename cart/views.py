@@ -1,7 +1,8 @@
 from django.shortcuts import (
     render, redirect, reverse,
-    HttpResponse, get_object_or_404)
+    get_object_or_404)
 from django.contrib import messages
+from django.http import Http404
 
 from products.models import Product
 
@@ -28,6 +29,12 @@ def add_to_cart(request, item_id):
     Returns:
         A redirect to a specific url.
     """
+    try:
+        get_object_or_404(Product, pk=item_id)
+    except Http404 as error:
+        messages.error(request, f'That product does not exist: {error}')
+        return render(request, '404.html', {'error': error})
+
     if request.POST.get('quantity'):
         quantity = int(request.POST.get('quantity'))
     else:
@@ -59,7 +66,12 @@ def adjust_cart(request, item_id):
     Returns:
         A redirect to a specific url.
     """
-    quantity = int(request.POST.get('quantity'))
+    if request.POST:
+        quantity = int(request.POST.get('quantity'))
+    else:
+        messages.error(request, 'Invalid Action!')
+        return redirect(reverse('view_cart'))
+
     cart = request.session.get('cart', {})
 
     if quantity > 0:
@@ -69,8 +81,8 @@ def adjust_cart(request, item_id):
         try:
             cart.pop(item_id)
             messages.info(request, 'Removed item from your cart')
-        except KeyError as e:
-            messages.error(request, f'Error removing item: {e}')
+        except KeyError as error:
+            messages.error(request, f'Error removing item: {error}')
 
     request.session['cart'] = cart
     return redirect(reverse('view_cart'))
@@ -93,6 +105,6 @@ def remove_from_cart(request, item_id):
         request.session['cart'] = cart
         return redirect(reverse('view_cart'))
 
-    except Exception as e:
-        messages.error(request, f'Error removing item: {e}')
+    except KeyError as error:
+        messages.error(request, f'Error removing item: {error}')
         return redirect(reverse('view_cart'))

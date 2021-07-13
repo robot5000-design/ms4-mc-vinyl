@@ -1,5 +1,6 @@
-import stripe
 import json
+import stripe
+
 
 from django.shortcuts import (
     render, redirect, reverse, get_object_or_404, HttpResponse
@@ -9,13 +10,13 @@ from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
-from .forms import OrderForm
-from .models import Order, OrderLineItem
+from cart.contexts import cart_contents
 from products.models import Product
 from profiles.models import UserProfile
 from profiles.forms import UserProfileForm
-from cart.contexts import cart_contents
 from messaging.models import UserMessage
+from .forms import OrderForm
+from .models import Order, OrderLineItem
 
 
 @require_POST
@@ -38,10 +39,10 @@ def cache_checkout_data(request):
             'username': request.user,
         })
         return HttpResponse(status=200)
-    except Exception as e:
+    except IndexError as exception:
         messages.error(request, 'Sorry, your payment cannot be \
             processed right now. Please try again later.')
-        return HttpResponse(content=e, status=400)
+        return HttpResponse(content=exception, status=400)
 
 
 def checkout(request):
@@ -113,7 +114,8 @@ def checkout(request):
     else:
         cart = request.session.get('cart', {})
         if not cart:
-            messages.error(request, "There's nothing in your cart at the moment")
+            messages.error(
+                request, "There's nothing in your cart at the moment")
             return redirect(reverse('products'))
 
         current_cart = cart_contents(request)
