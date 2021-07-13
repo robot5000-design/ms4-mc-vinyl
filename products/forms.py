@@ -3,13 +3,18 @@ from django.forms import Textarea
 from crispy_forms.bootstrap import InlineRadios
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout
+
 from .widgets import CustomClearableFileInput
 from .models import Product, Genre, ProductReview, Promotion
 
 
 class ProductForm(forms.ModelForm):
-
+    """ Represents a form for submitting new products or editing existing
+    ones.
+    """
     class Meta:
+        """ Fields to be inputs of product form.
+        """
         model = Product
         fields = (
             'artist',
@@ -57,8 +62,11 @@ class ProductForm(forms.ModelForm):
 
 
 class ProductReviewForm(forms.ModelForm):
-
+    """ Represents a form for product reviews.
+    """
     class Meta:
+        """ Fields and types for product review form.
+        """
         model = ProductReview
         fields = (
             'body',
@@ -91,8 +99,11 @@ class ProductReviewForm(forms.ModelForm):
 
 
 class GenreForm(forms.ModelForm):
-
+    """ Represents a form for inputting new genre types.
+    """
     class Meta:
+        """ Fields for genre form
+        """
         model = Genre
         fields = (
             'name',
@@ -101,8 +112,11 @@ class GenreForm(forms.ModelForm):
 
 
 class PromotionForm(forms.ModelForm):
-
+    """ Represents a form for inputting new promotion types.
+    """
     class Meta:
+        """ Fields for promotion form
+        """
         model = Promotion
         fields = (
             'name',

@@ -50,11 +50,7 @@ def add_to_wishlist(request, item_id):
     Returns:
         Redirects to the product detail page for that product.
     """
-    try:
-        product = get_object_or_404(Product, pk=item_id)
-    except Http404 as error:
-        messages.error(request, f'Error removing item: {error}')
-        return render(request, '404.html', {'error': error})
+    product = get_object_or_404(Product, pk=item_id)
 
     try:
         wishlist = get_object_or_404(Wishlist, user=request.user.id)
@@ -86,13 +82,8 @@ def remove_from_wishlist(request, item_id, redirect_from):
     Returns:
         Redirects to the wishlist page.
     """
-    try:
-        product = get_object_or_404(Product, pk=item_id)
-        wishlist = get_object_or_404(Wishlist, user=request.user.id)
-
-    except Http404 as error:
-        messages.error(request, f'Error removing item: {error}')
-        return render(request, '404.html', {'error': error})
+    product = get_object_or_404(Product, pk=item_id)
+    wishlist = get_object_or_404(Wishlist, user=request.user.id)
 
     if product in wishlist.products.all():
         wishlist.products.remove(product)

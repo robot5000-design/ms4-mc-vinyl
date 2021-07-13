@@ -4,7 +4,12 @@ from .models import UserMessage
 
 
 class UserMessageForm(forms.ModelForm):
+    """ Represents a form for users to write messages to the
+    admin regarding an order.
+    """
     class Meta:
+        """ Fields in order form and type of field.
+        """
         model = UserMessage
         fields = (
             'user_message',

@@ -3,7 +3,12 @@ from .models import Order
 
 
 class OrderForm(forms.ModelForm):
+    """ Represents an order form which contains the shipping
+    details for an order.
+    """
     class Meta:
+        """ Fields to be part of the form
+        """
         model = Order
         fields = ('full_name', 'email', 'phone_number',
                   'street_address1', 'street_address2',

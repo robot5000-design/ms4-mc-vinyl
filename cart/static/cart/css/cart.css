@@ -1,9 +1,11 @@
-/* Cart quantity form */
-.decrement-qty,
-.increment-qty {
-    border-color: #adb5bd;
-}
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
 
+/* Cart quantity form */
 .update-quantity {
     color: #0C5D6A;
 }

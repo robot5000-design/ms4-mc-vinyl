@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 .order-history {
     max-height: 416px; /* height of profile form + submit button */
     overflow-y: auto;
@@ -6,6 +13,22 @@
 
 #profile-update-form .form-control {
     color: #000;
+}
+
+#profile-update-form input::-webkit-input-placeholder {
+    color: #aab7c4;
+}
+
+#profile-update-form input::-moz-placeholder {
+    color: #aab7c4;
+}
+
+#profile-update-form input:-ms-input-placeholder {
+    color: #aab7c4;
+}
+
+#profile-update-form input::-ms-input-placeholder {
+    color: #aab7c4;
 }
 
 #profile-update-form input::placeholder {
@@ -30,6 +53,7 @@
     width: 211px;
 }
 
+/* messages card arrows */
 .arrow-left {
     width: 0;
     height: 0;
@@ -52,6 +76,7 @@
     top: -1px;
 }
 
+/* ------------------------------------Media Queries */
 @media (min-width: 576px) {
     .order-history {
         font-size: 1em;

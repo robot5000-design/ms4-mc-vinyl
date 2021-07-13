@@ -1,3 +1,12 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
+/* ----------------------------------------------General */
+
 @import url('https://fonts.googleapis.com/css2?family=Monoton&family=Montserrat&display=swap');
 
 body {
@@ -23,57 +32,34 @@ header {
     border-bottom: 3px solid #451d1d;
 }
 
+.disable-element {
+    pointer-events: none;
+}
+
 /* from Bulma */
 .icon {
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     height: 1.5rem;
     width: 1.5rem;
 }
 
 .logo-font {
     font-family: 'Monoton', cursive;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
-}
-
-.records-logo {
-    height: 50px;
-    margin-bottom: 15px;
-}
-
-.mobile-logo {
-    font-size: 1.4em;
 }
 
 .heading {
     font-size: 1.5em;
-}
-
-.delivery-banner {
-    background-color: #A20B0B;
-}
-
-.main-container {
-    min-height: 80vh;
-}
-
-.nav-items {
-    font-size: .9em;
-}
-
-.shop-now-button {
-    background: #451d1d;
-    color: #F9F6F6;
-    min-width: 200px;
-}
-
-.shop-entry {
-    background-color: rgba(0, 0, 0, 0.616);
-}
-
-.disable-element {
-    pointer-events: none;
 }
 
 .btn-dark {
@@ -149,6 +135,22 @@ a.category-badge>span.badge:hover {
 #user-options-1,
 #user-options-2 {
     cursor: pointer;
+}
+
+input[name='q']::-webkit-input-placeholder {
+    color: #aab7c4;
+}
+
+input[name='q']::-moz-placeholder {
+    color: #aab7c4;
+}
+
+input[name='q']:-ms-input-placeholder {
+    color: #aab7c4;
+}
+
+input[name='q']::-ms-input-placeholder {
+    color: #aab7c4;
 }
 
 input[name='q']::placeholder {
@@ -249,7 +251,7 @@ input[name='q']::placeholder {
     overflow-y: auto;
 }
 
-/* Allauth form formatting */
+/* ---------------------------------------------- Allauth form formatting */
 
 .allauth-form-inner-content p {
     margin-top: 1.5rem;
@@ -264,6 +266,22 @@ input[name='q']::placeholder {
 
 .allauth-form-inner-content label:not([for='id_remember']) {
     display: none;
+}
+
+.allauth-form-inner-content input::-webkit-input-placeholder {
+    color: #aab7c4;
+}
+
+.allauth-form-inner-content input::-moz-placeholder {
+    color: #aab7c4;
+}
+
+.allauth-form-inner-content input:-ms-input-placeholder {
+    color: #aab7c4;
+}
+
+.allauth-form-inner-content input::-ms-input-placeholder {
+    color: #aab7c4;
 }
 
 .allauth-form-inner-content input::placeholder {
@@ -289,7 +307,11 @@ input[name='q']::placeholder {
     line-height: 1.5;
 
     /* standard bootstrap btn transitions */
+    -webkit-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    -o-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
 }
 
 .allauth-form-inner-content button:hover,
@@ -309,7 +331,40 @@ input[name='q']::placeholder {
     width: 175px;
 }
 
-/* Product Form */
+/* ------------------------------------------------Nav */
+.records-logo {
+    height: 50px;
+    margin-bottom: 15px;
+}
+
+.mobile-logo {
+    font-size: 1.4em;
+}
+
+.delivery-banner {
+    background-color: #A20B0B;
+}
+
+.main-container {
+    min-height: 80vh;
+}
+
+.nav-items {
+    font-size: .9em;
+}
+
+/* ----------------------------------------------------home */
+.shop-now-button {
+    background: #451d1d;
+    color: #F9F6F6;
+    min-width: 200px;
+}
+
+.shop-entry {
+    background-color: rgba(0, 0, 0, 0.616);
+}
+
+/* -------------------------------------------- Product Form */
 
 .btn-file {
     position: relative;
@@ -375,12 +430,19 @@ input[name='q']::placeholder {
     height: 34px;
 }
 
+/* ----------------------------------------------------Quantity Form Buttons */
+.decrement-qty,
+.increment-qty {
+    border-color: #adb5bd;
+}
+
 /* -------------------------------- Media Queries */
 
 /* pad the top a bit when navbar is collapsed on mobile */
 @media (max-width: 991px) {
     .my-account-dropdown {
-        transform: translate3d(-60px, 0, 0);
+        -webkit-transform: translate3d(-60px, 0, 0);
+                transform: translate3d(-60px, 0, 0);
     }
 
     .nav-link {

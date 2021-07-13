@@ -4,9 +4,9 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from utils.helper_functions import send_confirmation_email
 
+from checkout.models import Order
 from .models import UserMessage
 from .forms import UserMessageForm
-from checkout.models import Order
 
 
 @login_required
@@ -139,9 +139,9 @@ def add_admin_reply(request, ref_number):
                                     body_context, path)
 
             return redirect(reverse('view_message_thread', args=[ref_number]))
-        else:
-            messages.error(request, 'Failed to add message. Please ensure the \
-                           form is valid.')
+
+        messages.error(request, 'Failed to add message. Please ensure the \
+                       form is valid.')
         return redirect(reverse('view_message_thread', args=[ref_number]))
 
 
@@ -182,12 +182,17 @@ def change_thread_status(request, ref_number):
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
-    messages = UserMessage.objects.filter(
+    message_thread = UserMessage.objects.filter(
         ref_number=ref_number).order_by('-message_date')
-
-    if messages[0].closed is False:
-        UserMessage.objects.filter(ref_number=ref_number).update(closed=True)
-    else:
-        UserMessage.objects.filter(ref_number=ref_number).update(closed=False)
+    try:
+        if message_thread[0].closed is False:
+            UserMessage.objects.filter(
+                ref_number=ref_number).update(closed=True)
+        else:
+            UserMessage.objects.filter(
+                ref_number=ref_number).update(closed=False)
+    except IndexError as exception:
+        messages.error(request, f'{exception}')
+        return redirect(reverse('home'))
 
     return redirect(reverse('view_message_thread', args=[ref_number]))

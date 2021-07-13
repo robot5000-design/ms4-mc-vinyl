@@ -4,12 +4,11 @@ from django.contrib.auth.decorators import login_required
 
 from utils.helper_functions import send_confirmation_email
 from mc_vinyl import settings
-from .models import UserProfile
-from .forms import UserProfileForm
 from messaging.forms import UserMessageForm
 from messaging.models import UserMessage
-
 from checkout.models import Order
+from .models import UserProfile
+from .forms import UserProfileForm
 
 
 @login_required
@@ -22,10 +21,10 @@ def profile(request):
         Render of the profile template.
         Redirects to the profile page after update or failed update.
     """
-    profile = get_object_or_404(UserProfile, user=request.user)
+    user_profile = get_object_or_404(UserProfile, user=request.user)
 
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=profile)
+        form = UserProfileForm(request.POST, instance=user_profile)
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile updated successfully')
@@ -33,9 +32,9 @@ def profile(request):
             messages.error(request,
                            'Update failed. Please ensure the form is valid.')
         return redirect(reverse('profile'))
-    else:
-        form = UserProfileForm(instance=profile)
-    orders = profile.orders.all().order_by('-date')
+
+    form = UserProfileForm(instance=user_profile)
+    orders = user_profile.orders.all().order_by('-date')
 
     template = 'profiles/profile.html'
     context = {
@@ -61,6 +60,10 @@ def order_history(request, order_number):
         Render of the past_order template.
     """
     order = get_object_or_404(Order, order_number=order_number)
+
+    if request.user != order.user_profile.user:
+        messages.error(request, 'Order does not match user!')
+        return redirect(reverse('home'))
 
     messages.info(request, (
         f'This is a past confirmation for order number {order_number}. '

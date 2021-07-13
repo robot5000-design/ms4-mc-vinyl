@@ -3,9 +3,10 @@ from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
+from django.http import Http404
 
-from .models import Product, Genre, ProductReview, Promotion
 from wishlist.models import Wishlist
+from .models import Product, Genre, ProductReview, Promotion
 from .forms import ProductForm, ProductReviewForm, GenreForm, PromotionForm
 
 
@@ -85,7 +86,6 @@ def product_detail(request, product_id):
     Returns:
         Render of the product_details template.
     """
-
     product = get_object_or_404(Product, pk=product_id)
     reviews = ProductReview.objects.filter(product=product)
     current_sorting = 'date_desc'
@@ -108,12 +108,10 @@ def product_detail(request, product_id):
 
     try:
         wishlist = get_object_or_404(Wishlist, user=request.user.id)
-        if product in wishlist.products.all():
-            in_wishlist = True
-        else:
-            in_wishlist = False
-    except Exception:
+    except Http404:
         in_wishlist = False
+    else:
+        in_wishlist = bool(product in wishlist.products.all())
 
     if request.user.is_authenticated:
         already_reviewed = ProductReview.objects.filter(pk=product_id,
@@ -256,8 +254,8 @@ def add_product_review(request, product_id):
     Returns:
         Redirects to product_detail page upon successful review.
     """
+    product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
-        product = get_object_or_404(Product, pk=product_id)
         review_form = ProductReviewForm(request.POST)
 
         if review_form.is_valid():
@@ -269,9 +267,9 @@ def add_product_review(request, product_id):
             )
             messages.info(request, 'Successfully added a review!')
             return redirect(reverse('product_detail', args=[product.id]))
-        else:
-            messages.error(request, 'Failed to add product review. Please ensure the \
-                           form is valid.')
+
+        messages.error(request, 'Failed to add product review. Please ensure the \
+                       form is valid.')
     return redirect(reverse('product_detail', args=[product.id]))
 
 @login_required
@@ -291,13 +289,8 @@ def edit_product_review(request, product_id, review_author):
         results from the database.
     """
     product = get_object_or_404(Product, pk=product_id)
-
-    try:
-        review = ProductReview.objects.filter(
-            product=product, user__username=review_author)[0]
-    except IndexError:
-        messages.error(request, 'Oops, Something went wrong!')
-        return redirect(reverse('product_detail', args=[product.id]))
+    review = get_object_or_404(
+        ProductReview, product=product, user__username=review_author)
 
     if request.user != review.user and not request.user.is_superuser:
         messages.error(request, "Sorry, you don't have permission to do that.")
@@ -313,9 +306,9 @@ def edit_product_review(request, product_id, review_author):
             review.save()
             messages.info(request, 'Review Updated!')
             return redirect(reverse('product_detail', args=[product.id]))
-        else:
-            messages.error(request, 'Failed to edit review. Please ensure the \
-                           form is valid.')
+
+        messages.error(request, 'Failed to edit review. Please ensure the \
+                       form is valid.')
     else:
         review_form = ProductReviewForm(initial={
             'body': review.body,
@@ -348,12 +341,8 @@ def delete_product_review(request, product_id, review_author):
         results from the database.
     """
     product = get_object_or_404(Product, pk=product_id)
-    try:
-        review = ProductReview.objects.filter(
-            product=product, user__username=review_author)[0]
-    except IndexError:
-        messages.error(request, 'Oops, Something went wrong!')
-        return redirect(reverse('product_detail', args=[product.id]))
+    review = get_object_or_404(
+        ProductReview, product=product, user__username=review_author)
 
     if request.user != review.user and not request.user.is_superuser:
         messages.error(request, "Sorry, you don't have permission to do that.")
@@ -384,15 +373,11 @@ def upvote_product_review(request, product_id, review_author):
         results from the database.
     """
     product = get_object_or_404(Product, pk=product_id)
-    try:
-        review = ProductReview.objects.filter(
-            product=product, user__username=review_author)[0]
-    except IndexError:
-        messages.error(request, 'Oops, Something went wrong!')
-        return redirect(reverse('product_detail', args=[product.id]))
+    review = get_object_or_404(
+        ProductReview, product=product, user__username=review_author)
 
-    if not review:
-        messages.error(request, "Sorry, you don't have permission to do that.")
+    if request.user == review.user:
+        messages.error(request, "You can't like your own review!!")
         return redirect(reverse('home'))
 
     if not review.upvote_list.filter(id=request.user.id):

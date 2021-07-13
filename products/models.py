@@ -14,6 +14,8 @@ def current_year():
 
 
 class Genre(models.Model):
+    """ Represents a genre field.
+    """
     name = models.CharField(max_length=50)
     friendly_name = models.CharField(max_length=50)
 
@@ -25,6 +27,8 @@ class Genre(models.Model):
 
 
 class Promotion(models.Model):
+    """ Represents a promotions field.
+    """
     name = models.CharField(max_length=50)
     friendly_name = models.CharField(max_length=50)
 
@@ -36,6 +40,8 @@ class Promotion(models.Model):
 
 
 class Product(models.Model):
+    """ Represents a product and its details.
+    """
     artist = models.CharField(max_length=254)
     label = models.CharField(max_length=254, blank=True)
     genre = models.ManyToManyField(Genre, blank=True)
@@ -63,6 +69,8 @@ class Product(models.Model):
     )
 
     def calculate_rating(self):
+        """ Calculates the product rating
+        """
         self.rating = self.reviews.aggregate(
             Avg('review_rating'))['review_rating__avg']
         self.save()
@@ -72,6 +80,8 @@ class Product(models.Model):
 
 
 class ProductReview(models.Model):
+    """ Represents a product review table.
+    """
     REVIEW_RATING_CHOICES = [
         (1, '1'),
         (2, '2'),
@@ -91,6 +101,8 @@ class ProductReview(models.Model):
     admin_comment = models.TextField(blank=True)
 
     class Meta:
+        """ Default ordering for product reviews.
+        """
         ordering = ["-review_date"]
 
     def __str__(self):

@@ -1,4 +1,4 @@
-// disable buttons after form submission to prevent multiple submissions
+// disable buttons after various form submission to prevent multiple submissions
 $(".edit-review-form").on("submit", function() {
     $(".edit-review-btn").prop("disabled", "true");
 });
@@ -39,18 +39,17 @@ $("#sort-selector").change(function() {
 
         window.location.replace(currentUrl);
     }
-})
+});
 
 // setting the href for the delete confirm modal
 $(".call-delete").click(function(event) {
     event.preventDefault();
     var objectId = $(this).attr("data-product");
     var modalId = $(this).attr("data-target");
+  	var deleteUrl = `/products/delete_review/${objectId}/`;
     if (modalId.includes("Product")) {
-        var deleteUrl = `/products/delete/${objectId}/`
-    } else {
-        var deleteUrl = `/products/delete_review/${objectId}/`
-    }    
+        deleteUrl = `/products/delete/${objectId}/`;
+    }
     $("#confirm-delete").attr("href", deleteUrl);
 });
 
@@ -65,37 +64,35 @@ window.addEventListener("load", function() {
     function a(a) {
         a.querySelectorAll(".remove").forEach(a=>{
             a.addEventListener("click", ()=>{
-                a.parentNode.remove()
+                a.parentNode.remove();
             }
-            )
+            );
         }
-        )
+        );
     }
     function b(b) {
-        const d = b.querySelector(".array-item")
-        , e = d.cloneNode(!0)
-        , f = d.parentElement;
+        const d = b.querySelector(".array-item"), e = d.cloneNode(!0), f = d.parentElement;
         d.getAttribute("data-isNone") && (d.remove(),
         e.removeAttribute("data-isNone"),
         e.removeAttribute("style")),
         a(b),
         b.querySelector(".add-array-item").addEventListener("click", ()=>{
             c++;
-            const b = e.cloneNode(!0)
-            , d = b.querySelector("input").getAttribute("id").split("_")
-            , g = d.slice(0, -1).join("_") + "_" + (c - 1 + "");
+            const b = e.cloneNode(!0),
+            d = b.querySelector("input").getAttribute("id").split("_"),
+            g = d.slice(0, -1).join("_") + "_" + (c - 1 + "");
             b.querySelector("input").setAttribute("id", g),
             b.querySelector("input").value = "",
             a(b),
-            f.appendChild(b)
+            f.appendChild(b);
         }
-        )
+        );
     }
     let c = 1;
     $(".dynamic-array-widget").not(".empty-form .dynamic-array-widget").each((a,c)=>b(c)),
     $(document).on("formset:added", function(a, c) {
-        c[0].querySelectorAll(".dynamic-array-widget").forEach(a=>b(a))
-    })
+        c[0].querySelectorAll(".dynamic-array-widget").forEach(a=>b(a));
+    });
 });
 
 // from Bootstrap, for disabling form submissions if there are invalid fields

@@ -2,7 +2,6 @@ from django.shortcuts import (
     render, redirect, reverse,
     get_object_or_404)
 from django.contrib import messages
-from django.http import Http404
 
 from products.models import Product
 
@@ -29,11 +28,7 @@ def add_to_cart(request, item_id):
     Returns:
         A redirect to a specific url.
     """
-    try:
-        get_object_or_404(Product, pk=item_id)
-    except Http404 as error:
-        messages.error(request, f'That product does not exist: {error}')
-        return render(request, '404.html', {'error': error})
+    get_object_or_404(Product, pk=item_id)
 
     if request.POST.get('quantity'):
         quantity = int(request.POST.get('quantity'))

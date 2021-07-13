@@ -1,3 +1,14 @@
+/**
+ * When the go-back button is clicked the browser returns to the
+ * previous page in history
+ */
+ function goBack() {
+    window.history.back();
+}
+
+// Call the goBack function which goes back to the previous page in history
+$(".go-back").click(goBack);
+
 // show toasts
 $('.toast').toast('show');
 
@@ -13,7 +24,6 @@ $(".add-message-form").on("submit", function() {
 
 // Disable +/- buttons outside 1-99 range
 function handleEnableDisable(itemId, currentValue) {
-    var currentValue = currentValue;
     var minusDisabled = currentValue < 2;
     var plusDisabled = currentValue > 98;
     $(`form #decrement-qty_${itemId}`).prop('disabled', minusDisabled);
@@ -64,14 +74,3 @@ $('.decrement-qty').click(function(e) {
     var itemId = $(this).data('item_id');
     handleEnableDisable(itemId, currentValue -= 1);
 });
-
-/**
- * When the go-back button is clicked the browser returns to the
- * previous page in history
- */
- function goBack() {
-    window.history.back();
-}
-
-// Call the goBack function which goes back to the previous page in history
-$(".go-back").click(goBack);
