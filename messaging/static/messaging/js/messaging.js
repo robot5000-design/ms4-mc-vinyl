@@ -4,7 +4,7 @@ $(".call-delete").click(function(event) {
     var objectId = $(this).attr("data-messages");
     var deleteUrl = `/messaging/delete_thread/${objectId}/`;
 
-    $("#confirm-delete").attr("href", deleteUrl);
+    $("#confirm-delete").attr("action", deleteUrl);
 });
 
 // Show open threads only

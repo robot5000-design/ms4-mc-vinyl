@@ -26,27 +26,23 @@
         <div class="col col-lg-8">
             <div class="row">
                 <div class="col">
-                    <a href="{% url 'messaging' %}" class="btn btn-dark  my-2">
+                    <a href="{% url 'messaging' %}" class="btn btn-dark my-2">
                         <span class="icon mr-2">
                             <i class="fas fa-angle-left"></i>
                         </span>
                         <span class="text-uppercase">Back to Messages</span>
                     </a>
                     {% if thread_status %}
-                        <a href="{% url 'change_thread_status' ref_number %}" class="btn btn-dark my-2">
-                            <span class="icon mr-2">
-                                <i class="far fa-check-square"></i>
-                            </span>
-                            <span class="text-uppercase">Open Thread</span>
-                        </a>
+                        <form action="{% url 'change_thread_status' ref_number %}" method="POST" class="my-2 d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-dark"><span class="icon mr-2"><i class="far fa-check-square"></i></span>Open Thread</button>
+                        </form>
                         <div class="font-weight-bold text-danger py-4">This thread is closed.</div>
                     {% else %}
-                        <a href="{% url 'change_thread_status' ref_number %}" class="btn btn-dark my-2">
-                            <span class="icon mr-2">
-                                <i class="far fa-square"></i>
-                            </span>
-                            <span class="text-uppercase">Close Thread</span>
-                        </a>
+                        <form action="{% url 'change_thread_status' ref_number %}" method="POST" class="my-2 d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-dark"><span class="icon mr-2"><i class="far fa-square"></i></span>Close Thread</button>
+                        </form>
                     {% endif %}
                 </div>
             </div>

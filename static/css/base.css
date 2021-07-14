@@ -128,12 +128,14 @@ a.category-badge>span.badge:hover {
 }
 
 .btt-link,
+.call-delete,
 .update-quantity,
 .remove-item,
 .wishlist-remove,
 .wishlist-to-cart,
 #user-options-1,
-#user-options-2 {
+#user-options-2,
+#upvote-review {
     cursor: pointer;
 }
 

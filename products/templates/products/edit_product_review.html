@@ -72,10 +72,9 @@
                                     </div>
                                 </div>
                                 <div class="text-left mt-2">
-                                    <button class="btn btn-dark  edit-review-btn my-3" type="submit">Edit Review</button>
+                                    <button class="btn btn-dark edit-review-btn my-3" type="submit">Edit Review</button>
                                     {% if request.user.is_superuser or review.user == request.user %}
-                                        <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteReviewModal" data-product="{{ product.id }}/{{ review.user.username }}">Delete Review</a>
-                                        {% include 'products/includes/modal_review_delete.html' %}
+                                        <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteReviewModal">Delete Review</a>
                                     {% endif %}                                        
                                 </div>                                                        
                             </div>
@@ -121,6 +120,9 @@
                 </div>
             </div>
         </div>
+        {% if request.user.is_superuser or review.user == request.user %}
+            {% include 'products/includes/modal_review_delete.html' %}
+        {% endif %} 
     </div>
 {% endblock %}
 

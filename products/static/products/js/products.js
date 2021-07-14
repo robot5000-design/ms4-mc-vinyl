@@ -19,6 +19,19 @@ $("#confirm-delete").on("click", function() {
     $(this).addClass("disable-element");
 });
 
+// Upvote a Review
+$('#upvote-review').click(function() {
+    var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+    var itemId = $(this).attr('data-items').split('_');
+    var url = `/products/upvote_review/${itemId[0]}/${itemId[1]}/`;
+    var data = {'csrfmiddlewaretoken': csrfToken};
+
+    $.post(url, data)
+     .done(function() {
+         location.reload();
+     });
+})
+
 // change the sort dropdown to match the current chosen option
 $("#sort-selector").change(function() {
     var selector = $(this);
@@ -39,18 +52,6 @@ $("#sort-selector").change(function() {
 
         window.location.replace(currentUrl);
     }
-});
-
-// setting the href for the delete confirm modal
-$(".call-delete").click(function(event) {
-    event.preventDefault();
-    var objectId = $(this).attr("data-product");
-    var modalId = $(this).attr("data-target");
-  	var deleteUrl = `/products/delete_review/${objectId}/`;
-    if (modalId.includes("Product")) {
-        deleteUrl = `/products/delete/${objectId}/`;
-    }
-    $("#confirm-delete").attr("href", deleteUrl);
 });
 
 // listen for image field change in product management form

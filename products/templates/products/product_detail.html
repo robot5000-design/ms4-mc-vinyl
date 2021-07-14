@@ -32,7 +32,7 @@
                     {% if request.user.is_superuser %}
                         <div class="pb-4">
                             <a class="btn btn-dark edit-product-btn" href="{% url 'edit_product' product.id %}">Edit</a>
-                            <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteProductModal" data-product="{{ product.id }}">Delete</a>
+                            <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteProductModal">Delete</a>
                         </div>
                         {% include 'products/includes/modal_delete.html' %}
                     {% endif %}
@@ -173,9 +173,9 @@
                             </div>
                             <div class="my-2">
                                 {% if request.user.is_authenticated and request.user not in review.upvote_list.all and request.user.id != review.user.id %}
-                                    <a class="review-links" href="{% url 'upvote_product_review' product.id review.user.username %}">
+                                    <div id="upvote-review" aria-label="upvote-review" data-items="{{ product.id }}_{{ review.user }}">
                                         <i class="fas fa-thumbs-up fs-5 pe-2"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
-                                    </a>
+                                    </div>
                                 {% else %}
                                     <i class="fas fa-thumbs-up"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
                                 {% endif %}

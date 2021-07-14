@@ -66,7 +66,7 @@
                                         <a class="btn btn-dark edit-product-btn w-100" href="{% url 'edit_product' product.id %}"><small>Edit</small></a>
                                     </div>
                                     <div class="col-6 px-0">
-                                        <a class="btn btn-danger call-delete w-100" data-toggle="modal" data-target="#deleteProductModal" data-product="{{ product.id }}"><small>Delete</small></a>
+                                        <a class="btn btn-danger call-delete w-100" data-toggle="modal" data-target="#deleteProductModal"><small>Delete</small></a>
                                     </div>
                                 </div>
                                 {% include 'products/includes/modal_delete.html' %}

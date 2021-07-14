@@ -161,8 +161,11 @@ def delete_thread(request, ref_number):
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
-    UserMessage.objects.filter(ref_number=ref_number).delete()
-
+    if request.POST:
+        UserMessage.objects.filter(ref_number=ref_number).delete()
+        messages.info(request, 'Message Thread Deleted.')
+    else:
+        messages.error(request, 'Invalid Action.')
     return redirect(reverse('messaging'))
 
 
@@ -182,17 +185,20 @@ def change_thread_status(request, ref_number):
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
-    message_thread = UserMessage.objects.filter(
-        ref_number=ref_number).order_by('-message_date')
-    try:
-        if message_thread[0].closed is False:
-            UserMessage.objects.filter(
-                ref_number=ref_number).update(closed=True)
-        else:
-            UserMessage.objects.filter(
-                ref_number=ref_number).update(closed=False)
-    except IndexError as exception:
-        messages.error(request, f'{exception}')
-        return redirect(reverse('home'))
+    if request.POST:
+        message_thread = UserMessage.objects.filter(
+            ref_number=ref_number).order_by('-message_date')
+        try:
+            if message_thread[0].closed is False:
+                UserMessage.objects.filter(
+                    ref_number=ref_number).update(closed=True)
+            else:
+                UserMessage.objects.filter(
+                    ref_number=ref_number).update(closed=False)
+        except IndexError as exception:
+            messages.error(request, f'{exception}')
+            return redirect(reverse('home'))
+    else:
+        messages.error(request, 'Invalid Action.')
 
     return redirect(reverse('view_message_thread', args=[ref_number]))

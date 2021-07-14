@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import (
+    render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -238,9 +239,11 @@ def delete_product(request, product_id):
         return redirect(reverse('home'))
 
     product = get_object_or_404(Product, pk=product_id)
-
-    product.delete()
-    messages.info(request, 'Product deleted!')
+    if request.POST:
+        product.delete()
+        messages.info(request, 'Product deleted!')
+    else:
+        messages.error(request, 'That is not allowed!')
     return redirect(reverse('products'))
 
 
@@ -347,9 +350,11 @@ def delete_product_review(request, product_id, review_author):
     if request.user != review.user and not request.user.is_superuser:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))
-
-    review.delete()
-    messages.info(request, 'Review deleted!')
+    if request.POST:
+        review.delete()
+        messages.info(request, 'Review deleted!')
+    else:
+        messages.error(request, 'That is not allowed!')
     return redirect(reverse('product_detail', args=[product.id]))
 
 
@@ -376,18 +381,22 @@ def upvote_product_review(request, product_id, review_author):
     review = get_object_or_404(
         ProductReview, product=product, user__username=review_author)
 
-    if request.user == review.user:
-        messages.error(request, "You can't like your own review!!")
-        return redirect(reverse('home'))
+    if request.POST:
+        if request.user == review.user:
+            messages.error(request, "You can't like your own review!!")
+            return HttpResponse(status=200)
 
-    if not review.upvote_list.filter(id=request.user.id):
-        review.upvote_list.add(request.user)
-        review.upvote_count = review.upvote_list.all().count()
-        review.save()
-        messages.info(request, 'Liked Review!')
-        return redirect(reverse('product_detail', args=[product.id]))
-    messages.info(request, 'Already Liked!')
-    return redirect(reverse('product_detail', args=[product.id]))
+        if not review.upvote_list.filter(id=request.user.id):
+            review.upvote_list.add(request.user)
+            review.upvote_count = review.upvote_list.all().count()
+            review.save()
+            messages.info(request, 'Liked Review!')
+            return HttpResponse(status=200)
+
+        messages.info(request, 'Already Liked!')
+        return HttpResponse(status=200)
+
+    return HttpResponse(status=500)
 
 
 @login_required

@@ -137,3 +137,8 @@ label .asteriskField {
 .custom-control-label {
     color: #ca1919;
 }
+
+#upvote-review {
+    color: #201ec0;
+    width: fit-content;
+}
