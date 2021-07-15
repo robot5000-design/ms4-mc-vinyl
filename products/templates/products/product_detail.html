@@ -45,6 +45,9 @@
                             <a href="{% url 'add_to_wishlist' product.id %}" aria-label="add-to-wishlist" class="text-danger ml-3"><i class="far fa-heart"></i></a>
                         {% endif %}
                     </p>
+                    {% if not request.user.is_authenticated %}
+                        <p class="small">Sign up so you can take advantage of the Wishlist.</p>
+                    {% endif %}
                     {% if product.genre %}
                         <p class="small mt-1 mb-0">
                             <i class="fas fa-tag mr-1"></i>

@@ -165,7 +165,7 @@ def delete_thread(request, ref_number):
         UserMessage.objects.filter(ref_number=ref_number).delete()
         messages.info(request, 'Message Thread Deleted.')
     else:
-        messages.error(request, 'Invalid Action.')
+        messages.error(request, 'Invalid Method.')
     return redirect(reverse('messaging'))
 
 
@@ -199,6 +199,6 @@ def change_thread_status(request, ref_number):
             messages.error(request, f'{exception}')
             return redirect(reverse('home'))
     else:
-        messages.error(request, 'Invalid Action.')
+        messages.error(request, 'Invalid Method.')
 
     return redirect(reverse('view_message_thread', args=[ref_number]))

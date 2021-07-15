@@ -64,7 +64,7 @@ def adjust_cart(request, item_id):
     if request.POST:
         quantity = int(request.POST.get('quantity'))
     else:
-        messages.error(request, 'Invalid Action!')
+        messages.error(request, 'Invalid Method!')
         return redirect(reverse('view_cart'))
 
     cart = request.session.get('cart', {})
