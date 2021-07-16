@@ -115,7 +115,7 @@ def product_detail(request, product_id):
         in_wishlist = bool(product in wishlist.products.all())
 
     if request.user.is_authenticated:
-        already_reviewed = ProductReview.objects.filter(pk=product_id,
+        already_reviewed = ProductReview.objects.filter(product=product,
                                                         user=request.user)
     else:
         already_reviewed = False
@@ -262,13 +262,18 @@ def add_product_review(request, product_id):
         review_form = ProductReviewForm(request.POST)
 
         if review_form.is_valid():
-            ProductReview.objects.create(
-                product=product,
-                user=request.user,
-                body=request.POST['body'],
-                review_rating=request.POST['review_rating'],
-            )
-            messages.info(request, 'Successfully added a review!')
+            already_reviewed = ProductReview.objects.filter(product=product,
+                                                            user=request.user)
+            if not already_reviewed:
+                ProductReview.objects.create(
+                    product=product,
+                    user=request.user,
+                    body=request.POST['body'],
+                    review_rating=request.POST['review_rating'],
+                )
+                messages.info(request, 'Successfully added a review!')
+            else:
+                messages.error(request, 'Already reviewed!')
             return redirect(reverse('product_detail', args=[product.id]))
 
         messages.error(request, 'Failed to add product review. Please ensure the \
