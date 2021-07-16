@@ -123,6 +123,10 @@ a.category-badge>span.badge:hover {
     z-index: 1;
 }
 
+.btt-link:hover {
+    text-decoration: none;
+}
+
 .btt-button i {
     color: #dc3545;
 }

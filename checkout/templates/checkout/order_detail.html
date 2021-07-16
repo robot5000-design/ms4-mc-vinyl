@@ -186,6 +186,15 @@
                 </div>
             </div>
         </div>
+        {% if order.user_profile %}
+            <div class="col-12 col-lg-6 mb-3">
+                <div>Customer Username: <strong>{{ order.user_profile.user }}</strong></div>
+            </div>
+        {% else %}    
+            <div class="col-12 col-lg-6 mb-3">
+                <div>Customer Username: <strong>No Account</strong></div>
+            </div>
+        {% endif %}
     </div>
     {% include 'messaging/includes/message_cards.html' %}
     </div>

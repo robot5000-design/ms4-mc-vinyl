@@ -89,9 +89,35 @@ As a customer:
 - I want to be able to register and change my password.
 - I want to know that the site is secure and safe to use.
 - I want to be aware of updates or new features through social links.
-- I want a site that is not slow to use and full of bugs, or if there is an error it is managed properly.
+- I want a site that is not slow or full of bugs and if there is an error it is managed properly.
 
 #### Scope
+
+From researching other similar vinyl e-commerce sites it should be possible to provide a broadly similar experience.
+
+Based on the results of the Strategy research the features to be included are:
+
+- Home: Landing page with large obvious CTA and the purpose of the site should be obvious.
+- Users can register, login and change password.
+- Passwords are validated and hashed.
+- Products can be searched by artist, title and genre.
+- Products can be sorted by price, rating or alphabetically.
+- A wishlist which saves to a user profile.
+- A payment system to purchase products using Stripe.
+- A user profile where customer shipping information and past orders and associated communication can be saved.
+- Sortable product reviews and ratings can be added, edited and deleted.
+- Staff can leave a comment underneath a review.
+- Reviews can be upvoted.
+- Staff messaging app for communicating with customers regarding orders.
+- Staff can view all orders and search by customer. ###########################################################################
+- Staff can add, edit and delete products.
+- Staff can add new genre or promotion fields.
+- Footer: Links to social media.
+
+
+From the strategy table all the above features appear viable. Some basic features such as pagination and a contact form may be left out for now due to time constraints. A wishlist and the messaging app for use between staff and customers are more relevant to the project requirements and interesting features to have instead. A CSP strategy would be useful to boost security but may also be left aside for now due to time constraints.
+
+#### Structure
 
 
 ---
