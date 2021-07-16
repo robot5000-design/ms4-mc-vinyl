@@ -159,7 +159,49 @@ The main colors used were #F9F6F6 for the background contrasting with #451D1D fo
 
 ### **2. Features and Functionality**
 
-The site was designed with a mobile first approach. Customised Bootstrap was used to help with the responsiveness and layout of the site. In addition targeted media queries were used to assist with this.
+The site was designed with a mobile first approach. Customised Bootstrap was used to help with the responsiveness and layout of the site. In addition targeted media queries were used to assist with this. The site borrows much of the functionality of Stripe payments from the Boutique Ado project however modified to suit this application. Superuser staff do not have access to the admin backend of the site. There is a specific Staff setting to allow that. 
+
+The Crispy Forms add-on is used throughout the site to aid form formatting. Each form has a CSRF tag for added security.
+
+Bootstrap toasts are used to provide feedback to the user regarding an action by utilising the Django message system levels and displaying the messages within the toasts.
+
+_Landing Page:_
+
+The landing page features a simple layout with a background image which assists in directing the user as to the purpose of the site and a large CTA to enter the shop. The navbar alternatively gives access to search the site directly or to log-in.
+
+_Authentication Pages:_
+
+Including Log-in, log-out, register, verification and change password are all handled using the Django-Allauth add-on which integrates seamlessly.
+
+_Products Page:_
+
+User can see all products. They can search and sort. The search input will search by artist or title or genre. Genres can be clicked directly or the dropdown sort allows sorting by price, rating or alphabetically. Product ratings are shown and additional edit and delete product buttons are shown to superusers.
+
+_Product Details Page:_
+
+Here users can see details of the product. The track listing makes use of the add-on Django-Better-Admin-Arrayfield. A Postgres relational database was used both locally and when deployed, as the sqlite3 or mysql versions will not handle the arrayfield.
+
+If a user is logged in they can; add the product to their wishlist, add it to their cart, leave a review and rating. They can also sort reviews by most popular review, by latest review or highest/lowest rating. There is also a button to edit or delete their own review. Superusers can again see the additional edit and delete buttons.
+
+_Product Review Page:_
+
+Here there's a form where users can edit or delete a past review and superusers can leave a comment beneath a review, which can be useful if it is a complaint. A modal is used to confirm a delete action.
+
+_Wishlist Page:_
+
+The wishlist allows users to make a list of up to 10 favourite products which they might like to purchase at some point in the future. For convenience there's are buttons to add each individual product to the cart or all items at once. This is one of the big advantages for a customer to sign up to the site as you cannot access or use the wishlist otherwise.
+
+_Cart Page:_
+
+As with any e-commerce site the cart shows the products added for purchase and a total to be paid including delivery.
+
+_Checkout Page:_
+
+The checkout page shows details of the intended purchases including a delivery cost if total is less than the free delivery threshold. Stripe credit card payments input are integrated into the template.
+
+_My Profile Page:_
+
+From here customers can save address details to make checkout quicker and easier. The can also view past orders and start a conversation with the site owners regarding a particular order. When they receive a message back they will also get an email notification to let them know they have a new message. A users username and email address are fixed and are the ones they signed up with.
 
 
 

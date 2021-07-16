@@ -41,6 +41,7 @@ def profile(request):
         'form': form,
         'orders': orders,
         'on_profile_page': True,
+        'user_profile': user_profile,
     }
     return render(request, template, context)
 

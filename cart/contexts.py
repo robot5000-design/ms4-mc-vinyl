@@ -29,17 +29,18 @@ def cart_contents(request):
             'product': product,
         })
 
-    if total < settings.FREE_DELIVERY_THRESHOLD:
+    if total < settings.FREE_DELIVERY_THRESHOLD and total != 0:
         # decimal is preferable to float when dealing with money as it's more
         # accurate (float errors)
-        delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
+        delivery = Decimal(settings.STANDARD_DELIVERY_COST)
         free_delivery_delta = settings.FREE_DELIVERY_THRESHOLD - total
     else:
         delivery = 0
         free_delivery_delta = 0
+        
 
     grand_total = delivery + total
-
+    
     # this context is available accross every template and every app
     # because it was added to context processors in settings
     context = {

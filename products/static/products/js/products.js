@@ -18,6 +18,11 @@ $(".add-product-form").on("submit", function() {
     $('#loading-overlay').fadeToggle(4000);
 });
 
+$(".edit-product-form").on("submit", function() {
+    $(".edit-product-submit").prop("disabled", "true");
+    $('#loading-overlay').fadeToggle(4000);
+});
+
 $("#confirm-delete").on("click", function() {
     $(this).addClass("disable-element");
 });

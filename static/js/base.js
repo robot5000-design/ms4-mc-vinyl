@@ -22,6 +22,11 @@ $(".add-message-form").on("submit", function() {
     $(".add-message-btn").prop("disabled", "true");
 });
 
+// Add loading spinner to search site form submit
+$(".search-site-form").submit(function() {
+    $('#loading-overlay').fadeToggle(4000);
+});
+
 // Disable +/- buttons outside 1-99 range
 function handleEnableDisable(itemId, currentValue) {
     var minusDisabled = currentValue < 2;
