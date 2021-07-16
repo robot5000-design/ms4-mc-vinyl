@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.db.models import Q
 
 from cart.contexts import cart_contents
 from products.models import Product
@@ -178,7 +179,7 @@ def checkout_success(request, order_number):
     """
     if 'order_number' not in request.session:
         raise Http404("Sorry that page has expired!")
-    elif request.session['order_number'] != order_number:
+    if request.session['order_number'] != order_number:
         raise Http404("Order Numbers do not match!")
 
     save_info = request.session.get('save_info')
@@ -240,6 +241,22 @@ def view_all_orders(request):
         return redirect(reverse('home'))
 
     orders = Order.objects.all().order_by('-date')
+
+    if request.GET:
+        if 'search_users' in request.GET:
+            query = request.GET['search_users']
+            if not query:
+                messages.error(
+                    request, "You didn't enter any search criteria!")
+                return redirect(reverse('view_all_orders'))
+
+            if query.lower() == 'no account':
+                queries = Q(user_profile=None)
+            else:
+                queries = Q(user_profile__user__username__icontains=query)
+
+            orders = orders.filter(queries)
+
     template = 'checkout/all_orders.html'
     context = {
         'orders': orders,

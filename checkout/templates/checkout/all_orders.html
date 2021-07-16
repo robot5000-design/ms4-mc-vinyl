@@ -25,41 +25,65 @@
         <div class="row">
             <div class="col-12">
                 <p class="">Order History</p>
-                <div class="order-history table-responsive">
-                    <table class="table table-sm table-borderless">
-                        <thead>
-                            <tr>
-                                <th>Order Number</th>
-                                <th>Date</th>
-                                <th>Customer</th>
-                                <th>Order Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for order in orders %}
-                                <tr>
-                                    <td>
-                                        <a href="{% url 'view_order_detail' order.order_number %}" title="{{ order.order_number }}">
-                                            {{ order.order_number|truncatechars:8 }}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div>{{ order.date|date:'d/m/y' }}</div>
-                                        <div>{{ order.date|date:'H:i' }}</div>
-                                    </td>
-                                    <td>
-                                        {% if order.user_profile.user %}
-                                            {{ order.user_profile.user }}
-                                        {% else %}
-                                            No Account
-                                        {% endif %}
-                                    </td>
-                                    <td>${{ order.grand_total }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                <div class="row mb-4">
+                    <div class="col-12 col-sm-8 col-md-6 col-lg-4">                   
+                        <form method="GET" action="{% url 'view_all_orders' %}">
+                            <div class="input-group">
+                                <input class="form-control border-dark" type="text" name="search_users" placeholder="Search Orders by Username..." required>
+                                <div class="input-group-append"> 
+                                    <button class="form-control btn btn-outline-dark" type="submit" aria-label="search-orders">
+                                        <span class="icon">
+                                            <i class="fas fa-search"></i>
+                                        </span>
+                                    </button>
+                                    <a href="{% url 'view_all_orders' %}" class="btn btn-dark">Reset</a>
+                                </div>
+                            </div>
+                        </form>                        
+                    </div>
                 </div>
+                <div class="col">
+                    <p>Search "no account" to see anonymous user orders.</p>
+                </div>
+                {% if orders %}
+                    <div class="order-history table-responsive">
+                        <table class="table table-sm table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Order Number</th>
+                                    <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>Order Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'view_order_detail' order.order_number %}" title="{{ order.order_number }}">
+                                                {{ order.order_number|truncatechars:8 }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div>{{ order.date|date:'d/m/y' }}</div>
+                                            <div>{{ order.date|date:'H:i' }}</div>
+                                        </td>
+                                        <td>
+                                            {% if order.user_profile.user %}
+                                                {{ order.user_profile.user }}
+                                            {% else %}
+                                                No Account
+                                            {% endif %}
+                                        </td>
+                                        <td>${{ order.grand_total }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p>No orders to see.</p>
+                {% endif %}
             </div>
         </div>
         <div class="btt-button">
