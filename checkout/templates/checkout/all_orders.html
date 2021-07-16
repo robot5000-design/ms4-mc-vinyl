@@ -31,7 +31,7 @@
                             <tr>
                                 <th>Order Number</th>
                                 <th>Date</th>
-                                <th>Items</th>
+                                <th>Customer</th>
                                 <th>Order Total</th>
                             </tr>
                         </thead>
@@ -48,14 +48,11 @@
                                         <div>{{ order.date|date:'H:i' }}</div>
                                     </td>
                                     <td>
-                                        <ul class="list-unstyled">
-                                            {% for item in order.lineitems.all %}
-                                                <li class="small">
-                                                    <div>{{ item.product.artist }}</div> 
-                                                    <div>{{ item.product.title }} x{{ item.quantity }}</div>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
+                                        {% if order.user_profile.user %}
+                                            {{ order.user_profile.user }}
+                                        {% else %}
+                                            No Account
+                                        {% endif %}
                                     </td>
                                     <td>${{ order.grand_total }}</td>
                                 </tr>
