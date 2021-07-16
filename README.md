@@ -109,7 +109,7 @@ Based on the results of the Strategy research the features to be included are:
 - Staff can leave a comment underneath a review.
 - Reviews can be upvoted.
 - Staff messaging app for communicating with customers regarding orders.
-- Staff can view all orders and search by customer. ###########################################################################
+- Staff can view all orders and search by customer.
 - Staff can add, edit and delete products.
 - Staff can add new genre or promotion fields.
 - Footer: Links to social media.
@@ -118,6 +118,50 @@ Based on the results of the Strategy research the features to be included are:
 From the strategy table all the above features appear viable. Some basic features such as pagination and a contact form may be left out for now due to time constraints. A wishlist and the messaging app for use between staff and customers are more relevant to the project requirements and interesting features to have instead. A CSP strategy would be useful to boost security but may also be left aside for now due to time constraints.
 
 #### Structure
+
+- A pretty typical e-commerce structure with all important pages accessible from any page from the Navbar at the top of the page, including the shopping cart.
+- Customer Wishlist link is in the Navbar.
+- User account features are accessible through a dropdown sub-menu in the Navbar along with staff features such as the messaging app.
+- Custom error page, for 404, 500 and CSRF errors so in the case of a broken internal link or where a CSRF form token has expired, a button is provided for the user to return to safety.
+
+#### Skeleton
+
+Wireframes made in Balsamiq Wireframes were used for basic layout. These can be viewed here:
+
+[Landing Page All Sizes](./documentation/wireframes/landing_page.png)
+
+[Admin Controls Page All Sizes](./documentation/wireframes/admin_controls.png)
+
+[Browse Reviews Page All Sizes](./documentation/wireframes/browse_my_reviews.png)
+
+[New Review Search Page All Sizes](./documentation/wireframes/new_review_search.png)
+
+[New/Edit Review Page All Sizes](./documentation/wireframes/new_edit_review.png)
+
+[Review Detail Page All Sizes](./documentation/wireframes/review_detail.png)
+
+[Register Page All Sizes](./documentation/wireframes/register.png)
+
+[Change Password Page All Sizes](./documentation/wireframes/change_password.png)
+
+[Contact Page All Sizes](./documentation/wireframes/contact_page.png)
+
+#### Surface
+
+[Pixabay](https://pixabay.com/) provided the free background image and the logo icon. The main font is a Google font called Monoton which conveniently matches the vinyl theme, with the secondary font being Montserrat.
+The main colors used were #F9F6F6 for the background contrasting with #451D1D for much of the text and the footer. #A20B0B is used for the banner announcing free delivery.
+
+![ColourChoices][3]
+
+[3]: ./documentation/images_for_readme/palette.png "Colour Choices"
+
+---
+
+### **2. Features and Functionality**
+
+The site was designed with a mobile first approach. Customised Bootstrap was used to help with the responsiveness and layout of the site. In addition targeted media queries were used to assist with this.
+
+
 
 
 ---

@@ -1,10 +1,12 @@
 // disable buttons after various form submission to prevent multiple submissions
 $(".edit-review-form").on("submit", function() {
     $(".edit-review-btn").prop("disabled", "true");
+    $('#loading-overlay').fadeToggle(4000);
 });
 
 $(".add-review-form").on("submit", function() {
     $(".add-review").prop("disabled", "true");
+    $('#loading-overlay').fadeToggle(4000);
 });
 
 $(".add-cart-form").on("submit", function() {
@@ -13,6 +15,7 @@ $(".add-cart-form").on("submit", function() {
 
 $(".add-product-form").on("submit", function() {
     $(".add-product-btn").prop("disabled", "true");
+    $('#loading-overlay').fadeToggle(4000);
 });
 
 $("#confirm-delete").on("click", function() {
