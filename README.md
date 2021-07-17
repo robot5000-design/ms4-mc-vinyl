@@ -25,7 +25,7 @@ Click the image to be taken to a live demo of the site:
 [![homepage][1]][2]
 
 [1]: ./documentation/images_for_readme/am-i-responsive.jpg
-[2]: https://mc-vinyl.herokuapp.com "Live Site" ###############################
+[2]: https://mc-vinyl.herokuapp.com "Live Site" ###################################################
 
 ---
 
@@ -257,7 +257,7 @@ __Postgres Database Collections Schema__:
 
 ![DatabaseSchema][4]
 
-[4]: ./documentation/images_for_readme/database_schema.svg "Database Schema"
+[4]: ./documentation/images_for_readme/database_schema.png "Database Schema"
 
 The database consists of 10 models with some common relationships to each other as marked on the diagram above. A Postgres database was used in development and the deployed version as the sqlite3 or mysql database options would not handle the arrayfield used for track listings:
 
@@ -287,7 +287,7 @@ _Wishlist Model_
 
 _Product Model_
 
-- Represents a single products details. It includes fields such as artist, title, sku, rating and price. The image field contains a path to the product image. The track list field uses an arrayfield to store the album track list. Includes Genre and Promotion many-to-many fields.
+- Represents a single products details. It includes fields such as artist, title, sku, rating and price. The image field contains a path to the product image. The track list field uses an ArrayField to store the album track list. Includes Genre and Promotion many-to-many fields.
 
 _Genre Model_
 
@@ -299,8 +299,7 @@ _Promotion Model_
 
 _ProductReview Model_
 
-- Represents an e-commerce promotions tag. It includes a programatical name and a friendly name.
-
+- Represents a user review of a product. Includes such fields as review body, review date, review rating, upvote count and an admin comment field, where the site admin can respond to a complaint. It features User and Product foreign-keys and upvote_list which is a User linked many-to-many field. The upvote_list length can be used to give the upvote count field value. A choices array is supplied for the review rating IntegerField.
 
 
 
