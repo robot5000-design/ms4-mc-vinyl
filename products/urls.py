@@ -16,6 +16,6 @@ urlpatterns = [
          views.delete_product_review, name='delete_product_review'),
     path('upvote_review/<int:product_id>/<str:review_author>/',
          views.upvote_product_review, name='upvote_product_review'),
-    path('product_fields_admin/', views.product_fields_admin,
-         name='product_fields_admin'),
+    path('product_tags_admin/', views.product_tags_admin,
+         name='product_tags_admin'),
 ]

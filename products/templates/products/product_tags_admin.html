@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-12">
                 <hr>
-                <h2 class="heading logo-font mb-4">Product Management</h2>
+                <h2 class="heading logo-font mb-4">Product Tags</h2>
                 <hr>
             </div>
         </div>
@@ -29,7 +29,7 @@
                         <h3 class="">Add Genre Tag:</h3>
                     </div>                    
                 </div>
-                <form method="POST" action="{% url 'product_fields_admin' %}" class="form mb-2 needs-validation" enctype="multipart/form-data" novalidate>
+                <form method="POST" action="{% url 'product_tags_admin' %}" class="form mb-2 needs-validation" enctype="multipart/form-data" novalidate>
                     {% csrf_token %}
                     <label for="genre-name" class="form-label">Programmatical Name:</label>
                     <input id="genre-name" name="name" type="text" class="form-control"
@@ -69,7 +69,7 @@
                         <h3 class="">Add Promotion Tag:</h3>
                     </div>
                 </div>                
-                <form method="POST" action="{% url 'product_fields_admin' %}" class="form mb-2 needs-validation" enctype="multipart/form-data" novalidate>
+                <form method="POST" action="{% url 'product_tags_admin' %}" class="form mb-2 needs-validation" enctype="multipart/form-data" novalidate>
                     {% csrf_token %}
                     <label for="promotion-name" class="form-label">Programmatical Name:</label>
                     <input id="promotion-name" name="name" type="text" class="form-control"

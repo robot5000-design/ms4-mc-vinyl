@@ -181,7 +181,9 @@ _Product Details Page:_
 
 Here users can see details of the product. The track listing makes use of the add-on Django-Better-Admin-Arrayfield. A Postgres relational database was used both locally and when deployed, as the sqlite3 or mysql versions will not handle the arrayfield.
 
-If a user is logged in they can; add the product to their wishlist, add it to their cart, leave a review and rating. They can also sort reviews by most popular review, by latest review or highest/lowest rating. There is also a button to edit or delete their own review. Superusers can again see the additional edit and delete buttons.
+If a user is logged in they can; add the product to their wishlist, add it to their cart, leave a review and rating. They can also sort reviews by most popular review, by latest review or highest/lowest rating. There is also a button to edit or delete their own review. Users can also upvote a review by clicking the thumbs-up symbol. 
+
+Superusers can again see the additional edit and delete buttons. 
 
 _Product Review Page:_
 
@@ -189,7 +191,7 @@ Here there's a form where users can edit or delete a past review and superusers 
 
 _Wishlist Page:_
 
-The wishlist allows users to make a list of up to 10 favourite products which they might like to purchase at some point in the future. For convenience there's are buttons to add each individual product to the cart or all items at once. This is one of the big advantages for a customer to sign up to the site as you cannot access or use the wishlist otherwise.
+The wishlist allows users to make a list of up to 10 favourite products which they might like to purchase at some point in the future. For convenience there's are buttons to add each individual product to the cart or all items at once. This is one of the big advantages for a customer to sign up to the site as they cannot access or use the wishlist otherwise. If they click on the wishlist it will direct them to the sign-in page.
 
 _Cart Page:_
 
@@ -202,6 +204,114 @@ The checkout page shows details of the intended purchases including a delivery c
 _My Profile Page:_
 
 From here customers can save address details to make checkout quicker and easier. The can also view past orders and start a conversation with the site owners regarding a particular order. When they receive a message back they will also get an email notification to let them know they have a new message. A users username and email address are fixed and are the ones they signed up with.
+
+**Superuser Features:**
+
+_Messaging App:_
+
+From the messaging app main page site admin with superuser status can view all message threads both open and closed. They can choose to view open or closed seperately and they can refresh messages or delete whole threads for maintenence purposes. Unread messages are in bold print and the user is informed if they've replied to a thread. Message threads are started by customers if they have an issue with an order. When the customer sends a message the site admin gets an email notification. The unique order number is used as a reference number for each message thread and messages are displayed by grouping them by ref. number and ordering by date.
+
+_Message Thread Page:_
+
+On this page the site admin can see a summary of the order in question and can reply to the customer. They can also open or close the thread.
+
+_All Orders Page:_
+
+From here the site admin can view all customer orders. They can search by username or by "no account" for anonymous users.
+
+_Add & Edit Product Page:_
+
+Allows a site admin to add a new product or edit an existing one. A check is performed to make sure that the new SKU product identifier does not already exist in the database. The customised Django Better Arrayfield makes it an easy task to add album track listings.
+
+_Product Tags Admin Page:_
+
+Allows a site admin to add a new product genres or promotion tags. Both programatical and reader friendly names are required. The programatical name is validated and does not allow spaces or special characters. Repetition is also checked.
+
+_Custom Error Pages:_
+
+Custom error pages are included for http 400, 403, 403CSRF and 500 errors.
+
+_Other features of the backend of the site:_
+
+__Project File Structure__: The project is structured and folders named as per the Django documentation and recommendations. Styling and javascript are split out to the various apps where appropriate. A seperate utils folder for helper functions was created for the send email function as it is used across various apps.
+
+__Defensive Programming__: As mentioned previously defensive programming was a key consideration. Potential errors are considered where they could possibly arise so that they could be handled appropriately. The @login_required decorator is used throughout to aid security of the site by preventing unauthorised users accessing functions through URL's. All URL's have been manually checked in the browser address bar to ensure expected functionality and security. Functions that require it have checks to see if the user is a superuser and authorised to access it. Validation on inputs is used where necessary. In all instances where the database is modified POST requests are used for some additional security.
+
+_There are no known outstanding bugs in the site._
+
+__Additional Security Considerations__:
+
+Django has in-built security through it middleware in settings and Django templates protects against the majority of XSS attacks.
+
+In addition:
+
+- All sensitive variables are stored in environment variables.
+- The session cookie and CSRF cookie are set to secure.
+- The SECURE_HSTS_SECONDS value is set, which means SecurityMiddleware will set the “Strict-Transport-Security” header. This reduces your exposure to some SSL-stripping man-in-the-middle (MITM) attacks.
+- SECURE_HSTS_INCLUDE_SUBDOMAINS is set to true, which means SecurityMiddleware will add the includeSubDomains directive to the Strict-Transport-Security header.
+- The session cookie is set to time-out after 3 hours.
+- Cross-Site Request Forgery (CSRF) attacks are dealt with by using the CSRF Token tag inside any form {% csrf_token %}.
+
+
+__Postgres Database Collections Schema__:
+
+![DatabaseSchema][4]
+
+[4]: ./documentation/images_for_readme/database_schema.svg "Database Schema"
+
+The database consists of 10 models with some common relationships to each other as marked on the diagram above. A Postgres database was used in development and the deployed version as the sqlite3 or mysql database options would not handle the arrayfield used for track listings:
+
+_User Model_
+
+- This model is supplied by Django Allauth and contains the key user authentication information, including username, email and password.
+
+_UserProfile Model_
+
+- Contains user editable information such as shipping/billing address and phone number. It has a one-to-one relationaship with User.
+
+_UserMessage Model_
+
+- For user messages. Contains fields such as message body, message date, message read, message topic closed. User messages are associated with a certain order by setting the ref. number equal to the particular order number. It includes User as a foreign-key.
+
+_Order Model_
+
+- For user e-commerce orders. Contains fields such as the order number, order date, shipping/billing details (which could be different from those in UserProfile), original cart items, delivery cost and totals. It includes UserProfile as a foreign-key.
+
+_OrderLineItem Model_
+
+- Represents a line in an order, product price * quantity with the lineitem_total field holding the result. It includes Order and Product as foreign-keys.
+
+_Wishlist Model_
+
+- Contains a many-to-many field of Products. It has a one-to-one relationaship with User.
+
+_Product Model_
+
+- Represents a single products details. It includes fields such as artist, title, sku, rating and price. The image field contains a path to the product image. The track list field uses an arrayfield to store the album track list. Includes Genre and Promotion many-to-many fields.
+
+_Genre Model_
+
+- Represents a music genre tag. It includes a programatical name and a friendly name.
+
+_Promotion Model_
+
+- Represents an e-commerce promotions tag. It includes a programatical name and a friendly name.
+
+_ProductReview Model_
+
+- Represents an e-commerce promotions tag. It includes a programatical name and a friendly name.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -4,7 +4,12 @@ $(".call-delete").click(function(event) {
     var objectId = $(this).attr("data-messages");
     var deleteUrl = `/messaging/delete_thread/${objectId}/`;
 
-    $("#confirm-delete").attr("action", deleteUrl);
+    $(".confirm-delete-form").attr("action", deleteUrl);
+});
+
+// disable multiple clicks
+$(".confirm-delete-btn").on("click", function() {
+    $(this).addClass("disable-element");
 });
 
 // Show open threads only

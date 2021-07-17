@@ -213,6 +213,11 @@ input[name='q']::placeholder {
 .customer-card {
     background-color: #1f7055;
 }
+
+.delivery-banner p {
+    font-size: .9rem;
+}
+
 /* ------------------------------------------- home */
 
 .shop-heading {
@@ -490,10 +495,6 @@ input[name='q']::placeholder {
         font-size: 1rem;
     }
 
-    .delivery-banner h4 {
-        font-size: .9rem;
-    }
-
     .increment-qty,
     .decrement-qty {
         padding: .25rem .5rem !important;
@@ -520,8 +521,12 @@ input[name='q']::placeholder {
         z-index: 1030;
     }
 
+    .delivery-banner p {
+        font-size: 1.1rem;
+    }
+
     .header-container {
-        padding-top: 200px;
+        padding-top: 187px;
     }
 
     .nav-link {

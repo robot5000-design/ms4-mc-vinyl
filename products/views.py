@@ -1,5 +1,6 @@
 from django.shortcuts import (
     render, redirect, reverse, get_object_or_404, HttpResponse)
+from django.views.decorators.http import require_POST
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -153,9 +154,11 @@ def edit_product(request, product_id):
         return redirect(reverse('home'))
 
     product = get_object_or_404(Product, pk=product_id)
+
     if request.method == 'POST':
         current_title = product.title
         form = ProductForm(request.POST, request.FILES, instance=product)
+
         if form.is_valid():
             current_sku = request.POST['sku']
             sku_exists = Product.objects.filter(
@@ -201,6 +204,7 @@ def add_product(request):
 
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
+
         if form.is_valid():
             new_sku = request.POST['sku']
             sku_exists = Product.objects.filter(sku=new_sku)
@@ -292,9 +296,6 @@ def edit_product_review(request, product_id, review_author):
         Renders the edit_product_review template.
         Redirects to product_detail page upon successful review.
         Redirects to home url if not superuser or the review author.
-    Raises:
-        IndexError: If the particular review cannot be picked from the filtered
-        results from the database.
     """
     product = get_object_or_404(Product, pk=product_id)
     review = get_object_or_404(
@@ -344,9 +345,6 @@ def delete_product_review(request, product_id, review_author):
     Returns:
         Redirects to product_detail page upon successful or failed delete.
         Redirects to home url if not superuser or the review author.
-    Raises:
-        IndexError: If the particular review cannot be picked from the filtered
-        results from the database.
     """
     product = get_object_or_404(Product, pk=product_id)
     review = get_object_or_404(
@@ -363,6 +361,7 @@ def delete_product_review(request, product_id, review_author):
     return redirect(reverse('product_detail', args=[product.id]))
 
 
+@require_POST
 @login_required
 def upvote_product_review(request, product_id, review_author):
     """ A view to upvote a product review.
@@ -375,37 +374,29 @@ def upvote_product_review(request, product_id, review_author):
         product_id (int): id which identifies a product in the database.
         review_author (str): The request user's username.
     Returns:
-        Redirects to product_detail page upon successful like or if already
-        liked or if an IndexError.
-        Redirects to home url if review doesn't exist.
-    Raises:
-        IndexError: If the particular review cannot be picked from the filtered
-        results from the database.
+        A HttpResonse status 200.
     """
     product = get_object_or_404(Product, pk=product_id)
     review = get_object_or_404(
         ProductReview, product=product, user__username=review_author)
 
-    if request.POST:
-        if request.user == review.user:
-            messages.error(request, "You can't like your own review!!")
-            return HttpResponse(status=200)
-
-        if not review.upvote_list.filter(id=request.user.id):
-            review.upvote_list.add(request.user)
-            review.upvote_count = review.upvote_list.all().count()
-            review.save()
-            messages.info(request, 'Liked Review!')
-            return HttpResponse(status=200)
-
-        messages.info(request, 'Already Liked!')
+    if request.user == review.user:
+        messages.error(request, "You can't like your own review!!")
         return HttpResponse(status=200)
 
-    return HttpResponse(status=500)
+    if not review.upvote_list.filter(id=request.user.id):
+        review.upvote_list.add(request.user)
+        review.upvote_count = review.upvote_list.all().count()
+        review.save()
+        messages.info(request, 'Liked Review!')
+        return HttpResponse(status=200)
+
+    messages.info(request, 'Already Liked!')
+    return HttpResponse(status=200)
 
 
 @login_required
-def product_fields_admin(request):
+def product_tags_admin(request):
     """ A view to render and edit product genres and promotions fields.
 
     Checks if the new field already exists and if not, adds it.
@@ -413,8 +404,8 @@ def product_fields_admin(request):
     Args:
         request (object): HTTP request object.
     Returns:
-        Renders the product_fields_admin page.
-        Redirects to product_fields_admin page upon successful add.
+        Renders the product_tags_admin page.
+        Redirects to product_tags_admin page upon successful add.
         Redirects to home url if not superuser.
     """
     if not request.user.is_superuser:
@@ -448,12 +439,12 @@ def product_fields_admin(request):
             else:
                 messages.error(request, 'Failed to add promotion. Please ensure the \
                             form is valid.')
-        return redirect(reverse('product_fields_admin'))
+        return redirect(reverse('product_tags_admin'))
 
     genre_form = GenreForm()
     promotion_form = PromotionForm()
 
-    template = 'products/product_fields_admin.html'
+    template = 'products/product_tags_admin.html'
     context = {
         'genre_form': genre_form,
         'promotion_form': promotion_form,

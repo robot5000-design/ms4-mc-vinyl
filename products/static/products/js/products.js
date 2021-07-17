@@ -23,7 +23,7 @@ $(".edit-product-form").on("submit", function() {
     $('#loading-overlay').fadeToggle(4000);
 });
 
-$("#confirm-delete").on("click", function() {
+$(".confirm-delete-btn").on("click", function() {
     $(this).addClass("disable-element");
 });
 

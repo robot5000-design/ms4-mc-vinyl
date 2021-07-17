@@ -14,9 +14,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <form id="confirm-delete" method="POST">
+                <form class="confirm-delete-form" method="POST">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                    <button type="submit" class="btn btn-danger confirm-delete-btn">Confirm Delete</button>
                 </form>
             </div>
         </div>

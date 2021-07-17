@@ -73,8 +73,7 @@ def remove_from_wishlist(request, item_id, redirect_from):
     """Remove the item from wishlist.
 
     Gets the product and wishlist from the database and removes the
-    product from the request user's wishlist if it exists. If not,
-    an exception is raised but handled.
+    product from the request user's wishlist if it exists.
 
     Args:
         request (object): HTTP request object.
