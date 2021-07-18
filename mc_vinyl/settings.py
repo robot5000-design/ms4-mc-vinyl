@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['localhost', ]
+ALLOWED_HOSTS = ['localhost', 'ms4-mc-vinyl-record-store.herokuapp.com']
 
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_AGE = 10800
@@ -132,6 +132,7 @@ WSGI_APPLICATION = 'mc_vinyl.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
 
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))

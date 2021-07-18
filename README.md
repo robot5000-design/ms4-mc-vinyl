@@ -209,7 +209,7 @@ From here customers can save address details to make checkout quicker and easier
 
 _Messaging App:_
 
-From the messaging app main page site admin with superuser status can view all message threads both open and closed. They can choose to view open or closed seperately and they can refresh messages or delete whole threads for maintenence purposes. Unread messages are in bold print and the user is informed if they've replied to a thread. Message threads are started by customers if they have an issue with an order. When the customer sends a message the site admin gets an email notification. The unique order number is used as a reference number for each message thread and messages are displayed by grouping them by ref. number and ordering by date.
+From the messaging app main page site admin with superuser status can view all message threads both open and closed. They can choose to view open or closed separately and they can refresh messages or delete whole threads for maintenence purposes. Unread messages are in bold print and the user is informed if they've replied to a thread. Message threads are started by customers if they have an issue with an order. When the customer sends a message the site admin gets an email notification. The unique order number is used as a reference number for each message thread and messages are displayed by grouping them by ref. number and ordering by date.
 
 _Message Thread Page:_
 
@@ -233,7 +233,7 @@ Custom error pages are included for http 400, 403, 403CSRF and 500 errors.
 
 _Other features of the backend of the site:_
 
-__Project File Structure__: The project is structured and folders named as per the Django documentation and recommendations. Styling and javascript are split out to the various apps where appropriate. A seperate utils folder for helper functions was created for the send email function as it is used across various apps.
+__Project File Structure__: The project is structured and folders named as per the Django documentation and recommendations. Styling and javascript are split out to the various apps where appropriate. A separate utils folder for helper functions was created for the send email function as it is used across various apps.
 
 __Defensive Programming__: As mentioned previously defensive programming was a key consideration. Potential errors are considered where they could possibly arise so that they could be handled appropriately. The @login_required decorator is used throughout to aid security of the site by preventing unauthorised users accessing functions through URL's. All URL's have been manually checked in the browser address bar to ensure expected functionality and security. Functions that require it have checks to see if the user is a superuser and authorised to access it. Validation on inputs is used where necessary. In all instances where the database is modified POST requests are used for some additional security.
 
@@ -259,7 +259,7 @@ __Postgres Database Collections Schema__:
 
 [4]: ./documentation/images_for_readme/database_schema.png "Database Schema"
 
-The database consists of 10 models with some common relationships to each other as marked on the diagram above. A Postgres database was used in development and the deployed version as the sqlite3 or mysql database options would not handle the arrayfield used for track listings:
+ A Postgres relational database set up in Heroku for convenience and linked to in environmental variables, was used in development as well as the deployed version, as the sqlite3 or mysql database options would not handle the arrayfield used for track listings. The database consists of 10 models with some common relationships to each other as marked on the diagram above:
 
 _User Model_
 
@@ -299,9 +299,188 @@ _Promotion Model_
 
 _ProductReview Model_
 
-- Represents a user review of a product. Includes such fields as review body, review date, review rating, upvote count and an admin comment field, where the site admin can respond to a complaint. It features User and Product foreign-keys and upvote_list which is a User linked many-to-many field. The upvote_list length can be used to give the upvote count field value. A choices array is supplied for the review rating IntegerField.
+- Represents a user review of a product. Includes the fields; review body, review date, review rating, upvote count and an admin comment field, where the site admin can respond to a complaint. It features User and Product foreign-keys and upvote_list which is a User linked many-to-many field, the length of which can be used to give the upvote count field value. A choices array is supplied for the review rating IntegerField.
 
+---
 
+### **3. Technologies Used**
+
+_IDE and Languages:_
+
+- Gitpod - IDE used.
+- HTML - Base structural language.
+- CSS - Language used for styling.
+- JavaScript - for application functionality and DOM manipulation.
+- Python - for backend functionality.
+- Django templating language in Django template renders.
+
+_Libraries, frameworks and Add-ons:_
+
+- Django 3.2.3 - is a Python-based free and open-source web framework that follows the model–template–views architectural pattern.
+- Django-allauth 0.44.0 - Integrated set of Django applications addressing authentication, registration, account management.
+- Django-better-admin-arrayfield 1.4.2 - Formats model ArrayFields into separate inputs rather than a comma separated list.
+- Django-crispy-forms 1.11.2 - Formats form renders in templates.
+- Bootstrap 4.6.0 - Used to help with grid layout, screen size responsiveness and other features such as buttons and toasts.
+- JavaScript, Popper.js, and jQuery as part of Bootstrap.
+- Font Awesome for icons.
+- Google Fonts for Monoton and Montserrat fonts.
+- Stripe - for processing credit card payments.
+
+_Database:_
+
+- Postgres - Relational Database.
+
+_Hosting and Version Control:_
+
+- GitHub - Holding repository.
+- Git - Version control.
+- Heroku - for hosting the site.
+
+_Other Tools:_
+
+- Balsamiq - For wireframes.
+- Microsoft Paint 3D - For editing images.
+- Browserstack - To check base compatibility.
+- freeformatter.com - to format html files.
+- tinyjpg.com - to reduce image file size.
+- Autoprefixer - used to automatically add browser compatibility prefixes.
+- w3c - for HTML and CSS validation.
+- jshint - for JavaScript validation.
+- pylint - for python validation.
+- Chrome Development Tools - for checking performance and accessibility.
+- [quickDBD](www.quickdatabasediagrams.com) - for the database schema.
+
+As per industry practice and to reduce the number of small commits on the master branch, separate branches were created and used for features (where appropriate) and for the readme file as they were developed. These were squashed, merged and deleted after use.
+
+---
+
+### **4. Testing**
+
+__Final testing of links, responsiveness and Live Website test cases can be found in the [final testing document here](./documentation/testing.md).__
+
+---
+
+### **5. Deployment**
+
+The live site is deployed to [Heroku](https://www.heroku.com), a cloud application platform. The deployment procedure for this was as follows:
+
+1. The repository for the site was generated in Github based on the [Code Institute Full Template](https://github.com/Code-Institute-Org/gitpod-full-template).
+
+2. 
+
+4. In the IDE CLI make a requirements file containing all installed dependencies using the following command:
+    - `pip3 freeze --local > requirements.txt`
+
+5. Again in the IDE CLI make a Procfile using command:
+    - `echo web: gunicorn mc_vinyl.wsgi:application > Procfile`
+
+6. Debug must be set to False for production.
+
+7. Make a [Heroku](https://www.heroku.com) account and create a new App.
+
+    ![CreateNewApp][5]
+
+    [5]: ./documentation/images_for_readme/create-new-app.jpg "Create New App"
+
+8. Give it a name and choose the appropriate region.
+
+    ![NameApp][6]
+
+    [6]: ./documentation/images_for_readme/name-app.jpg "Name New App"
+
+9. Go to settings and click on Reveal Config Vars.
+
+    ![Settings][7]
+
+    [7]: ./documentation/images_for_readme/settings.jpg "Settings"
+
+10. Enter the environmental variables for the project from the env.py file.
+
+    ![EnvVariables][8]
+
+    [8]: ./documentation/images_for_readme/env-variables.jpg "Environmental Variables"
+
+11. Then select Deploy and click connect to Github. Type the repository name in the search box and press search. Just below that, this should find the repository. Click Connect. Heroku is now connected to the Github repository.
+
+    ![ConnectGithub][9]
+
+    [9]: ./documentation/images_for_readme/connect-github.jpg "Connect Github"
+
+12. Finally select the correct branch (in this case Master) and click on Deploy Branch. Automatic or manual deployment can be used as preferred. The message "Your app was successfully deployed." should appear. Click View to view the now deployed app.
+
+    ![DeployBranch][10]
+
+    [10]: ./documentation/images_for_readme/deploy-branch.jpg "Deploy Branch"
+
+---
+
+_For this website to be run locally it can downloaded as a ZIP file or it can be cloned, however it needs access to a database schema named "movie_review" as highlighted in the earlier section:_
+
+- To download ZIP copy:
+
+1. On GitHub, navigate to the main page of the repository.
+2. Above the list of files, click Code.
+3. Click Download ZIP.
+4. Navigate to the local Downloads folder and un-zip the project_one-master folder.
+
+- To Clone using Command Line:
+
+1. On GitHub, navigate to the main page of the repository.
+2. Above the list of files, click Code.
+3. To clone the repository using HTTPS, under "Clone with HTTPS", copy the URL.
+To clone the repository using an SSH key, including a certificate issued by your organization's
+SSH certificate authority, click Use SSH, then copy the URL.
+4. Open Git Bash.
+5. Change the current working directory to the location where you want the cloned directory.
+6. Type git clone, and then paste the URL you copied earlier: \$ git clone url-copied-earlier
+7. Press Enter to create your local clone.
+
+- To Clone using GitHub Desktop:
+
+1. On GitHub, navigate to the main page of the repository.
+2. Above the list of files, click Code.
+3. Click "Open with GitHub Desktop" to clone and open the repository with GitHub Desktop.
+4. Follow the prompts in GitHub Desktop to complete the clone.
+
+Once the local project directory is in place, create a virtual python environment. Make an env.py file with the following entries:
+
+    - import os
+    - ("IP", "0.0.0.0")
+    - ("PORT", "5000")
+    - ("SECRET_KEY", "\<your secret key\>")
+    - ("API_KEY", "\<your api access key\>")
+    - ("MONGO_URI", "\<your mongodb uri\>")
+    - ("MONGO_DBNAME", "movie_review")
+
+Install the required packages with:
+
+- `pip install -r requirements.txt`
+
+Run the app: 
+
+- `python3 manage.py runserver`
+
+The website should be available at http://127.0.0.1:5000
+
+---
+
+### **6. Credits and Notes**
+
+- All code in this project is completely the authors unless otherwise indicated in the code.
+
+- Free background image supplied from pixabay.com and is free to use without attribution.
+
+- My Mentor for their time and advice.
+
+- Friends and family who tested the site.
+
+---
+
+### **Disclaimer**
+
+- This website is for educational purposes only.
+
+---
 
 
 
