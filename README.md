@@ -429,6 +429,132 @@ Back in Heroku:
 
     [9]: ./documentation/images_for_readme/connect-github.jpg "Connect Github"
 
+Setting up Amazon AWS:
+
+_a) Setting up S3:_
+
+1. Sign in to AWS account and search for S3.
+
+2. Click Create Bucket. Name it "ms4-mc-vinyl-record-store".
+
+3. Uncheck Block Public Access and click Create Bucket.
+
+4. Once created, click on the new bucket to adjust settings.
+
+5. Under the Properties tab scroll down to Static Website Hosting and click Edit.
+
+6. Select Enable and select Host Static Website. Enter index.html and error.html as indicated and click Save Changes.
+
+7. Under the Permissions tab, scroll down to CORS Configuration and click Edit.
+
+8. Enter the following CORS Configuration and Save changes:
+
+        [
+            {
+                "AllowedHeaders": [
+                    "Authorization"
+                ],
+                "AllowedMethods": [
+                    "GET"
+                ],
+                "AllowedOrigins": [
+                    "*"
+                ],
+                "ExposeHeaders": []
+            }
+        ]
+
+9. Next, again under the Permissions tab scroll to Bucket Policy and click Edit.
+
+10. Click Policy Generator. This will open a new browser tab for Policy Generator. Select S3 Bucket Policy as Policy Type. Under Add Statements, click Enable for Effect, enter * for Principal, select GetObject for Actions. For the ARN input, paste the Bucket ARN copied from the Edit Bucket Policy Page. Click Add Statement followed by Generate Policy.
+
+11. Copy the policy and paste it under the Edit Bucket Policy page. Because we want to allow access to all resources under this bucket, add /* to the end of the Resources key and Save Changes.
+
+12. Next, again under the Permissions tab scroll to Access Control List(ACL) and click Edit. Tick List access under the Everyone (public access) section and Save changes.
+
+_b) Setting up IAM:_
+
+1. Create a new group named "manage-ms4-mc-vinyl-record-store" and save.
+
+2. Click Policies under Access Management and click Create Policy.
+
+3. Click the JSON tab. Click Import Managed Policy. Search for s3. Tick AmazonS3FullAccess and Import.
+
+4. Use the ARN from the Bucket Policy earlier to replace the Resource key so the Resource item looks as follows:
+
+            "Resource": [
+                "arn:aws:s3:::ms4-mc-vinyl-record-store",
+                "arn:aws:s3:::ms4-mc-vinyl-record-store/*"
+            ]
+
+5. Click Next and enter a name "ms4-mc-vinyl-record-store-policy" and description for the policy and finally click Create Policy.
+
+6. Next, click User Groups under Access Management. Click on the "manage-ms4-mc-vinyl-record-store" group.
+
+7. Under the Permissions tab click Add Permissions and then Attach Policies and select the "ms4-mc-vinyl-record-store-policy" policy and click Add Permission.
+
+8. Next, click Users under Access Management. Click Add Users.
+
+9. Give the user a name "mc-vinyl-static-files-user" and give them Programmatic Access and click Next.
+
+10. Under Add User to Group select "manage-ms4-mc-vinyl-record-store". The policy is already attached.
+
+11. Click Next repeatedly and then Create User. Download the csv file as prompted. The values in this file are needed later.
+
+12. Back in the IDE, install boto3 and django-storages:
+    `pip3 install boto3 django-storages`
+
+13. Add 'storages' to apps in settings.py.
+
+14. Add the following code to settings.py:
+
+        if 'USE_AWS' in os.environ:
+
+            # Cache control
+            AWS_S3_OBJECT_PARAMETERS = {
+                'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+                'CacheControl': 'max-age=94608000',
+            }
+
+            # Bucket Config
+            AWS_STORAGE_BUCKET_NAME = 'ms4-mc-vinyl-record-store'
+            AWS_S3_REGION_NAME = 'eu-west-1'
+            AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+            AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+            AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+            # Static and media files
+            STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+            STATICFILES_LOCATION = 'static'
+            DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+            MEDIAFILES_LOCATION = 'media'
+
+            # Override static and media URLs in production
+            STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+            MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'"
+
+15. Add AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY into Heroku environmental variables, the values of these taken from the csv files downloaded earlier. 
+
+16. Then add USE_AWS = True and remove DISABLE_COLLECTSTATIC = 1.
+
+17. Back in the IDE create a new file called custom_storages.py with the following code:
+
+        from django.conf import settings
+        from storages.backends.s3boto3 import S3Boto3Storage
+
+
+        class StaticStorage(S3Boto3Storage):
+            location = settings.STATICFILES_LOCATION
+
+
+        class MediaStorage(S3Boto3Storage):
+            location = settings.MEDIAFILES_LOCATION
+
+18. 
+
+
+
+
 
 
 
