@@ -533,7 +533,7 @@ _b) Setting up IAM:_
             STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
             MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'"
 
-15. Add AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY into Heroku environmental variables, the values of these taken from the csv files downloaded earlier. 
+15. Now add AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY into Heroku environmental variables, the values of these taken from the csv files downloaded earlier.
 
 16. Then add USE_AWS = True and remove DISABLE_COLLECTSTATIC = 1.
 
@@ -550,7 +550,25 @@ _b) Setting up IAM:_
         class MediaStorage(S3Boto3Storage):
             location = settings.MEDIAFILES_LOCATION
 
-18. 
+18. Commit the changes and push.
+
+19. Back in Amazon S3 Buckets click on "ms4-mc-vinyl-record-store" bucket. There is now a static folder. Create a new folder called "media". Upload all site images to this folder and grant public read access.
+
+20. Finally add the Stripe environmental variables to Heroku, so the list of Heroku environmental variables looks like:
+
+        AWS_ACCESS_KEY_ID
+        AWS_SECRET_ACCESS_KEY
+        DATABASE_URL
+        DEFAULT_FROM_EMAIL
+        EMAIL_HOST_USER
+        EMAIL_HOST_PASSWORD
+        SECRET_KEY
+        STRIPE_PUBLIC_KEY
+        STRIPE_SECRET_KEY
+        STRIPE_WH_SECRET
+        USE_AWS
+
+21. The deployed Heroku site should now be functioning correctly.
 
 
 
