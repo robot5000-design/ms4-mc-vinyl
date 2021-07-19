@@ -37,10 +37,9 @@ def cart_contents(request):
     else:
         delivery = 0
         free_delivery_delta = 0
-        
 
     grand_total = delivery + total
-    
+
     # this context is available accross every template and every app
     # because it was added to context processors in settings
     context = {

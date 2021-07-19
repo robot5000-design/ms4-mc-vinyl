@@ -32,11 +32,11 @@ ALLOWED_HOSTS = ['localhost', 'ms4-mc-vinyl-record-store.herokuapp.com']
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_AGE = 10800
 CSRF_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = 31536000
+#SECURE_HSTS_SECONDS = 31536000
 #SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-if 'DEVELOPMENT' not in os.environ:
-    SECURE_SSL_REDIRECT = True
+# if 'DEVELOPMENT' not in os.environ:
+#     SECURE_SSL_REDIRECT = True
 
 # Application definition
 
@@ -134,6 +134,7 @@ WSGI_APPLICATION = 'mc_vinyl.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
+# Postgres Database
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
 }

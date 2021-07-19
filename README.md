@@ -325,6 +325,8 @@ _Libraries, frameworks and Add-ons:_
 - Font Awesome for icons.
 - Google Fonts for Monoton and Montserrat fonts.
 - Stripe - for processing credit card payments.
+- dj-database-url - The dj_database_url.config method returns a Django database connection dictionary, populated with all the data specified in your URL.
+- Psycopg2-binary - is the most popular PostgreSQL database adapter for the Python programming language.
 
 _Database:_
 
@@ -364,18 +366,6 @@ __Final testing of links, responsiveness and Live Website test cases can be foun
 
 The live site is deployed to [Heroku](https://www.heroku.com), a cloud application platform. The deployment procedure for this was as follows:
 
-1. The repository for the site was generated in Github based on the [Code Institute Full Template](https://github.com/Code-Institute-Org/gitpod-full-template).
-
-2. 
-
-4. In the IDE CLI make a requirements file containing all installed dependencies using the following command:
-    - `pip3 freeze --local > requirements.txt`
-
-5. Again in the IDE CLI make a Procfile using command:
-    - `echo web: gunicorn mc_vinyl.wsgi:application > Procfile`
-
-6. Debug must be set to False for production.
-
 7. Make a [Heroku](https://www.heroku.com) account and create a new App.
 
     ![CreateNewApp][5]
@@ -388,29 +378,72 @@ The live site is deployed to [Heroku](https://www.heroku.com), a cloud applicati
 
     [6]: ./documentation/images_for_readme/name-app.jpg "Name New App"
 
+4. Under the Resources tab search for postgres in the addons input and install.
+
+5. Next enter the environmental variables (config vars in Heroku) for the project and create a secret key. Then copy the database URL.
+
+Back in the IDE:
+
+1. The repository for the site was generated in Github based on the [Code Institute Full Template](https://github.com/Code-Institute-Org/gitpod-full-template).
+
+3. The copied database URL and secret key can be saved in the local environmental variables.
+
+2. Install both dj-database-url and psycopg2-binary. The dj_database_url.parse(os.environ.get('DATABASE_URL')) method is used in settings to connect to the databse URL in environmental variables.
+
+3. Install gunicorn.
+
+4. In the IDE CLI make a requirements file containing all installed dependencies using the following command:
+    - `pip3 freeze --local > requirements.txt`
+
+5. Again in the IDE CLI make a Procfile using command:
+    - `echo web: gunicorn mc_vinyl.wsgi:application > Procfile`
+
+6. Debug must be set to False for production.
+
+7. Add 'localhost' and 'ms4-mc-vinyl-record-store.herokuapp.com' to the ALLOWED_HOSTS list in settings.py.
+
+6. Migrate the new database with the command:
+    - `python3 manage.py migrate`
+
+6. Create a superuser:
+    - `python3 manage.py createsuperuser`
+
+5. Commit and push to the Github repository.
+
+7. From the CLI login to Heroku. Connect to the Heroku remote for the app.
+    - `heroku git:remote -a ms4-mc-vinyl-record-store`
+
+8. Temporarily disable collectstatic in Heroku before pushing. Using the CLI as below, or setting it in heroku environment variables.
+    - `heroku config:set DISABLE_COLLECTSTATIC=1 -a ms4-mc-vinyl-record-store`
+
+8. Then push to the heroku remote.
+    - `git push heroku master`
+
+8. This should deploy the application to Heroku however, the next steps connect the app to the Github repository for automatic deployments.
+
+Back in Heroku:
+
+11. Select Deploy and click connect to Github. Type the repository name in the search box and press search. Just below that, this should find the repository. Click Connect. Heroku is now connected to the Github repository. Select the correct branch and then Automatic or manual deployment can be used as preferred.
+
+    ![ConnectGithub][9]
+
+    [9]: ./documentation/images_for_readme/connect-github.jpg "Connect Github"
+
+
+
+
 9. Go to settings and click on Reveal Config Vars.
 
     ![Settings][7]
 
     [7]: ./documentation/images_for_readme/settings.jpg "Settings"
 
-10. Enter the environmental variables for the project from the env.py file.
+10. Enter the environmental variables for the project.
 
     ![EnvVariables][8]
 
     [8]: ./documentation/images_for_readme/env-variables.jpg "Environmental Variables"
 
-11. Then select Deploy and click connect to Github. Type the repository name in the search box and press search. Just below that, this should find the repository. Click Connect. Heroku is now connected to the Github repository.
-
-    ![ConnectGithub][9]
-
-    [9]: ./documentation/images_for_readme/connect-github.jpg "Connect Github"
-
-12. Finally select the correct branch (in this case Master) and click on Deploy Branch. Automatic or manual deployment can be used as preferred. The message "Your app was successfully deployed." should appear. Click View to view the now deployed app.
-
-    ![DeployBranch][10]
-
-    [10]: ./documentation/images_for_readme/deploy-branch.jpg "Deploy Branch"
 
 ---
 
