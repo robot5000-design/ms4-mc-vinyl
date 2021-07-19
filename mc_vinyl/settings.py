@@ -35,8 +35,8 @@ CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-# if 'DEVELOPMENT' not in os.environ:
-#     SECURE_SSL_REDIRECT = True
+if 'DEVELOPMENT' not in os.environ:
+    SECURE_SSL_REDIRECT = True
 
 # Application definition
 

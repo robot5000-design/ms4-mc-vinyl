@@ -88,7 +88,6 @@ def product_detail(request, product_id):
     Returns:
         Render of the product_details template.
     """
-    raise Exception('exception')
     product = get_object_or_404(Product, pk=product_id)
     reviews = ProductReview.objects.filter(product=product)
     current_sorting = 'date_desc'
