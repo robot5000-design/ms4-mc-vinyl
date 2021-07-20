@@ -37,9 +37,9 @@
                             {% csrf_token %}
                             <button type="submit" class="btn btn-dark"><span class="icon mr-2"><i class="far fa-check-square"></i></span>Open Thread</button>
                         </form>
-                        <div class="font-weight-bold text-danger py-4">This thread is closed.</div>
+                        <div class="font-weight-bold text-danger py-4">** This thread is closed. **</div>
                     {% else %}
-                        <form action="{% url 'change_thread_status' ref_number %}" method="POST" class="my-2 d-inline">
+                        <form action="{% url 'change_thread_status' ref_number %}" method="POST" class="d-inline">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-dark"><span class="icon mr-2"><i class="far fa-square"></i></span>Close Thread</button>
                         </form>
@@ -48,7 +48,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3">
+    <div class="row my-4">
         <div class="col-12 col-lg-6 mb-3">
             <div class="order-confirmation-wrapper p-2 border">
                 <div class="row">
