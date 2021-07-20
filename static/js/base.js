@@ -17,9 +17,10 @@ $(".btt-link").click(function(e) {
     window.scrollTo(0,0);
 });
 
-// Disable form submit button to prevent multiple entries
+// Disable form submit button to prevent multiple entries and add overlay
 $(".add-message-form").on("submit", function() {
     $(".add-message-btn").prop("disabled", "true");
+    $('#loading-overlay').fadeToggle(4000);
 });
 
 // Add loading spinner to search site form submit

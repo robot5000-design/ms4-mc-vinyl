@@ -109,12 +109,13 @@ def add_user_message(request, order_number):
             )
             messages.info(request, 'Successfully added a message!')
 
+            message = request.POST['user_message']
             customer_email = settings.DEFAULT_FROM_EMAIL
             subject_context = {'ref_number': order_number}
             body_context = {
                     'user': request.user,
                     'ref_number': order_number,
-                    'message': request.POST['user_message']
+                    'message': message,
                 }
             path = 'profiles/confirmation_emails/'
             send_confirmation_email(customer_email, subject_context,

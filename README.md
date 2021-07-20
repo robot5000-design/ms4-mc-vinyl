@@ -252,6 +252,13 @@ In addition:
 - The session cookie is set to time-out after 3 hours.
 - Cross-Site Request Forgery (CSRF) attacks are dealt with by using the CSRF Token tag inside any form {% csrf_token %}.
 
+__Potential Future Features__:
+
+There are a number of things that given more time would make the site more usable:
+
+- Add separate billing and delivery addresses in the order model.
+- Extend the messaging app to include a contact message form for anonymous users.
+- Pagination of all relevant pages using the Paginator Class.
 
 __Postgres Database Collections Schema__:
 
@@ -327,6 +334,8 @@ _Libraries, frameworks and Add-ons:_
 - Stripe - for processing credit card payments.
 - dj-database-url - The dj_database_url.config method returns a Django database connection dictionary, populated with all the data specified in your URL.
 - Psycopg2-binary - is the most popular PostgreSQL database adapter for the Python programming language.
+- boto3 - AWS SDK for Python to create, configure, and manage AWS services, such as Amazon Simple Storage Service (Amazon S3).
+- Django-storages - a collection of custom storage backends for Django. Used in combination with boto3.
 
 _Database:_
 
@@ -366,72 +375,72 @@ __Final testing of links, responsiveness and Live Website test cases can be foun
 
 The live site is deployed to [Heroku](https://www.heroku.com), a cloud application platform. The deployment procedure for this was as follows:
 
-7. Make a [Heroku](https://www.heroku.com) account and create a new App.
+1. Make a [Heroku](https://www.heroku.com) account and create a new App.
 
     ![CreateNewApp][5]
 
     [5]: ./documentation/images_for_readme/create-new-app.jpg "Create New App"
 
-8. Give it a name and choose the appropriate region.
+2. Give it a name and choose the appropriate region.
 
     ![NameApp][6]
 
     [6]: ./documentation/images_for_readme/name-app.jpg "Name New App"
 
-4. Under the Resources tab search for postgres in the addons input and install.
+3. Under the Resources tab search for postgres in the addons input and install.
 
-5. Next enter the environmental variables (config vars in Heroku) for the project and create a secret key. Then copy the database URL.
+4. Next enter the environmental variables (config vars in Heroku) for the project and create a secret key. Then copy the database URL.
 
 Back in the IDE:
 
-1. The repository for the site was generated in Github based on the [Code Institute Full Template](https://github.com/Code-Institute-Org/gitpod-full-template).
+5. The repository for the site was generated in Github based on the [Code Institute Full Template](https://github.com/Code-Institute-Org/gitpod-full-template).
 
-3. The copied database URL and secret key can be saved in the local environmental variables.
+6. The copied database URL and secret key can be saved in the local environmental variables.
 
-2. Install both dj-database-url and psycopg2-binary. The dj_database_url.parse(os.environ.get('DATABASE_URL')) method is used in settings to connect to the databse URL in environmental variables.
+7. Install both dj-database-url and psycopg2-binary. The dj_database_url.parse(os.environ.get('DATABASE_URL')) method is used in settings to connect to the databse URL in environmental variables.
 
-3. Install gunicorn.
+8. Install gunicorn.
 
-4. In the IDE CLI make a requirements file containing all installed dependencies using the following command:
+9. In the IDE CLI make a requirements file containing all installed dependencies using the following command:
     - `pip3 freeze --local > requirements.txt`
 
-5. Again in the IDE CLI make a Procfile using command:
+10. Again in the IDE CLI make a Procfile using command:
     - `echo web: gunicorn mc_vinyl.wsgi:application > Procfile`
 
-6. Debug must be set to False for production.
+11. Debug must be set to False for production.
 
-7. Add 'localhost' and 'ms4-mc-vinyl-record-store.herokuapp.com' to the ALLOWED_HOSTS list in settings.py.
+12. Add 'localhost' and 'ms4-mc-vinyl-record-store.herokuapp.com' to the ALLOWED_HOSTS list in settings.py.
 
-6. Migrate the new database with the command:
+13. Migrate the new database with the command:
     - `python3 manage.py migrate`
 
-6. Create a superuser:
+14. Create a superuser:
     - `python3 manage.py createsuperuser`
 
-5. Commit and push to the Github repository.
+15. Commit and push to the Github repository.
 
-7. From the CLI login to Heroku. Connect to the Heroku remote for the app.
+16. From the CLI login to Heroku. Connect to the Heroku remote for the app.
     - `heroku git:remote -a ms4-mc-vinyl-record-store`
 
-8. Temporarily disable collectstatic in Heroku before pushing. Using the CLI as below, or setting it in heroku environment variables.
+17. Temporarily disable collectstatic in Heroku before pushing. Using the CLI as below, or setting it in heroku environment variables.
     - `heroku config:set DISABLE_COLLECTSTATIC=1 -a ms4-mc-vinyl-record-store`
 
-8. Then push to the heroku remote.
+18. Then push to the heroku remote.
     - `git push heroku master`
 
-8. This should deploy the application to Heroku however, the next steps connect the app to the Github repository for automatic deployments.
+19. This should deploy the application to Heroku however, the next steps connect the app to the Github repository for automatic deployments.
 
 Back in Heroku:
 
-11. Select Deploy and click connect to Github. Type the repository name in the search box and press search. Just below that, this should find the repository. Click Connect. Heroku is now connected to the Github repository. Select the correct branch and then Automatic or manual deployment can be used as preferred.
+20. Select Deploy and click connect to Github. Type the repository name in the search box and press search. Just below that, this should find the repository. Click Connect. Heroku is now connected to the Github repository. Select the correct branch and then Automatic or manual deployment can be used as preferred.
 
-    ![ConnectGithub][9]
+    ![DeployBranch][9]
 
-    [9]: ./documentation/images_for_readme/connect-github.jpg "Connect Github"
+    [9]: ./documentation/images_for_readme/deploy-branch.jpg "Deploy Branch"
 
 Setting up Amazon AWS:
 
-_a) Setting up S3:_
+_a). Setting up S3:_
 
 1. Sign in to AWS account and search for S3.
 
@@ -472,7 +481,7 @@ _a) Setting up S3:_
 
 12. Next, again under the Permissions tab scroll to Access Control List(ACL) and click Edit. Tick List access under the Everyone (public access) section and Save changes.
 
-_b) Setting up IAM:_
+_b). Setting up IAM:_
 
 1. Create a new group named "manage-ms4-mc-vinyl-record-store" and save.
 
@@ -554,7 +563,7 @@ _b) Setting up IAM:_
 
 19. Back in Amazon S3 Buckets click on "ms4-mc-vinyl-record-store" bucket. There is now a static folder. Create a new folder called "media". Upload all site images to this folder and grant public read access.
 
-20. Finally add the Stripe environmental variables to Heroku, so the list of Heroku environmental variables looks like:
+20. Finally add the Stripe environmental variables to Heroku (settings and click on Reveal Config Vars), so the list of Heroku environmental variables looks like:
 
         AWS_ACCESS_KEY_ID
         AWS_SECRET_ACCESS_KEY
@@ -570,74 +579,50 @@ _b) Setting up IAM:_
 
 21. The deployed Heroku site should now be functioning correctly.
 
-
-
-
-
-
-
-9. Go to settings and click on Reveal Config Vars.
-
-    ![Settings][7]
-
-    [7]: ./documentation/images_for_readme/settings.jpg "Settings"
-
-10. Enter the environmental variables for the project.
-
-    ![EnvVariables][8]
-
-    [8]: ./documentation/images_for_readme/env-variables.jpg "Environmental Variables"
-
-
 ---
 
-_For this website to be run locally it can downloaded as a ZIP file or it can be cloned, however it needs access to a database schema named "movie_review" as highlighted in the earlier section:_
+_For this website to be run locally it can downloaded as a ZIP file or it can be cloned, however it needs access to a Postgres database as highlighted in the earlier section:_
 
 - To download ZIP copy:
 
-1. On GitHub, navigate to the main page of the repository.
-2. Above the list of files, click Code.
-3. Click Download ZIP.
-4. Navigate to the local Downloads folder and un-zip the project_one-master folder.
+    1. On GitHub, navigate to the main page of the repository.
+    2. Above the list of files, click Code.
+    3. Click Download ZIP.
+    4. Navigate to the local Downloads folder and un-zip the project_one-master folder.
 
 - To Clone using Command Line:
 
-1. On GitHub, navigate to the main page of the repository.
-2. Above the list of files, click Code.
-3. To clone the repository using HTTPS, under "Clone with HTTPS", copy the URL.
-To clone the repository using an SSH key, including a certificate issued by your organization's
-SSH certificate authority, click Use SSH, then copy the URL.
-4. Open Git Bash.
-5. Change the current working directory to the location where you want the cloned directory.
-6. Type git clone, and then paste the URL you copied earlier: \$ git clone url-copied-earlier
-7. Press Enter to create your local clone.
+    1. On GitHub, navigate to the main page of the repository.
+    2. Above the list of files, click Code.
+    3. To clone the repository using HTTPS, under "Clone with HTTPS", copy the URL.
+    To clone the repository using an SSH key, including a certificate issued by your organization's
+    SSH certificate authority, click Use SSH, then copy the URL.
+    4. Open Git Bash.
+    5. Change the current working directory to the location where you want the cloned directory.
+    6. Type git clone, and then paste the URL you copied earlier: 
+
+        `git clone url-copied-earlier`
+        
+    7. Press Enter to create your local clone.
 
 - To Clone using GitHub Desktop:
 
-1. On GitHub, navigate to the main page of the repository.
-2. Above the list of files, click Code.
-3. Click "Open with GitHub Desktop" to clone and open the repository with GitHub Desktop.
-4. Follow the prompts in GitHub Desktop to complete the clone.
+    1. On GitHub, navigate to the main page of the repository.
+    2. Above the list of files, click Code.
+    3. Click "Open with GitHub Desktop" to clone and open the repository with GitHub Desktop.
+    4. Follow the prompts in GitHub Desktop to complete the clone.
 
-Once the local project directory is in place, create a virtual python environment. Make an env.py file with the following entries:
-
-    - import os
-    - ("IP", "0.0.0.0")
-    - ("PORT", "5000")
-    - ("SECRET_KEY", "\<your secret key\>")
-    - ("API_KEY", "\<your api access key\>")
-    - ("MONGO_URI", "\<your mongodb uri\>")
-    - ("MONGO_DBNAME", "movie_review")
+Once the local project directory is in place, create a virtual python environment. Of course the environment variables will need to be set-up locally.
 
 Install the required packages with:
 
-- `pip install -r requirements.txt`
+- `pip3 install -r requirements.txt`
 
 Run the app: 
 
 - `python3 manage.py runserver`
 
-The website should be available at http://127.0.0.1:5000
+The website should be available at localhost.
 
 ---
 
@@ -645,7 +630,11 @@ The website should be available at http://127.0.0.1:5000
 
 - All code in this project is completely the authors unless otherwise indicated in the code.
 
-- Free background image supplied from pixabay.com and is free to use without attribution.
+- Free background image and records icon supplied from pixabay.com and is free to use without attribution.
+
+- Trash Can icon used under Font Awesome Licence https://fontawesome.com/license
+
+- Star rating CSS https://github.com/chrislingxiao/starrating
 
 - My Mentor for their time and advice.
 
@@ -658,21 +647,3 @@ The website should be available at http://127.0.0.1:5000
 - This website is for educational purposes only.
 
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-
-Trash Can icon used under Font Awesome Licence https://fontawesome.com/license
-
-star rating css https://github.com/chrislingxiao/starrating
