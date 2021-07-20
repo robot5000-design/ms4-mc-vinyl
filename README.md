@@ -25,7 +25,7 @@ Click the image to be taken to a live demo of the site:
 [![homepage][1]][2]
 
 [1]: ./documentation/images_for_readme/am-i-responsive.jpg
-[2]: https://mc-vinyl.herokuapp.com "Live Site" ###################################################
+[2]: https://ms4-mc-vinyl-record-store.herokuapp.com/ "Live Site"
 
 ---
 
