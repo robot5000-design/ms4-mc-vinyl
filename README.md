@@ -128,23 +128,29 @@ From the strategy table all the above features appear viable. Some basic feature
 
 Wireframes made in Balsamiq Wireframes were used for basic layout. These can be viewed here:
 
-[Landing Page All Sizes](./documentation/wireframes/landing_page.png)
+[Landing Page All Sizes](./documentation/wireframes/landing-page-all-sizes.png)
 
-[Admin Controls Page All Sizes](./documentation/wireframes/admin_controls.png)
+[All Products Page All Sizes](./documentation/wireframes/products-page-all-sizes.png)
 
-[Browse Reviews Page All Sizes](./documentation/wireframes/browse_my_reviews.png)
+[Product Detail Page All Sizes](./documentation/wireframes/product-detail-all-sizes.png)
 
-[New Review Search Page All Sizes](./documentation/wireframes/new_review_search.png)
+[Add/Edit Product Page All Sizes](./documentation/wireframes/add-edit-product-all-sizes.png)
 
-[New/Edit Review Page All Sizes](./documentation/wireframes/new_edit_review.png)
+[Add Product Tags Page All Sizes](./documentation/wireframes/add-product-tags-all-sizes.png)
 
-[Review Detail Page All Sizes](./documentation/wireframes/review_detail.png)
+[All Orders Page All Sizes](./documentation/wireframes/all-orders-all-sizes.png)
 
-[Register Page All Sizes](./documentation/wireframes/register.png)
+[Checkout Page All Sizes](./documentation/wireframes/checkout-all-sizes.png)
 
-[Change Password Page All Sizes](./documentation/wireframes/change_password.png)
+[Messaging Page All Sizes](./documentation/wireframes/messaging-page-all-sizes.png)
 
-[Contact Page All Sizes](./documentation/wireframes/contact_page.png)
+[Message Thread Page All Sizes](./documentation/wireframes/message-thread-all-sizes.png)
+
+[Order Detail Page All Sizes](./documentation/wireframes/order-detail-all-sizes.png)
+
+[Profile Page All Sizes](./documentation/wireframes/profile-page-all-sizes.png)
+
+[Wishlist Page All Sizes](./documentation/wireframes/wishlist-all-sizes.png)
 
 #### Surface
 

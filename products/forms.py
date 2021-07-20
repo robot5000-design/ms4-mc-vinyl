@@ -17,6 +17,7 @@ class ProductForm(forms.ModelForm):
         """
         model = Product
         fields = (
+            'image',
             'artist',
             'title',
             'promotion',
@@ -28,7 +29,6 @@ class ProductForm(forms.ModelForm):
             'description',
             'album_format',
             'color',
-            'image',
             'track_list',
             )
 
