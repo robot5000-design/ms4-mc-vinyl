@@ -57,13 +57,13 @@ As the site owner/administrator:
 
 - I want the site layout to be a typical e-commerce with the expected features and smooth navigation between sections.
 - I want users to be able to register, login and change password.
+- I want customers to be able to search and sort products.
 - I want the site to be relatively secure for users.
 - I want customers to be able to purchase and pay for products.
 - I want customers to be able to save favourite items to a wishlist for later which is saved to their account.
 - I want customers to be able to save profile information to their account.
 - I want staff to be able to add, edit and delete products.
 - I want customers to be able to message staff and vice versa with a record kept of all conversations.
-- I want customers to be able to search and sort products.
 - I want users to be able to make new reviews and edit or delete old reviews.
 - I want users to be able to rate products and i want the rating to be updated if reviews are adjusted or deleted.
 - I want users to be able to sort reviews.
