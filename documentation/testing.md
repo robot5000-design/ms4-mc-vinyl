@@ -255,8 +255,106 @@ Python code was passed through pylint and there are no outstanding issues.
 
 The Javascript on the site does not function on Internet Explorer 11, but considering its overall low usage and the fact that it is being discontinued in 2021, it was deemed not worth spending time on.
 
+Chrome Development Tools Lighthouse after some work, scored the site well, an example of the products page score below. Each page was worked on until the accessibility score was 100 on all and there were no contrast ratio issues. One of the few issues raised was the resolution of the no-image image but it is a free image and is perfectly adequate for the job at hand.
+
+Products Page:
+
+![LighthouseExample][11]
+
+[11]: ../documentation/images_for_readme/lighthouse-products.jpg "Lighthouse Example Score"
+
+Product Detail Page:
+
+![LighthouseExample2][12]
+
+[12]: ../documentation/images_for_readme/lighthouse-product-detail.jpg "Lighthouse Example Score 2"
+
 ---
 
+## 3. Final Testing Test Cases on Live Website
+
+The site has been tested on both mobile and desktop for responsiveness and functionality.
+
+Any issues have been cataloged in the Issues section on Github and closed when a sufficient solution
+was reached. There are no known exisiting issues with the final deployed version.
+
+- TC01
+
+    Description:
+
+  - Verify Register account, Login and Change Password. All controls are in the Navbar.
+
+    Procedure:
+
+    1. Try to register a new account with a valid email address and verify the account. __PASS__
+
+    2. Try to login to the account. __PASS__
+
+    3. Try changing the password. __PASS__
+
+- TC02
+
+    Description:
+
+  - Verify all navbar and footer links on Index page function as expected which will also confirm that the base template links work.
+
+    Procedure:
+
+    1. Navigate to [Index](https://ms4-mc-vinyl-record-store.herokuapp.com/). Check the navbar logo. It should link to index. __PASS__
+
+    2. Check the navbar menu item links all work as expected. All links in the dropdowns, All Products, Genre, Special Offers. Check the links work in the My Account sub-menu which should show Login and Register only. Check Cart link goes to Cart. Check the Wishlist link goes to Login page. __PASS__
+
+    3. Login and check the user sub-menu in the navbar. My Profile, Change Password and Logout should all link to their relevant pages. Wishlist should now link to the Wishlist page. __PASS__
+
+    4. Login as a Superuser and check the user sub-menu in the navbar. Messaging, All Orders, Add a New Product and Product Tags Admin should all link to their relevant pages. __PASS__
+
+    5. Check the footer links work as expected. Social links should open in a new tab. __PASS__
+
+    6. Test the search input. Try 'rock' which should show albums of the rock genre. Try 'queen' and then try 'deaf', which should result in albums with the word queen and then deaf in the artist name or album title. __PASS__
+
+    7. Click Enter Shop which should link to the products page. __PASS__
+
+- TC03
+
+    Description:
+
+  - Verify links on Products page.
+
+    Procedure:
+
+    1. Navigate to [Products Page](https://ms4-mc-vinyl-record-store.herokuapp.com/products/). Product images should link to Product Detail page. __PASS__
+
+    2. Login as a Superuser. Edit and Delete buttons should now be visible above each product image. Edit should link to the Edit Product page. Delete should call up a modal to confirm delete of the product. __PASS__
+
+    3. Test all options of the sorting dropdown, which sorts by price, rating or artist alphabetically, in either direction. __PASS__
+
+    4. Clicking on a genre tag under any product should show all products of that genre. __PASS__
+
+- TC04
+
+    Description:
+
+  - Verify links on Products Details page.
+
+    Procedure:
+
+    1. Click on any product on the Products page. Test Back button on Product Detail page. Should return to Products page. __PASS__
+
+    2. Clicking on the heart icon should add the product to, or remove the product from, the Wishlist. __PASS__
+
+    3. Clicking on the genre tag should show all products of that genre. __PASS__
+
+    4. The Keep Shopping button should link to the Products page. __PASS__
+
+    5. Trying to add zero quantity to the cart should not work. __PASS__
+
+    6. Try to add any non-zero quantity to the cart to confirm it adds to the cart correctly. A success toast should confirm this as well as the correct cart total under the cart icon. __PASS__
+
+    7. An anonymous user should be displayed a message to login to make a review. __PASS__
+
+    8. Login. The review form should now be visible. Make a review. The review should appear at the top. __PASS__
+
+    9. Test all options of the review sort dropdown. __PASS__
 
 
 

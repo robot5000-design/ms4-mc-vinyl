@@ -386,6 +386,7 @@ input[name='q']::placeholder {
 /* ------------------------------------------------Nav */
 .records-logo {
     height: 50px;
+    width: 67px;
     margin-bottom: 15px;
 }
 

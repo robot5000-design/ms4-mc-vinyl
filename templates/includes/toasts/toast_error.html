@@ -8,6 +8,9 @@
         </button>
     </div>
     <div class="toast-body bg-light">
-        {{ message }}        
+        {{ message }}
+        {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}     
     </div>
 </div> 

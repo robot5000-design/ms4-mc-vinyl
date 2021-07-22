@@ -40,7 +40,10 @@ def all_products(request):
                 direction = request.GET['direction']
                 if direction == 'desc':
                     sortkey = f'-{sortkey}'
-            products = products.order_by(sortkey)
+            if sortkey == 'rating' or sortkey == '-rating':
+                products = products.order_by(sortkey).exclude(rating=None)
+            else:
+                products = products.order_by(sortkey)
 
         if 'genre' in request.GET:
             genres = request.GET['genre'].split(',')

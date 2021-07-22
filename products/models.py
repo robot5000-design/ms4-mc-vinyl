@@ -62,7 +62,10 @@ class Product(models.Model):
     pre_sale_price = models.DecimalField(max_digits=6, decimal_places=2,
                                          null=True, blank=True)
     rating = models.DecimalField(max_digits=3, decimal_places=1,
-                                 null=True, blank=True)
+                                 null=True, blank=True,
+                                 validators=[MaxValueValidator(5, message='Number between 0 & 5'),
+                                             MinValueValidator(0, message='Number between 0 & 5')
+                                             ])
     image = models.ImageField(null=True, blank=True)
     track_list = ArrayField(
         models.CharField(max_length=100, blank=True),
@@ -98,8 +101,9 @@ class ProductReview(models.Model):
     review_date = models.DateTimeField(auto_now_add=True)
     review_rating = models.IntegerField(choices=REVIEW_RATING_CHOICES,
                                         default=None)
-    upvote_list = models.ManyToManyField(User, blank=True, related_name='upvote_users')
-    upvote_count = models.IntegerField(null=True, blank=True)
+    upvote_list = models.ManyToManyField(User, blank=True,
+                                         related_name='upvote_users')
+    upvote_count = models.IntegerField(default=0)
     admin_comment = models.TextField(blank=True)
 
     class Meta:

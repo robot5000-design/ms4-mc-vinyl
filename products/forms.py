@@ -26,6 +26,7 @@ class ProductForm(forms.ModelForm):
             'sku',
             'price',
             'pre_sale_price',
+            'rating',
             'genre',
             'description',
             'album_format',

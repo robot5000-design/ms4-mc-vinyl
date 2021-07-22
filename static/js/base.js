@@ -28,6 +28,12 @@ $(".search-site-form").submit(function() {
     $('#loading-overlay').fadeToggle(4000);
 });
 
+if ($(".search-site-form input") == "") {
+    $(".search-site-form button").addClass("disable-element");
+} else {
+    $(".search-site-form button").removeClass("disable-element");
+}
+
 // Disable +/- buttons outside 1-99 range
 function handleEnableDisable(itemId, currentValue) {
     var minusDisabled = currentValue < 2;

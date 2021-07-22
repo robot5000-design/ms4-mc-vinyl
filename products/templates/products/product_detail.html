@@ -48,6 +48,13 @@
                     {% endif %}
                     <p class="logo-font detail-artist">{{ product.artist }}</p>
                     <p class="my-3"><strong>{{ product.title }}</strong></p>
+                    <div class="mb-3 mt-2">
+                        {% if product.rating %}
+                            <small><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                        {% else %}
+                            <small>No Rating</small>
+                        {% endif %}
+                    </div>
                     {% if product.pre_sale_price %}
                         <s class="small">€{{ product.pre_sale_price }}</s>
                     {% endif %}
@@ -75,14 +82,7 @@
                     <div><small><strong>Label: </strong> {{ product.label }}</small></div>
                     <div><small><strong>Album Format: </strong>{{ product.album_format }}</small></div>
                     <div><small><strong>Colour: </strong>{{ product.color }}</small></div>                   
-                    <div><small><strong>SKU: </strong>{{ product.sku }}</small></div>                   
-                    <div class="mb-4 mt-2">
-                        {% if product.rating %}
-                            <small><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
-                        {% else %}
-                            <small>No Rating</small>
-                        {% endif %}
-                    </div>
+                    <div class="pb-3"><small><strong>SKU: </strong>{{ product.sku }}</small></div>
                     <p class="my-4">{{ product.description }}</p>
                     {% for track in product.track_list %}
                         <div class="row my-2">
@@ -177,10 +177,13 @@
                     <div class="row">
                     {% for review in reviews %}
                         <div class="col-12 py-2">
-                            <div class="small">
-                                Reviewed by: {{ review.user.username }} {{ review.review_date|date:"d M Y" }}
+                            <div class="small mb-2">
+                                Reviewed by: <span class="font-weight-bold">{{ review.user.username }}</span>
                             </div>
-                            <div class="my-2">
+                            <div class="small">
+                                Date: {{ review.review_date|date:"d M Y" }}
+                            </div>
+                            <div class="my-3">
                                 {{ review.body }}
                             </div>
                             <div class="">

@@ -110,7 +110,7 @@ def add_user_message(request, order_number):
             messages.info(request, 'Successfully added a message!')
 
             message = request.POST['user_message']
-            customer_email = settings.DEFAULT_FROM_EMAIL
+            send_email_address = settings.EMAIL_HOST_USER
             subject_context = {'ref_number': order_number}
             body_context = {
                     'user': request.user,
@@ -118,7 +118,7 @@ def add_user_message(request, order_number):
                     'message': message,
                 }
             path = 'profiles/confirmation_emails/'
-            send_confirmation_email(customer_email, subject_context,
+            send_confirmation_email(send_email_address, subject_context,
                                     body_context, path)
         else:
             messages.error(request, 'Failed to add message. Please ensure the \
