@@ -82,14 +82,17 @@
                                 <div class="card-body pb-2">
                                     <div class="row">
                                         <div class="col">
+                                            {% if product.pre_sale_price %}
+                                                <s class="small">€{{ product.pre_sale_price }}</s>
+                                            {% endif %}
                                             <p class="lead font-weight-bold">€{{ product.price }}</p>
                                         </div>
                                         <div class="col text-right">
                                             {% if product.rating %}
-                                            <small class=""><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
-                                        {% else %}
-                                            <small class="">No Rating</small>
-                                        {% endif %}
+                                                <small><i class="fas fa-star mr-1"></i>{{ product.rating }}</small>
+                                            {% else %}
+                                                <small>No Rating</small>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="row card-album-title">

@@ -176,15 +176,9 @@ As a user:
 
 - I want a site that is not slow or full of bugs and if there is an error it is managed properly.
 
-_These requirements have been met by trying to predict where errors may occur in the code and taking appropriate action. For instance, if there is the possibility of an index error occurring a try/except block is used. Custom http error pages are in use in the templates folder. Depending on the situation, sometimes feedback is provided to the user in the form of a toast error or in the case of a not found error, they may be sent to the custom 404 error page._
+_These requirements have been met by employing defensive programming, by trying to predict where errors may occur in the code and taking appropriate action. For instance, if there is the possibility of an index error occurring a try/except block is used. Custom http error pages are in use in the templates folder. Depending on the situation, sometimes feedback is provided to the user in the form of a toast error or in the case of a not found error, they may be sent to the custom 404 error page._
 
 ---
-
-
-
-
-
-
 
 As the site owner/administrator:
 
@@ -194,5 +188,78 @@ As a user:
 
 - I want to know that the site is secure and safe to use.
 
-_These requirements have largly been met by Django's own inbuilt security. In addition, SESSION COOKIE SECURE, SESSION COOKIE AGE, CSRF COOKIE SECURE, SECURE HSTS and SECURE SSL REDIRECT have all been set and added to the settings.py file. A CSP policy would increase security even more. All URL's have been checked to ensure unauthorised users cannot access functions or parts of the database that they should not have access to._
+_These requirements have largly been met by Django's own inbuilt security. In addition, SESSION COOKIE SECURE, SESSION COOKIE AGE, CSRF COOKIE SECURE, SECURE HSTS and SECURE SSL REDIRECT have all been set and added to the settings.py file. A CSP policy would increase security even more. The @login required decorator is used on functions that require it and in other functions that should only be accessible to site admins a check is performed to see if the user is a superuser. All URL's have been checked to ensure unauthorised users cannot access functions or parts of the database that they should not have access to. Finally all requests from the front-end which would alter the database are performed as POST only requests for some added security, which means the relevant functions cannot be accessed through the url directly._
+
+---
+
+## 2. Page Responsiveness
+
+### Testing responsiveness of each html page
+
+Using Chrome and Chrome Dev Tools.
+
+Breakpoints | index | products | product detail | register| login | change password | add product | edit product | edit review | add tags | all orders | order detail | profile | past order | messaging | message thread | wishlist | cart | checkout | error
+--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---
+W280px | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y
+W400px | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y
+W576px | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y
+W768px | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y
+W992px | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y
+W1200px | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y
+
+- In addition, each page is checked for responsiveness using Chrome Dev Tools infinitely adjustable sliding re-sizer tool. From 280px (Samsung Galaxy Fold) up to full width 1536px on a 4k laptop. Although not optimised for 280px, it is perfectly useable.
+- All tests passed.
+
+### __Summary:__
+
+- No problems found.
+
+---
+
+## 3. List of devices tested
+
+- Google Pixel 5
+- Samsung Galaxy S7
+- Samsung A21s
+- Samsung Galaxy S10
+- Huawei P30 Pro
+- iPhone 11 Safari through Browserstack (limited test)
+- Asus k501u 4k laptop
+- Chrome Dev Tools Device Emulator:
+  - Samsung Galaxy Fold
+  - Samsung S5
+  - Google Pixel 2
+  - iPhone 5
+  - iPhone X
+  - iPad
+  - iPad Pro
+
+The site has been tested on the following browsers on Windows 10:
+
+- Internet Explorer 11
+- Firefox 87.0
+- Google Chrome 89.0.4389.114
+- Opera 75.0.3969.149
+- Microsoft Edge 89.0.774.68
+- Safari 10.1 on Mac using www.browserstack.com (limited test)
+
+and tested on a Google Pixel 5:
+
+- Chrome 91.0.4472.101
+
+All HTML and CSS files have been passed through the w3c validation service here https://validator.w3.org/ with any issues corrected.
+
+Javascript files were passed through jshint.com without any significant issues.
+
+Python code was passed through pylint and there are no outstanding issues.
+
+The Javascript on the site does not function on Internet Explorer 11, but considering its overall low usage and the fact that it is being discontinued in 2021, it was deemed not worth spending time on.
+
+---
+
+
+
+
+
+
 

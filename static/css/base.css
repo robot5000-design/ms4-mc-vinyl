@@ -15,7 +15,7 @@ body {
 }
 
 .home-container {
-    background: url('/media/record_store.jpg') no-repeat center center fixed;
+    background: url('/media/record_store.jpg') no-repeat center center scroll;
     background-size: cover;
     height: 100vh;
 }
@@ -35,6 +35,12 @@ header {
 .dropdown-item {
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.table th,
+.table td {
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 #loading-overlay {
@@ -408,6 +414,7 @@ input[name='q']::placeholder {
 
 .shop-entry {
     background-color: rgba(0, 0, 0, 0.616);
+    border-radius: 0 0 5px 5px;
 }
 
 /* -------------------------------------------- Product Form */
@@ -537,6 +544,10 @@ input[name='q']::placeholder {
     .nav-link {
         padding-left: .6rem;
         padding-right: .6rem;
+    }
+
+    .home-container {
+        background: url('/media/record_store.jpg') no-repeat center center fixed;
     }
 }
 

@@ -59,6 +59,8 @@ class Product(models.Model):
     album_format = models.CharField(max_length=40, blank=True)
     color = models.CharField(max_length=15, blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    pre_sale_price = models.DecimalField(max_digits=6, decimal_places=2,
+                                         null=True, blank=True)
     rating = models.DecimalField(max_digits=3, decimal_places=1,
                                  null=True, blank=True)
     image = models.ImageField(null=True, blank=True)

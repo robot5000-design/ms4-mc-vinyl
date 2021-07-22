@@ -48,6 +48,9 @@
                     {% endif %}
                     <p class="logo-font detail-artist">{{ product.artist }}</p>
                     <p class="my-3"><strong>{{ product.title }}</strong></p>
+                    {% if product.pre_sale_price %}
+                        <s class="small">€{{ product.pre_sale_price }}</s>
+                    {% endif %}
                     <p class="lead mb-3 text-left font-weight-bold">€{{ product.price }}
                         {% if in_wishlist %}
                             <a href="{% url 'remove_from_wishlist' product.id 'product' %}" aria-label="remove-from-wishlist" class="wishlist-remove text-danger ml-3"><i class="fas fa-heart"></i></a>
