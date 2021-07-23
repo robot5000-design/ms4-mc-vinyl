@@ -41,7 +41,8 @@
         <main class="main-container container my-5">
             <div class="row">
                 <div class="col-12 col-lg-6">
-                    <p>Internal Server Error 500</p>
+                    <p>{{ exception }}</p>
+                    <p>HTTP 500 Internal Server Error</p>
                     <p>Please click below to return to safety.</p>
                     <a href="{% url 'home' %}" class="btn btn-success">Back</a>
                 </div>

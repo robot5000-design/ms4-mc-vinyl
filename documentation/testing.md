@@ -355,13 +355,17 @@ Any issues have been cataloged in the Issues section on Github and closed when a
 
     9. Login as standard user. The review form should now be visible. Make a review. The review should appear at the top. There should be a Edit/Delete button under this review only. __PASS__
 
-    10. Test all options of the review sort dropdown. __PASS__
+    10. Try to edit the review. Confirm the changes. __PASS__
 
-    11. Login as Superuser. Navigate back to a Product Detail page. There should be Edit and Delete product buttons at the top of the page. Edit should link to the Edit Product page. Delete should call up a modal to confirm delete of the product. __PASS__
+    11. Test all options of the review sort dropdown. __PASS__
 
-    12. Scroll down and every review should have a Edit/Delete button under it. __PASS__
+    12. Login as Superuser. Edit any review but add an Admin comment to the review to check functionality. __PASS__
 
-    13. Like a review and confirm it counts up by 1 and should no longer be clickable. __PASS__
+    13. Navigate back to a Product Detail page. There should be Edit and Delete product buttons at the top of the page. Edit should link to the Edit Product page. Delete should call up a modal to confirm delete of the product. __PASS__
+
+    14. Scroll down and every review should have a Edit/Delete button under it. __PASS__
+
+    15. Like a review and confirm it counts up by 1 and should no longer be clickable. __PASS__
 
 - TC05
 
@@ -469,7 +473,80 @@ Any issues have been cataloged in the Issues section on Github and closed when a
 
     4. Reset should show all orders again. __PASS__
 
+- TC11
 
+    Description:
+
+  - Verify Add Product and Edit Product page functionality.
+
+    Procedure:
+
+    1. Login as a Superuser and navigate to the Add Product page. Fill out the details. Confirm Artist, Title, SKU and Price are required. Confirm SKU cannot match another product. __PASS__
+
+    2. Add a product. __PASS__
+    
+    3. Edit that product. __PASS__
+
+    4. Confirm an invalid image file brings up a toast error showing the error text. __PASS__
+
+    5. Delete that product. __PASS__
+
+    6. Confirm Cancel button returns to the previous page. __PASS__
+
+- TC12
+
+    Description:
+
+  - Verify Product Tags Admin page functionality.
+
+    Procedure:
+
+    1. Login as a Superuser and navigate to the Product Tags Admin page. Confirm spaces not allowed in genre programmatic name by trying to add a new genre. __PASS__
+
+    2. Confirm add a new genre tag. __PASS__
+
+    3. Confirm spaces not allowed in promotion programmatic name by trying to add a new promotion. __PASS__
+
+    4. Confirm add a new promotion tag. __PASS__
+
+    5. Confirm Cancel button returns to last page. __PASS__
+
+---
+
+## 4. Debugging
+
+Although there are no known outstanding bugs, the main problematic bugs were reported in the issues section of Github and are copied below.
+
+1. Overall rating not updating after adding, deleting or updating a review #1.
+
+    _Solved for adding and deleting by implementing signals and solved for updating by calling the save() method rather than using update()._
+
+2. Deleting an item from wishlist not reloading the current page #2.
+
+    _Use JS to send an AJAX request to the backend and JS to reload page whether deleted from wishlist or product detail page._
+
+3. User message not closing as requested after automatically reopening due to new message #3.
+
+    _Solved by ordering messages by date before closing the last message._
+
+4. Wishlist remove in the url address bar gives a front end error as it directs to nowhere #4.
+
+    _Solved by adding an extra variable to the url path which indicates which page the remove from wishlist button was pressed. This removed the need for the javascript ajax post request._
+
+5. Review sort by most likes not working #7.
+
+    _Solved by modifying the model to have a default of zero rather than null._
+
+---
+
+
+
+
+
+$(document).ready(function() {
+    e = $( "input[name='csrfmiddlewaretoken']" );
+    $(e).val('invalidToken');
+});
 
 
 
