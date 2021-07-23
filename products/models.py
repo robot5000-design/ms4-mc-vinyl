@@ -59,12 +59,14 @@ class Product(models.Model):
     album_format = models.CharField(max_length=40, blank=True)
     color = models.CharField(max_length=15, blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    pre_sale_price = models.DecimalField(max_digits=6, decimal_places=2,
-                                         null=True, blank=True)
+    pre_discount_price = models.DecimalField(max_digits=6, decimal_places=2,
+                                             null=True, blank=True)
     rating = models.DecimalField(max_digits=3, decimal_places=1,
                                  null=True, blank=True,
-                                 validators=[MaxValueValidator(5, message='Number between 0 & 5'),
-                                             MinValueValidator(0, message='Number between 0 & 5')
+                                 validators=[MaxValueValidator(5,
+                                             message='Number between 0 & 5'),
+                                             MinValueValidator(0,
+                                             message='Number between 0 & 5')
                                              ])
     image = models.ImageField(null=True, blank=True)
     track_list = ArrayField(

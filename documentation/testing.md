@@ -275,8 +275,7 @@ Product Detail Page:
 
 The site has been tested on both mobile and desktop for responsiveness and functionality.
 
-Any issues have been cataloged in the Issues section on Github and closed when a sufficient solution
-was reached. There are no known exisiting issues with the final deployed version.
+Any issues have been cataloged in the Issues section on Github and closed when a sufficient solution was reached. There are no known exisiting issues with the final deployed version. Begin all tests not logged in (anonymous user).
 
 - TC01
 
@@ -340,21 +339,138 @@ was reached. There are no known exisiting issues with the final deployed version
 
     1. Click on any product on the Products page. Test Back button on Product Detail page. Should return to Products page. __PASS__
 
-    2. Clicking on the heart icon should add the product to, or remove the product from, the Wishlist. __PASS__
+    2. Clicking on the heart icon as an anonymous user should redirect to the login page. __PASS__
 
-    3. Clicking on the genre tag should show all products of that genre. __PASS__
+    3. Login as standard user. Clicking on the heart icon should add the product to, or remove the product from, the Wishlist. __PASS__
 
-    4. The Keep Shopping button should link to the Products page. __PASS__
+    4. Clicking on the genre tag should show all products of that genre. __PASS__
 
-    5. Trying to add zero quantity to the cart should not work. __PASS__
+    5. The Keep Shopping button should link to the Products page. __PASS__
 
-    6. Try to add any non-zero quantity to the cart to confirm it adds to the cart correctly. A success toast should confirm this as well as the correct cart total under the cart icon. __PASS__
+    6. Trying to add zero quantity to the cart should not work. __PASS__
 
-    7. An anonymous user should be displayed a message to login to make a review. __PASS__
+    7. Try to add any non-zero quantity to the cart to confirm it adds to the cart correctly. A success toast should confirm this as well as the correct cart total under the cart icon. __PASS__
 
-    8. Login. The review form should now be visible. Make a review. The review should appear at the top. __PASS__
+    8. Logout. An anonymous user should be displayed a message to login to make a review. __PASS__
 
-    9. Test all options of the review sort dropdown. __PASS__
+    9. Login as standard user. The review form should now be visible. Make a review. The review should appear at the top. There should be a Edit/Delete button under this review only. __PASS__
+
+    10. Test all options of the review sort dropdown. __PASS__
+
+    11. Login as Superuser. Navigate back to a Product Detail page. There should be Edit and Delete product buttons at the top of the page. Edit should link to the Edit Product page. Delete should call up a modal to confirm delete of the product. __PASS__
+
+    12. Scroll down and every review should have a Edit/Delete button under it. __PASS__
+
+    13. Like a review and confirm it counts up by 1 and should no longer be clickable. __PASS__
+
+- TC05
+
+    Description:
+
+  - Verify Cart functionality. Stripe test card credentials: 4242 4242 4242 4242 #242.
+
+    Procedure:
+
+    1. Add a product to the cart. Check that a delivery price is applicable if below the free delivery threshold and vice versa if not. __PASS__
+
+    2. Checkout as an anonymous user using test card credentials. Confirm redirect to checkout success page, success toast and email delivered. __PASS__
+
+    3. Add a product and checkout as a standard logged in user using test card credentials. Do not tick the Save Profile field. Confirm redirect to checkout success page, success toast and email delivered. __PASS__
+
+    4. Confirm the Profile information from step 3 was not saved to the user profile by checking the My Profile page. All fields should be blank. __PASS__
+
+    5. Repeat step 3 but this time tick the Save Profile field. The profile information should be available on the My Profile page after chaeckout. __PASS__
+
+- TC06
+
+    Description:
+
+  - Verify Wishlist functionality.
+
+    Procedure:
+
+    1. Login as a standard user. Add a product to the wishlist. Transfer the product to the cart. __PASS__
+
+    2. Add another product to the wishlist. Use the Add All To Cart button to transfer all of the products to the cart. __PASS__
+
+    3. Logout and login to confirm that the cart details are saved to the user. __PASS__
+
+    4. Login and use the delete button to remove products from the cart. __PASS__
+
+    5. The Keep Shopping button should direct back to the products page. __PASS__
+
+- TC07
+
+    Description:
+
+  - Verify Cart functionality.
+
+    Procedure:
+
+    1. Add products to the cart and navigate to the Cart page. Clicking on any product image should link to the Product Detail page for that product. __PASS__
+
+    2. Confirm Update button updates the product quantity. __PASS__
+
+    3. Confirm Remove button removes the product from the cart. __PASS__
+
+    4. The Keep Shopping button should direct back to the products page. __PASS__
+
+    5. The Secure Checkout button should redirect to the Checkout page. __PASS__
+
+- TC08
+
+    Description:
+
+  - Verify My Profile functionality. TC07 must be completed beforehand.
+
+    Procedure:
+
+    1. Login as standard user and navigate to My Profile page. Click on any order to view detail of the order. Write a test message. Message should now be visible below the order detail. __PASS__
+    
+    2. Try updating the profile information and confirm the change. __PASS__
+
+    3. The back button should direct back to the last page. __PASS__
+
+- TC09
+
+    Description:
+
+  - Verify Messaging App functionality. TC08 must be completed beforehand.
+
+    Procedure:
+
+    1. Login as a Superuser and navigate to the Messaging page. The message written in TC07 should appear in bold as unread and unreplied. __PASS__
+
+    2. Clicking on Open Threads or Closed Threads should show one or the other. Clicking Refresh should show all messages again. __PASS__
+
+    3. Clicking on the message should direct to the message thread page. The message from TC08 should be visible below the order detail. Write a test reply and the new message should appear and confirm a notification email is sent to the customer eamil address. __PASS__
+
+    4. Clicking Back to Messages button should return to the messaging page where the message should now not be in bold text and should be indicated as replied. __PASS__
+
+    5. Click into the message thread again and mark as Thread Closed. Clicking back to messages should now show the message in the closed thread table. __PASS__
+
+    6. Confirm the admin message also appears in the relevant My Profile/Past Order page. __PASS__
+
+    7. Back on the Messaging page try to delete the message thread. A modal for confirmation should pop up. __PASS__
+
+- TC10
+
+    Description:
+
+  - Verify All Orders page functionality.
+
+    Procedure:
+
+    1. Login as a Superuser and navigate to the All Orders page. All order should appear sorted by most recent. Click on any order and details of that order should be shown. __PASS__
+
+    2. A blank search input should not be accepted. Search for any username or a partial username and results that match the query should be shown. __PASS__
+
+    3. Search for 'no account' and anonymous user orders only should be shown. __PASS__
+
+    4. Reset should show all orders again. __PASS__
+
+
+
 
 
 

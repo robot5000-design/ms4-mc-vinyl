@@ -21,7 +21,7 @@
                     <span class="icon">
                         <i class="fas fa-chevron-left"></i>
                     </span>
-                    <span class="text-uppercase keep-btn">Back</span>
+                    <span class="text-uppercase">Back</span>
                 </a>
             </div>
         </div>
@@ -200,7 +200,7 @@
                                         <i class="fas fa-thumbs-up fs-5 pe-2"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
                                     </div>
                                 {% else %}
-                                    <i class="fas fa-thumbs-up"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
+                                    <i class="fas fa-thumbs-up"></i> {{ review.upvote_count }}
                                 {% endif %}
                             </div>
                             {% if review.admin_comment %}

@@ -22,11 +22,11 @@
             <hr>
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-4">
         <div class="col col-lg-8">
             <div class="row">
                 <div class="col">
-                    <a href="{% url 'view_all_orders' %}" class="btn btn-dark  my-2">
+                    <a href="{% url 'view_all_orders' %}" class="btn btn-outline-dark">
                         <span class="icon mr-2">
                             <i class="fas fa-angle-left"></i>
                         </span>
@@ -38,6 +38,18 @@
     </div>
     <div class="row mb-3">
         <div class="col-12 col-lg-6 mb-3">
+            {% if order.user_profile %}
+                <div class="col-12 col-lg-6 mb-3">
+                    <div>Customer Username: <strong>{{ order.user_profile.user }}</strong></div>
+                </div>
+            {% else %}    
+                <div class="col-12 col-lg-6 mb-3">
+                    <div>Customer Username: <strong>No Account</strong></div>
+                </div>
+            {% endif %}
+            <div class="col-12 col-lg-6 mb-3">
+                <div>Customer Email: <strong>{{ order.email }}</strong></div>
+            </div>
             <div class="order-confirmation-wrapper p-2 border">
                 <div class="row">
                     <div class="col">
@@ -186,15 +198,6 @@
                 </div>
             </div>
         </div>
-        {% if order.user_profile %}
-            <div class="col-12 col-lg-6 mb-3">
-                <div>Customer Username: <strong>{{ order.user_profile.user }}</strong></div>
-            </div>
-        {% else %}    
-            <div class="col-12 col-lg-6 mb-3">
-                <div>Customer Username: <strong>No Account</strong></div>
-            </div>
-        {% endif %}
     </div>
     {% include 'messaging/includes/message_cards.html' %}
     </div>
