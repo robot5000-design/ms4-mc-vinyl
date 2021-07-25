@@ -161,7 +161,7 @@ def delete_thread(request, ref_number):
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
-    if request.POST:
+    if request.method == 'POST':
         UserMessage.objects.filter(ref_number=ref_number).delete()
         messages.info(request, 'Message Thread Deleted.')
     else:
@@ -185,7 +185,7 @@ def change_thread_status(request, ref_number):
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
-    if request.POST:
+    if request.method == 'POST':
         message_thread = UserMessage.objects.filter(
             ref_number=ref_number).order_by('-message_date')
         try:

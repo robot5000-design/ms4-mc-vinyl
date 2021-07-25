@@ -246,7 +246,7 @@ def delete_product(request, product_id):
         return redirect(reverse('home'))
 
     product = get_object_or_404(Product, pk=product_id)
-    if request.POST:
+    if request.method == 'POST':
         product.delete()
         messages.info(request, 'Product deleted!')
     else:
@@ -356,7 +356,7 @@ def delete_product_review(request, product_id, review_author):
     if request.user != review.user and not request.user.is_superuser:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))
-    if request.POST:
+    if request.method == 'POST':
         review.delete()
         messages.info(request, 'Review deleted!')
     else:

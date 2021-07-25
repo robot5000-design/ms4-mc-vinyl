@@ -61,7 +61,7 @@ def adjust_cart(request, item_id):
     Returns:
         A redirect to a specific url.
     """
-    if request.POST:
+    if request.method == 'POST':
         quantity = int(request.POST.get('quantity'))
     else:
         messages.error(request, 'Invalid Method!')

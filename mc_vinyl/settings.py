@@ -134,14 +134,23 @@ WSGI_APPLICATION = 'mc_vinyl.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-
-# Postgres Database
-# DATABASES = {
-#     'default': dj_database_url.parse(os.environ.get('DATABASE_URL')),
-# }
-
-
-
+if 'DEVELOPMENT' in os.environ:
+    # Postgres Testing Database
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'ms4',
+            'USER': 'markc',
+            'PASSWORD': 'motogp2097',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
+else:
+    # Postgres Database
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL')),
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
