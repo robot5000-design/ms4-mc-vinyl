@@ -22,7 +22,7 @@ def all_products(request):
         Render of the products template.
         Redirects to products url after a search.
     """
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('?')
     query = None
     genres = None
     promotions = None
@@ -250,7 +250,7 @@ def delete_product(request, product_id):
         product.delete()
         messages.info(request, 'Product deleted!')
     else:
-        messages.error(request, 'That is not allowed!')
+        messages.error(request, 'Invalid Method.')
     return redirect(reverse('products'))
 
 
@@ -285,6 +285,7 @@ def add_product_review(request, product_id):
 
         messages.error(request, 'Failed to add product review. Please ensure the \
                        form is valid.')
+    messages.error(request, 'Invalid Method.')
     return redirect(reverse('product_detail', args=[product.id]))
 
 @login_required
@@ -360,7 +361,7 @@ def delete_product_review(request, product_id, review_author):
         review.delete()
         messages.info(request, 'Review deleted!')
     else:
-        messages.error(request, 'That is not allowed!')
+        messages.error(request, 'Invalid Method.')
     return redirect(reverse('product_detail', args=[product.id]))
 
 

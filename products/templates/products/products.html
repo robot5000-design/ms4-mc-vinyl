@@ -63,7 +63,7 @@
                             {% if request.user.is_superuser %}
                                 <div class="row mx-auto pb-1 admin-buttons-row">
                                     <div class="col-6 px-0">
-                                        <a class="btn btn-dark edit-product-btn w-100" href="{% url 'edit_product' product.id %}"><small>Edit</small></a>
+                                        <a class="btn btn-outline-dark edit-product-btn w-100" href="{% url 'edit_product' product.id %}"><small>Edit</small></a>
                                     </div>
                                     <div class="col-6 px-0">
                                         <a class="btn btn-danger call-delete w-100" data-toggle="modal" data-target="#deleteProductModal"><small>Delete</small></a>
