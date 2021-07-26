@@ -86,6 +86,7 @@ class TestViews(TestCase):
     def test_add_product(self):
         test_user = User.objects.create_superuser(username='testuser', password='testpassword')
         self.client.login(username='testuser', password='testpassword')
+        # with data
         response = self.client.post('/products/add/', {
             'artist': 'Test Artist',
             'title': 'Test Title',
@@ -94,6 +95,10 @@ class TestViews(TestCase):
         })
         product = Product.objects.get(sku='Test SKU')
         self.assertRedirects(response, f'/products/{product.id}/')
+        # without data
+        response = self.client.get('/products/add/')
+        self.assertTemplateUsed(response, 'products/add_product.html')
+
 
     def test_login_required_for_add_product(self):
         response = self.client.post('/products/add/', {

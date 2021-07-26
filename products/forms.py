@@ -40,12 +40,12 @@ class ProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        genres = Genre.objects.all()
+        genres = Genre.objects.all().order_by('name')
         genres_friendly_names = [
             (genre.id, genre.get_friendly_name()) for genre in genres]
         self.fields['genre'].choices = genres_friendly_names
 
-        promotions = Promotion.objects.all()
+        promotions = Promotion.objects.all().order_by('name')
         promotions_friendly_names = [
             (promotion.id, promotion.get_friendly_name())
             for promotion in promotions
