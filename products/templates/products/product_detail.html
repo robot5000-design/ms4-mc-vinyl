@@ -41,7 +41,7 @@
                 <div class="product-details-container mb-5 mt-md-5">
                     {% if request.user.is_superuser %}
                         <div class="pb-4">
-                            <a class="btn btn-dark edit-product-btn" href="{% url 'edit_product' product.id %}">Edit</a>
+                            <a class="btn btn-outline-dark edit-product-btn" href="{% url 'edit_product' product.id %}">Edit</a>
                             <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteProductModal">Delete</a>
                         </div>
                         {% include 'products/includes/modal_delete.html' %}

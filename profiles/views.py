@@ -13,14 +13,14 @@ from .forms import UserProfileForm
 
 @login_required
 def profile(request):
-    """ Display and edit the user's profile. Display order summary.
+    ''' Display and edit the user's profile. Display order summary.
 
     Args:
         request (object): HTTP request object.
     Returns:
         Render of the profile template.
         Redirects to the profile page after update or failed update.
-    """
+    '''
     user_profile = get_object_or_404(UserProfile, user=request.user)
 
     if request.method == 'POST':
@@ -48,7 +48,7 @@ def profile(request):
 
 @login_required
 def order_history(request, order_number):
-    """ Display the history including messages of a past order.
+    ''' Display the history including messages of a past order.
 
     Gets past details on an order and all associated messages.
     Renders a user message form so that the user can send a message regarding
@@ -59,7 +59,7 @@ def order_history(request, order_number):
         order_number (uuid): unique order reference number.
     Returns:
         Render of the past_order template.
-    """
+    '''
     order = get_object_or_404(Order, order_number=order_number)
 
     if request.user != order.user_profile.user:
@@ -87,7 +87,7 @@ def order_history(request, order_number):
 
 @login_required
 def add_user_message(request, order_number):
-    """ Handles the sending of a user message regarding a past order.
+    ''' Handles the sending of a user message regarding a past order.
 
     If the user message form is valid the message is saved and an email is
     sent to the admin.
@@ -97,7 +97,7 @@ def add_user_message(request, order_number):
         order_number (uuid): unique order reference number.
     Returns:
         Redirects to the same order history page.
-    """
+    '''
     if request.method == 'POST':
         message_form = UserMessageForm(request.POST)
 

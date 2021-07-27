@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 
 class UserMessage(models.Model):
-    """ A user or admin message relating to a reference number
-    """
+    ''' A user or admin message relating to a reference number
+    '''
     ref_number = models.CharField(max_length=32)
     user = models.ForeignKey(
         User, blank=True, null=True, on_delete=models.SET_NULL)

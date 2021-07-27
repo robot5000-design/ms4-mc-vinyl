@@ -1,6 +1,7 @@
 import datetime
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import (
+    MaxValueValidator, MinValueValidator, RegexValidator)
 from django_better_admin_arrayfield.models.fields import ArrayField
 from django.db.models import Avg
 from django.contrib.auth.models import User
@@ -14,9 +15,10 @@ def current_year():
 
 
 class Genre(models.Model):
-    """ Represents a genre field.
-    """
-    name = models.CharField(max_length=50)
+    ''' Represents a genre field.
+    '''
+    name = models.CharField(
+        max_length=50, validators=[RegexValidator(regex='^[-a-z0-9_]+$')])
     friendly_name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -27,9 +29,10 @@ class Genre(models.Model):
 
 
 class Promotion(models.Model):
-    """ Represents a promotions field.
-    """
-    name = models.CharField(max_length=50)
+    ''' Represents a promotions field.
+    '''
+    name = models.CharField(
+        max_length=50, validators=[RegexValidator(regex='^[-a-z0-9_]+$')])
     friendly_name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -40,8 +43,8 @@ class Promotion(models.Model):
 
 
 class Product(models.Model):
-    """ Represents a product and its details.
-    """
+    ''' Represents a product and its details.
+    '''
     artist = models.CharField(max_length=254)
     label = models.CharField(max_length=254, blank=True)
     genre = models.ManyToManyField(Genre, blank=True)
@@ -52,9 +55,13 @@ class Product(models.Model):
     release_date = models.IntegerField(
         blank=True,
         null=True,
-        validators=[MaxValueValidator(
-            current_year(), message='Year in format YYYY'),
-            MinValueValidator(1900, message='Year in format YYYY')]
+        validators=[
+            MaxValueValidator(
+                current_year(),
+                message=f'Year in format YYYY between 1900-{current_year()}'),
+            MinValueValidator(
+                1900,
+                message=f'Year in format YYYY between 1900-{current_year()}')]
         )
     album_format = models.CharField(max_length=40, blank=True)
     color = models.CharField(max_length=15, blank=True)
@@ -76,8 +83,8 @@ class Product(models.Model):
     )
 
     def calculate_rating(self):
-        """ Calculates the product rating
-        """
+        ''' Calculates the product rating
+        '''
         self.rating = self.reviews.aggregate(
             Avg('review_rating'))['review_rating__avg']
         self.save()
@@ -87,8 +94,8 @@ class Product(models.Model):
 
 
 class ProductReview(models.Model):
-    """ Represents a product review table.
-    """
+    ''' Represents a product review table.
+    '''
     REVIEW_RATING_CHOICES = [
         (1, '1'),
         (2, '2'),
@@ -109,8 +116,8 @@ class ProductReview(models.Model):
     admin_comment = models.TextField(blank=True)
 
     class Meta:
-        """ Default ordering for product reviews.
-        """
+        ''' Default ordering for product reviews.
+        '''
         ordering = ["-review_date"]
 
     def __str__(self):

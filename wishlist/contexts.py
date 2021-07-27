@@ -4,8 +4,8 @@ from .models import Wishlist
 
 
 def wishlist_contents(request):
-    """ Wishlist context to display number of items in the navbar
-    """
+    ''' Wishlist context to display number of items in the navbar
+    '''
     try:
         wishlist = get_object_or_404(Wishlist, user=request.user.id)
         wishlist_items = wishlist.products.all()

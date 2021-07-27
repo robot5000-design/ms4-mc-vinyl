@@ -4,12 +4,12 @@ from .models import UserMessage
 
 
 class UserMessageForm(forms.ModelForm):
-    """ Represents a form for users to write messages to the
+    ''' Represents a form for users to write messages to the
     admin regarding an order.
-    """
+    '''
     class Meta:
-        """ Fields in order form and type of field.
-        """
+        ''' Fields in order form and type of field.
+        '''
         model = UserMessage
         fields = (
             'user_message',
@@ -19,8 +19,8 @@ class UserMessageForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        """ Remove Label and add placeholder from user message form
-        """
+        ''' Remove Label and add placeholder from user message form
+        '''
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].label = False

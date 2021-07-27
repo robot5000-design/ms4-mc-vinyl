@@ -13,7 +13,7 @@ from .forms import ProductForm, ProductReviewForm, GenreForm, PromotionForm
 
 
 def all_products(request):
-    """ Gets, sorts and searches all products in the database for
+    ''' Gets, sorts and searches all products in the database for
     the products page.
 
     Args:
@@ -21,7 +21,7 @@ def all_products(request):
     Returns:
         Render of the products template.
         Redirects to products url after a search.
-    """
+    '''
     products = Product.objects.all().order_by('?')
     query = None
     genres = None
@@ -83,14 +83,14 @@ def all_products(request):
 
 
 def product_detail(request, product_id):
-    """ A view to show individual product details including product reviews.
+    ''' A view to show individual product details including product reviews.
 
     Args:
         request (object): HTTP request object.
         product_id (int): id which identifies a product in the database.
     Returns:
         Render of the product_details template.
-    """
+    '''
     product = get_object_or_404(Product, pk=product_id)
     reviews = ProductReview.objects.filter(product=product)
     current_sorting = 'date_desc'
@@ -139,7 +139,7 @@ def product_detail(request, product_id):
 
 @login_required
 def edit_product(request, product_id):
-    """ A view to edit individual product details.
+    ''' A view to edit individual product details.
 
     Gets a products details from the database for editing. If the sku
     is changed to one that already exists the user is warned.
@@ -151,7 +151,7 @@ def edit_product(request, product_id):
         Render of the edit_product template.
         Redirects to home url if not superuser.
         Redirects to product_detail page upon successful or failed update.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -190,7 +190,7 @@ def edit_product(request, product_id):
 
 @login_required
 def add_product(request):
-    """ A view to add individual product details.
+    ''' A view to add individual product details.
 
     The user is warned if the sku chosen already exists in the database.
 
@@ -200,7 +200,7 @@ def add_product(request):
         Render of the add_product template.
         Redirects to home url if not superuser.
         Redirects to product_detail page upon successful or failed update.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -232,7 +232,7 @@ def add_product(request):
 
 @login_required
 def delete_product(request, product_id):
-    """ A view to delete individual product details.
+    ''' A view to delete individual product details.
 
     Args:
         request (object): HTTP request object.
@@ -240,7 +240,7 @@ def delete_product(request, product_id):
     Returns:
         Redirects to home url if not superuser.
         Redirects to products page upon successful delete.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -256,14 +256,14 @@ def delete_product(request, product_id):
 
 @login_required
 def add_product_review(request, product_id):
-    """ A view to add a product review of a particular product.
+    ''' A view to add a product review of a particular product.
 
     Args:
         request (object): HTTP request object.
         product_id (int): id which identifies a product in the database.
     Returns:
         Redirects to product_detail page upon successful review.
-    """
+    '''
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
         review_form = ProductReviewForm(request.POST)
@@ -290,7 +290,7 @@ def add_product_review(request, product_id):
 
 @login_required
 def edit_product_review(request, product_id, review_author):
-    """ A view to edit a product review.
+    ''' A view to edit a product review.
 
     Args:
         request (object): HTTP request object.
@@ -300,7 +300,7 @@ def edit_product_review(request, product_id, review_author):
         Renders the edit_product_review template.
         Redirects to product_detail page upon successful review.
         Redirects to home url if not superuser or the review author.
-    """
+    '''
     product = get_object_or_404(Product, pk=product_id)
     review = get_object_or_404(
         ProductReview, product=product, user__username=review_author)
@@ -340,7 +340,7 @@ def edit_product_review(request, product_id, review_author):
 
 @login_required
 def delete_product_review(request, product_id, review_author):
-    """ A view to delete a product review.
+    ''' A view to delete a product review.
 
     Args:
         request (object): HTTP request object.
@@ -349,7 +349,7 @@ def delete_product_review(request, product_id, review_author):
     Returns:
         Redirects to product_detail page upon successful or failed delete.
         Redirects to home url if not superuser or the review author.
-    """
+    '''
     product = get_object_or_404(Product, pk=product_id)
     review = get_object_or_404(
         ProductReview, product=product, user__username=review_author)
@@ -368,7 +368,7 @@ def delete_product_review(request, product_id, review_author):
 @require_POST
 @login_required
 def upvote_product_review(request, product_id, review_author):
-    """ A view to upvote a product review.
+    ''' A view to upvote a product review.
 
     Checks if the request user is already in the upvote list and if not
     adds them and increments the review upvote_count.
@@ -379,7 +379,7 @@ def upvote_product_review(request, product_id, review_author):
         review_author (str): The request user's username.
     Returns:
         A HttpResonse status 200.
-    """
+    '''
     product = get_object_or_404(Product, pk=product_id)
     review = get_object_or_404(
         ProductReview, product=product, user__username=review_author)
@@ -401,7 +401,7 @@ def upvote_product_review(request, product_id, review_author):
 
 @login_required
 def product_tags_admin(request):
-    """ A view to render and edit product genres and promotions fields.
+    ''' A view to render and edit product genres and promotions fields.
 
     Checks if the new field already exists and if not, adds it.
 
@@ -411,7 +411,7 @@ def product_tags_admin(request):
         Renders the product_tags_admin page.
         Redirects to product_tags_admin page upon successful add.
         Redirects to home url if not superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))

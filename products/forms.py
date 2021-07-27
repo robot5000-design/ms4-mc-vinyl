@@ -9,12 +9,12 @@ from .models import Product, Genre, ProductReview, Promotion
 
 
 class ProductForm(forms.ModelForm):
-    """ Represents a form for submitting new products or editing existing
+    ''' Represents a form for submitting new products or editing existing
     ones.
-    """
+    '''
     class Meta:
-        """ Fields to be inputs of product form.
-        """
+        ''' Fields to be inputs of product form.
+        '''
         model = Product
         fields = (
             'image',
@@ -61,14 +61,15 @@ class ProductForm(forms.ModelForm):
                 field.widget.attrs['aria-label'] = 'image-input'
             else:
                 field.widget.attrs['class'] = 'border-dark'
-
+                if self.fields[field_name].required:
+                    field.widget.attrs['placeholder'] = 'Required'
 
 class ProductReviewForm(forms.ModelForm):
-    """ Represents a form for product reviews.
-    """
+    ''' Represents a form for product reviews.
+    '''
     class Meta:
-        """ Fields and types for product review form.
-        """
+        ''' Fields and types for product review form.
+        '''
         model = ProductReview
         fields = (
             'body',
@@ -101,11 +102,11 @@ class ProductReviewForm(forms.ModelForm):
 
 
 class GenreForm(forms.ModelForm):
-    """ Represents a form for inputting new genre types.
-    """
+    ''' Represents a form for inputting new genre types.
+    '''
     class Meta:
-        """ Fields for genre form
-        """
+        ''' Fields for genre form
+        '''
         model = Genre
         fields = (
             'name',
@@ -114,11 +115,11 @@ class GenreForm(forms.ModelForm):
 
 
 class PromotionForm(forms.ModelForm):
-    """ Represents a form for inputting new promotion types.
-    """
+    ''' Represents a form for inputting new promotion types.
+    '''
     class Meta:
-        """ Fields for promotion form
-        """
+        ''' Fields for promotion form
+        '''
         model = Promotion
         fields = (
             'name',

@@ -11,7 +11,7 @@ from .forms import UserMessageForm
 
 @login_required
 def messaging(request):
-    """ Display all messages.
+    ''' Display all messages.
 
     Gets all messages grouped by order reference number by getting
     distinct id's first and then using the id's to filter messages.
@@ -22,7 +22,7 @@ def messaging(request):
     Returns:
         Render of the messaging template.
         Redirects to home url if not superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -57,7 +57,7 @@ def messaging(request):
 
 @login_required
 def view_message_thread(request, ref_number):
-    """ Display a thread of messages.
+    ''' Display a thread of messages.
 
     Gets a thread of messages all associated with one order
     reference number. Gets the order, the associated user
@@ -69,7 +69,7 @@ def view_message_thread(request, ref_number):
     Returns:
         Render of the message_thread template.
         Redirects to home url if not superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -99,7 +99,7 @@ def view_message_thread(request, ref_number):
 
 @login_required
 def add_admin_reply(request, ref_number):
-    """ Adds an admin message reply.
+    ''' Adds an admin message reply.
 
     Facilitates the admin user to write a message response to a customer
     regarding a specific order.
@@ -110,7 +110,7 @@ def add_admin_reply(request, ref_number):
     Returns:
         Render of the message_thread template.
         Redirects to home url if not superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -147,7 +147,7 @@ def add_admin_reply(request, ref_number):
 
 @login_required
 def delete_thread(request, ref_number):
-    """ Removes all messages in a thread associated with a specific
+    ''' Removes all messages in a thread associated with a specific
     ref number.
 
     Args:
@@ -156,7 +156,7 @@ def delete_thread(request, ref_number):
     Returns:
         Render of the messaging template.
         Redirects to home url if not superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -171,7 +171,7 @@ def delete_thread(request, ref_number):
 
 @login_required
 def change_thread_status(request, ref_number):
-    """ Close/open a thread associated with a specific
+    ''' Close/open a thread associated with a specific
     ref number.
 
     Args:
@@ -180,7 +180,7 @@ def change_thread_status(request, ref_number):
     Returns:
         Render of the message_thread template.
         Redirects to home url if not superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))

@@ -3,18 +3,18 @@ from .models import UserProfile
 
 
 class UserProfileForm(forms.ModelForm):
-    """ Represents a user profile form.
-    """
+    ''' Represents a user profile form.
+    '''
     class Meta:
-        """ Field to exclude from user profile form.
-        """
+        ''' Field to exclude from user profile form.
+        '''
         model = UserProfile
         exclude = ('user',)
 
     def __init__(self, *args, **kwargs):
-        """ Add placeholders and classes, remove auto-generated
+        ''' Add placeholders and classes, remove auto-generated
         labels and set autofocus on first field
-        """
+        '''
         super().__init__(*args, **kwargs)
         placeholders = {
             'default_full_name': 'Full Name',
