@@ -22,7 +22,7 @@ def all_products(request):
         Render of the products template.
         Redirects to products url after a search.
     '''
-    products = Product.objects.all().order_by('?')
+    products = Product.objects.all()
     query = None
     genres = None
     promotions = None

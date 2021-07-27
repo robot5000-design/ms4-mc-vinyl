@@ -78,23 +78,26 @@ def view_message_thread(request, ref_number):
                       .filter(ref_number=ref_number)
                       .order_by('-message_date')
                       )
-    message_thread.update(read=True)
-    order = get_object_or_404(Order, order_number=ref_number)
+    if message_thread:
+        message_thread.update(read=True)
+        order = get_object_or_404(Order, order_number=ref_number)
 
-    user = list(message_thread)[-1].user
-    thread_status = message_thread[0].closed
-    message_form = UserMessageForm()
+        user = list(message_thread)[-1].user
+        thread_status = message_thread[0].closed
+        message_form = UserMessageForm()
 
-    template = 'messaging/message_thread.html'
-    context = {
-        'message_thread': message_thread,
-        'ref_number': ref_number,
-        'message_form': message_form,
-        'user': user,
-        'thread_status': thread_status,
-        'order': order,
-    }
-    return render(request, template, context)
+        template = 'messaging/message_thread.html'
+        context = {
+            'message_thread': message_thread,
+            'ref_number': ref_number,
+            'message_form': message_form,
+            'user': user,
+            'thread_status': thread_status,
+            'order': order,
+        }
+        return render(request, template, context)
+    messages.error(request, 'That does not exist!')
+    return redirect(reverse('messaging'))
 
 
 @login_required
@@ -140,9 +143,12 @@ def add_admin_reply(request, ref_number):
 
             return redirect(reverse('view_message_thread', args=[ref_number]))
 
-        messages.error(request, 'Failed to add message. Please ensure the \
-                       form is valid.')
+        messages.error(
+            request, 'Failed to add message. Please ensure the form is valid.'
+            )
         return redirect(reverse('view_message_thread', args=[ref_number]))
+    messages.error(request, 'Invalid Method.')
+    return redirect(reverse('view_message_thread', args=[ref_number]))
 
 
 @login_required
