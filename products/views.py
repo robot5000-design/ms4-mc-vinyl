@@ -69,6 +69,9 @@ def all_products(request):
                 Q(genre__name__icontains=query)
             )
             products = products.filter(queries).distinct()
+    else:
+        # randomise the product order
+        products = Product.objects.all().order_by('?')
 
     current_sorting = f'{sort}_{direction}'
 
