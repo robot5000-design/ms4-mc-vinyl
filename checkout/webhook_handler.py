@@ -60,11 +60,6 @@ class StripeWH_Handler:
         shipping_details = intent.shipping
         grand_total = round(intent.charges.data[0].amount / 100, 2)
 
-        # Clean data in the shipping details
-        for field, value in shipping_details.address.items():
-            if value == "":
-                shipping_details.address[field] = None
-
         # Update profile information if save_info was checked
         profile = None
         username = intent.metadata.username
@@ -74,11 +69,11 @@ class StripeWH_Handler:
                 profile.default_full_name = shipping_details.name
                 profile.default_phone_number = shipping_details.phone
                 profile.default_country = shipping_details.address.country
-                profile.default_postcode = shipping_details.address.postal_code
                 profile.default_town_or_city = shipping_details.address.city
                 profile.default_street_address1 = shipping_details.address.line1
                 profile.default_street_address2 = shipping_details.address.line2
                 profile.default_county = shipping_details.address.state
+                profile.default_postcode = shipping_details.address.postal_code
                 profile.save()
 
         order_exists = False
