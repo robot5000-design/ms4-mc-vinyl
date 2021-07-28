@@ -12,21 +12,11 @@ class TestMessagingViews(TestCase):
     def setUp(self):
         testuser_1 = User.objects.create_user(
             username='testuser', password='testpassword')
-        testuser_2 = User.objects.create_user(
-            username='testuser2', password='testpassword')
         testuser_su = User.objects.create_superuser(
             username='testuser_su', password='testpassword')
 
         testuser_1.save()
-        testuser_2.save()
         testuser_su.save()
-
-        # product = Product.objects.create(
-        #     artist='Test Artist',
-        #     title='Test Title',
-        #     sku='Test SKU',
-        #     price='1',
-        # )
 
         UserMessage.objects.create(
             ref_number='123',
@@ -36,7 +26,6 @@ class TestMessagingViews(TestCase):
         Order.objects.create(
             order_number='123',
             full_name='test name',
-            #user_profile='test profile',
             email='test@email.com',
             phone_number='test phone',
             country='US',
@@ -46,8 +35,6 @@ class TestMessagingViews(TestCase):
             county='test country',
             original_cart={},
         )
-
-
 
     # Test Messaging View
     #
@@ -172,7 +159,7 @@ class TestMessagingViews(TestCase):
         self.assertRedirects(
             response, f'/messaging/message_thread/{message_thread[0].ref_number}/'
         )
-    
+
     # Test Delete Thread View
     #
     def test_delete_thread_successful(self):
