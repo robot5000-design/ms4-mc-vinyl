@@ -8,7 +8,7 @@
 # from products.models import Product
 
 
-# class TestProductsModels(TestCase):
+# class TestProductsForms(TestCase):
 #     def setUp(self):
 #         User.objects.create_user(
 #             username='testuser', password='testpassword')
