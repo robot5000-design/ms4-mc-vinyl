@@ -15,7 +15,7 @@ Your order will be shipped to {{ order.street_address1 }} in {{ order.town_or_ci
 
 We've got your phone number on file as {{ order.phone_number }}.
 
-If you have any questions regarding this order and you have an account please log into your account, click on the last order in your profile and message us there.
+If you have any questions regarding this order and you have an account please log into your account, click on this order and message us there.
 Otherwise, if you do not have an account feel free to contact us at admin@mc-vinyl.com
 
 Thank you for your order!
