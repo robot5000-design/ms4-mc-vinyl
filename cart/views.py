@@ -46,7 +46,7 @@ def add_to_cart(request, item_id):
         messages.success(request, f'Updated item quantity to {cart[item_id]}')
     else:
         cart[item_id] = quantity
-        messages.success(request, 'Added item to your cart')
+        messages.success(request, 'Added item to your cart.')
 
     request.session['cart'] = cart
     return redirect(redirect_url)
@@ -75,7 +75,7 @@ def adjust_cart(request, item_id):
     else:
         try:
             cart.pop(item_id)
-            messages.info(request, 'Removed item from your cart')
+            messages.info(request, 'Removed item from your cart.')
         except KeyError as error:
             messages.error(request, f'Error removing item: {error}')
 

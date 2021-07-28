@@ -291,6 +291,7 @@ def add_product_review(request, product_id):
     messages.error(request, 'Invalid Method.')
     return redirect(reverse('product_detail', args=[product.id]))
 
+
 @login_required
 def edit_product_review(request, product_id, review_author):
     ''' A view to edit a product review.

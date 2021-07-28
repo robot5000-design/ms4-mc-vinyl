@@ -174,6 +174,10 @@ def checkout_success(request, order_number):
         order_number (uuid): unique order reference number.
     Returns:
         Render of the checkout success template.
+    Raises:
+        django Http404 exception - If there's an order number mismatch
+        or order number does not exist in session. This could happen if
+        a user tries to access through the url.
     '''
     if 'order_number' not in request.session:
         raise Http404("Sorry that page has expired!")

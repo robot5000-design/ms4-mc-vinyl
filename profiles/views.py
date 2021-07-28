@@ -61,8 +61,11 @@ def order_history(request, order_number):
         Render of the past_order template.
     '''
     order = get_object_or_404(Order, order_number=order_number)
+    # Validate if user should be accessing this order
+    valid_order_choice = Order.objects.filter(
+        user_profile__user=request.user, order_number=order.order_number)
 
-    if request.user != order.user_profile.user:
+    if not valid_order_choice:
         messages.error(request, 'Order does not match user!')
         return redirect(reverse('home'))
 
@@ -99,7 +102,9 @@ def add_user_message(request, order_number):
         Redirects to the same order history page.
     '''
     if request.method == 'POST':
-        message_form = UserMessageForm(request.POST)
+        message_form = UserMessageForm({
+            'user_message': request.POST['user_message']
+        })
 
         if message_form.is_valid():
             UserMessage.objects.create(
@@ -123,5 +128,4 @@ def add_user_message(request, order_number):
         else:
             messages.error(request, 'Failed to add message. Please ensure the \
                            form is valid.')
-
     return redirect(reverse('order_history', args=[order_number]))

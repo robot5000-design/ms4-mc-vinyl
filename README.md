@@ -379,6 +379,8 @@ __Final testing of links, responsiveness and Live Website test cases can be foun
 
 ### **5. Deployment**
 
+#### **5a. Deployment to Heroku**
+
 The live site is deployed to [Heroku](https://www.heroku.com), a cloud application platform. The deployment procedure for this was as follows:
 
 1. Make a [Heroku](https://www.heroku.com) account and create a new App.
@@ -586,6 +588,7 @@ _b). Setting up IAM:_
 21. The deployed Heroku site should now be functioning correctly.
 
 ---
+#### **5b. Deployment Locally**
 
 _For this website to be run locally it can downloaded as a ZIP file or it can be cloned, however it needs access to a Postgres database as highlighted in the earlier section:_
 
@@ -636,11 +639,13 @@ The website should be available at localhost.
 
 - All code in this project is completely the authors unless otherwise indicated in the code.
 
-- Free background image and records icon supplied from pixabay.com and is free to use without attribution.
+- Free background image and records brand icon supplied from pixabay.com and is free to use without attribution.
+
+- All album images are the property and copyright of the artists.
 
 - Trash Can icon used under Font Awesome Licence https://fontawesome.com/license
 
-- Star rating CSS https://github.com/chrislingxiao/starrating
+- Star rating CSS provided by: https://github.com/chrislingxiao/starrating
 
 - My Mentor for their time and advice.
 

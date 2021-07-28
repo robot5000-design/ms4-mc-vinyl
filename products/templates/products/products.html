@@ -5,13 +5,7 @@
     <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
 {% endblock %}
 
-{% block page_header %}
-    <div class="container header-container">
-        <div class="row">
-            <div class="col"></div>
-        </div>
-    </div>
-{% endblock %}
+{% block extra_title %}All Products{% endblock %}
 
 {% block content %}
     <div class="container-fluid mb-5 pb-5">
@@ -104,14 +98,14 @@
                                     <div class="row">
                                         <div class="col">                                            
                                             {% if product.genre %}
-                                            <p class="small mt-1 mb-0 genre-wrapper">
-                                                <i class="fas fa-tag mr-1"></i>
-                                                {% for genre in product.genre.all %}
-                                                    <a class="" href="{% url 'products' %}?genre={{ genre }}">
-                                                        {{ genre.friendly_name|capfirst }}
-                                                    </a>{% if product.genre.all|length > 1 and forloop.counter != product.genre.all|length %} | {% endif %}
-                                                {% endfor %}
-                                            </p>
+                                                <p class="small mt-1 mb-0 genre-wrapper">
+                                                    <i class="fas fa-tag mr-1"></i>
+                                                    {% for genre in product.genre.all %}
+                                                        <a class="" href="{% url 'products' %}?genre={{ genre }}">
+                                                            {{ genre.friendly_name|capfirst }}
+                                                        </a>{% if product.genre.all|length > 1 and forloop.counter != product.genre.all|length %} | {% endif %}
+                                                    {% endfor %}
+                                                </p>
                                             {% endif %}
                                         </div>
                                     </div>

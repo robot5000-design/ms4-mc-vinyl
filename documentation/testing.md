@@ -188,7 +188,11 @@ As a user:
 
 - I want to know that the site is secure and safe to use.
 
-_These requirements have largly been met by Django's own inbuilt security. In addition, SESSION COOKIE SECURE, SESSION COOKIE AGE, CSRF COOKIE SECURE, SECURE HSTS and SECURE SSL REDIRECT have all been set and added to the settings.py file. A CSP policy would increase security even more. The @login required decorator is used on functions that require it and in other functions that should only be accessible to site admins a check is performed to see if the user is a superuser. All URL's have been checked to ensure unauthorised users cannot access functions or parts of the database that they should not have access to. Finally all requests from the front-end which would alter the database are performed as POST only requests for some added security, which means the relevant functions cannot be accessed through the url directly._
+_These requirements have largly been met by Django's own inbuilt security. In addition, SESSION COOKIE SECURE, SESSION COOKIE AGE, CSRF COOKIE SECURE, SECURE HSTS and SECURE SSL REDIRECT have all been set and added to the settings.py file. A CSP policy would increase security even more as evidenced by the Mozilla Observatory Security Scan shown below. Even without, the site scored well. The @login required decorator is used on functions that require it and in other functions that should only be accessible to site admins a check is performed to see if the user is a superuser. All URL's have been checked to ensure unauthorised users cannot access functions or parts of the database that they should not have access to. Finally all requests from the front-end which would alter the database are performed as POST only requests for some added security, which means the relevant functions cannot be accessed through the url directly._
+
+![SecurityScan][11]
+
+[11]: ../documentation/images_for_readme/security-scan.jpg "Mozilla Observatory Security Scan"
 
 ---
 
@@ -245,7 +249,7 @@ The site has been tested on the following browsers on Windows 10:
 
 and tested on a Google Pixel 5:
 
-- Chrome 91.0.4472.101
+- Chrome 91.0.4472.164
 
 All HTML and CSS files have been passed through the w3c validation service here https://validator.w3.org/ with any issues corrected.
 
@@ -259,15 +263,15 @@ Chrome Development Tools Lighthouse after some work, scored the site well, an ex
 
 Products Page:
 
-![LighthouseExample][11]
+![LighthouseExample][12]
 
-[11]: ../documentation/images_for_readme/lighthouse-products.jpg "Lighthouse Example Score"
+[12]: ../documentation/images_for_readme/lighthouse-products.jpg "Lighthouse Example Score"
 
 Product Detail Page:
 
-![LighthouseExample2][12]
+![LighthouseExample2][13]
 
-[12]: ../documentation/images_for_readme/lighthouse-product-detail.jpg "Lighthouse Example Score 2"
+[13]: ../documentation/images_for_readme/lighthouse-product-detail.jpg "Lighthouse Example Score 2"
 
 ---
 
@@ -511,6 +515,41 @@ Any issues have been cataloged in the Issues section on Github and closed when a
 
     5. Confirm Cancel button returns to last page. __PASS__
 
+- TC13
+
+    Description:
+
+  - Verify 404 error page functionality.
+
+    Procedure:
+
+    1. Type an invalid extension to the site address in the address bar and the 404.html page is shown. __PASS__
+
+- TC14
+
+    Description:
+
+  - Verify 500 error page functionality.
+
+    Procedure:
+
+    1. Raise an unhandled exception in the code and the 500.html page is shown. __PASS__
+
+- TC15
+
+    Description:
+
+  - Verify CSRF error page functionality.
+
+    Procedure:
+
+    1. Insert the following javascript to make the CSRF token invalid. The CSRF error page 403_csrf.html is shown. __PASS__
+
+            $(document).ready(function() {
+                csrfInputElement = $( "input[name='csrfmiddlewaretoken']" );
+                $(csrfInputElement).val('invalidToken');
+            });
+
 ---
 
 ## 4. Debugging
@@ -537,16 +576,21 @@ Although there are no known outstanding bugs, the main problematic bugs were rep
 
     _Solved by modifying the model to have a default of zero rather than null._
 
+6. Problem with some order confirmation emails not being sent #8.
+
+    _From Stripe seems to be a problem during the checkout process. Check errors in console on dev server. Solve by removing code that was setting empty optional shipping address details to None. Psycopg2 does not seem to allow null values._
+
+7. Randomising the product order causing duplicates to appear in a search #9.
+
+    _Solved by only randomising the queryset if not a search or sort get request._
+
 ---
 
 
 
 
 
-$(document).ready(function() {
-    e = $( "input[name='csrfmiddlewaretoken']" );
-    $(e).val('invalidToken');
-});
+
 
 
 

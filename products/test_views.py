@@ -2,7 +2,7 @@
 # from django.contrib.messages import get_messages
 
 # from django.contrib.auth.models import User
-# from products.models import Product, ProductReview, Genre, Promotion
+# from .models import Product, ProductReview, Genre, Promotion
 
 
 # class TestProductsViews(TestCase):
