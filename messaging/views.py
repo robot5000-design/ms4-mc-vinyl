@@ -43,7 +43,10 @@ def messaging(request):
                     )
     for message in all_messages:
         order = get_object_or_404(Order, order_number=message.ref_number)
-        customer = order.user_profile.user.username
+        if order.user_profile.user:
+            customer = order.user_profile.user.username
+        else:
+            customer = order.full_name
         message.customer = customer
         if message.closed is False:
             open_threads.append(message)
