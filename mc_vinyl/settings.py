@@ -134,7 +134,7 @@ WSGI_APPLICATION = 'mc_vinyl.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if 'DEVELOPMENT' in os.environ:
+if 'TEST' in os.environ:
     # Postgres Testing Database
     DATABASES = {
         'default': {
