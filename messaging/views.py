@@ -43,7 +43,7 @@ def messaging(request):
                     )
     for message in all_messages:
         order = get_object_or_404(Order, order_number=message.ref_number)
-        if order.user_profile.user:
+        if order.user_profile:
             customer = order.user_profile.user.username
         else:
             customer = order.full_name
