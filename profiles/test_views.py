@@ -126,5 +126,7 @@ class TestProfileViews(TestCase):
             })
         self.assertRedirects(
             response, f'/profile/order_history/{order.order_number}/')
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(str(messages[0]), 'Invalid Method.')
         message = UserMessage.objects.filter(ref_number=order.order_number)
         self.assertEqual(len(message), 0)

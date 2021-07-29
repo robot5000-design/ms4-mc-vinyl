@@ -42,6 +42,9 @@ def messaging(request):
                     .order_by('-message_date')
                     )
     for message in all_messages:
+        associated_order = Order.objects.get(order_number=message.ref_number)
+        customer = associated_order.user_profile.user.username
+        message.customer = customer
         if message.closed is False:
             open_threads.append(message)
         else:

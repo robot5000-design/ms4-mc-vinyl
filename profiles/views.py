@@ -128,4 +128,6 @@ def add_user_message(request, order_number):
         else:
             messages.error(request, 'Failed to add message. Please ensure the \
                            form is valid.')
+        return redirect(reverse('order_history', args=[order_number]))
+    messages.error(request, 'Invalid Method.')
     return redirect(reverse('order_history', args=[order_number]))

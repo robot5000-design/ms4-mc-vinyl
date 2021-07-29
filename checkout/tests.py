@@ -12,8 +12,8 @@ class TestCheckoutForms(TestCase):
     #         price='1',
     #     )
 
-    # Test Order form
-    #
+    Test Order form
+    
     def test_order_form_friendly_name_required(self):
         form = GenreForm({
             'name': 'test',
