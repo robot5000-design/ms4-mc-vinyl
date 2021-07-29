@@ -42,9 +42,8 @@ def messaging(request):
                     .order_by('-message_date')
                     )
     for message in all_messages:
-        associated_order = get_object_or_404(
-            Order, order_number=message.ref_number)
-        customer = associated_order.user_profile.user.username
+        order = get_object_or_404(Order, order_number=message.ref_number)
+        customer = order.user_profile.user.username
         message.customer = customer
         if message.closed is False:
             open_threads.append(message)
@@ -86,7 +85,7 @@ def view_message_thread(request, ref_number):
         message_thread.update(read=True)
         order = get_object_or_404(Order, order_number=ref_number)
 
-        user = list(message_thread)[-1].user
+        user = order.user_profile.user
         thread_status = message_thread[0].closed
         message_form = UserMessageForm()
 
