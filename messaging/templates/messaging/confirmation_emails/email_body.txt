@@ -2,7 +2,12 @@ Hello!
 
 You have received a new reply in this conversation ref no. {{ ref_number }}.
 
+** Do not reply to this email. This email address is not monitored. **
+
 Please log in to view all messages in the thread and to reply.
+
+The message you received:
+"{{ message }}"
 
 Thank you for your custom!
 

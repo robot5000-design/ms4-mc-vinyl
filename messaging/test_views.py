@@ -4,18 +4,21 @@
 # from django.contrib.auth.models import User
 # from messaging.models import UserMessage
 # from checkout.models import Order
+# from profiles.models import UserProfile
 
 
 # class TestMessagingViews(TestCase):
 
 #     def setUp(self):
-#         testuser_1 = User.objects.create_user(
+#         testuser = User.objects.create_user(
 #             username='testuser', password='testpassword')
 #         testuser_su = User.objects.create_superuser(
 #             username='testuser_su', password='testpassword')
 
-#         testuser_1.save()
+#         testuser.save()
 #         testuser_su.save()
+
+#         testuser_profile = UserProfile.objects.get(user=testuser)
 
 #         UserMessage.objects.create(
 #             ref_number='123',
@@ -33,6 +36,7 @@
 #             street_address1='test address 1',
 #             county='test country',
 #             original_cart={},
+#             user_profile=testuser_profile
 #         )
 
 #     # Test Messaging View

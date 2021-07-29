@@ -42,7 +42,8 @@ def messaging(request):
                     .order_by('-message_date')
                     )
     for message in all_messages:
-        associated_order = Order.objects.get(order_number=message.ref_number)
+        associated_order = get_object_or_404(
+            Order, order_number=message.ref_number)
         customer = associated_order.user_profile.user.username
         message.customer = customer
         if message.closed is False:
@@ -125,11 +126,11 @@ def add_admin_reply(request, ref_number):
         message_form = UserMessageForm(request.POST)
 
         if message_form.is_valid():
-            UserMessage.objects.create(
+            message = UserMessage.objects.create(
                 ref_number=ref_number,
                 user=request.user,
                 user_message=request.POST['user_message'],
-            )
+                )
             messages.info(request, 'Successfully added a message!')
 
             # send an email to customer
@@ -139,6 +140,7 @@ def add_admin_reply(request, ref_number):
             body_context = {
                     'user': request.user,
                     'ref_number': ref_number,
+                    'message': message,
                 }
             path = 'messaging/confirmation_emails/'
             send_confirmation_email(customer_email, subject_context,

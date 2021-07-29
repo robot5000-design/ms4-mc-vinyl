@@ -1,5 +1,8 @@
 from django.test import TestCase
 
+from .forms import OrderForm
+from .models import Order
+
 
 class TestCheckoutForms(TestCase):
     # def setUp(self):
@@ -12,15 +15,19 @@ class TestCheckoutForms(TestCase):
     #         price='1',
     #     )
 
-    Test Order form
-    
-    def test_order_form_friendly_name_required(self):
-        form = GenreForm({
-            'name': 'test',
-            'friendly_name': ''
+    # Test Order form
+    #
+    def test_add_order_form_successful_with_required_fields(self):
+        form = OrderForm({
+            'full_name': 'test name',
+            'email': 'test@email.com',
+            'phone_number': '123456',
+            'country': 'IE',
+            'town_or_city': 'test city',
+            'street_address1': 'test address 1',
             })
-        self.assertFalse(form.is_valid())
-        self.assertIn('friendly_name', form.errors.keys())
-        self.assertEqual(form.errors['friendly_name'][0],
-                         'This field is required.')
+        self.assertTrue(form.is_valid())
+        form.save()
+        Order.objects.get(email='test@email.com')
+
 
