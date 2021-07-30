@@ -177,3 +177,11 @@ class TestWishlistModels(TestCase):
         self.assertEqual(
             str(messages[0]), "There's nothing to add!")
         self.assertRedirects(response, '/wishlist/')
+
+    def test_transfer_to_cart_wishlist_does_not_exist(self):
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get('/wishlist/transfer/')
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(
+            str(messages[0]), "There's nothing to add!")
+        self.assertRedirects(response, '/wishlist/')
