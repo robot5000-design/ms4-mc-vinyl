@@ -584,6 +584,10 @@ Although there are no known outstanding bugs, the main problematic bugs were rep
 
     _Solved by only randomising the queryset if not a search or sort get request._
 
+8. Messaging page not showing and giving 500 error on deployed site only #10
+
+    _Solved by adding a conditional statement checking if the user profile exists on an order before using it. On the deployed site there are probably messages from orders that have been tampered with or users changed or removed. So this makes the site more robust._
+
 ---
 
 

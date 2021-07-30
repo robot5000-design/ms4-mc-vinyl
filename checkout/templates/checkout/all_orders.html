@@ -72,7 +72,8 @@
                                         </td>
                                         <td>
                                             {% if order.user_profile.user %}
-                                                {{ order.user_profile.user }}
+                                                <div class="d-md-none">{{ order.user_profile.user|truncatechars:14 }}</div>
+                                                <div class="d-none d-md-block">{{ order.user_profile.user|truncatechars:30 }}</div>
                                             {% else %}
                                                 No Account
                                             {% endif %}

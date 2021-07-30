@@ -5,15 +5,6 @@ from .models import Order
 
 
 class TestCheckoutForms(TestCase):
-    # def setUp(self):
-    #     User.objects.create_user(
-    #         username='testuser', password='testpassword')
-    #     Product.objects.create(
-    #         artist='Test Artist',
-    #         title='Test Title',
-    #         sku='Test SKU',
-    #         price='1',
-    #     )
 
     # Test Order form
     #
@@ -29,5 +20,3 @@ class TestCheckoutForms(TestCase):
         self.assertTrue(form.is_valid())
         form.save()
         Order.objects.get(email='test@email.com')
-
-
