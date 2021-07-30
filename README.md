@@ -247,13 +247,13 @@ _There are no known outstanding bugs in the site._
 
 __Additional Security Considerations__:
 
-Django has in-built security through it middleware in settings and Django templates protects against the majority of XSS attacks.
+Django has in-built security through its middleware in settings and Django templates protects against the majority of XSS attacks.
 
 In addition:
 
 - All sensitive variables are stored in environment variables.
 - The session cookie and CSRF cookie are set to secure.
-- The SECURE_HSTS_SECONDS value is set, which means SecurityMiddleware will set the “Strict-Transport-Security” header. This reduces your exposure to some SSL-stripping man-in-the-middle (MITM) attacks.
+- The SECURE_HSTS_SECONDS value is set, which means SecurityMiddleware will set the “Strict-Transport-Security” header. This reduces exposure to some SSL-stripping man-in-the-middle (MITM) attacks.
 - SECURE_HSTS_INCLUDE_SUBDOMAINS is set to true, which means SecurityMiddleware will add the includeSubDomains directive to the Strict-Transport-Security header.
 - The session cookie is set to time-out after 3 hours.
 - Cross-Site Request Forgery (CSRF) attacks are dealt with by using the CSRF Token tag inside any form {% csrf_token %}.
