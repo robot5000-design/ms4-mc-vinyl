@@ -35,7 +35,7 @@
                     {% csrf_token %}
                     <label for="genre-name" class="form-label">Programmatical Name:</label>
                     <input id="genre-name" name="name" type="text" class="form-control"
-                    pattern="^[-a-z0-9_]+$" maxlength="30" required>
+                        pattern="^[-a-z0-9_]+$" maxlength="30" required>
                     <span class="invalid-feedback">only small letters, numbers, underscores or hyphens (no spaces)</span>
                     <div class="my-3">
                         <label for="genre-friendly-name" class="form-label">Display Name:</label>
@@ -52,12 +52,12 @@
                         <div class="font-weight-bold">Existing Genres: *</div>
                         {% if genres %}
                             {% for genre in genres %}
-                            <div class="row">
-                                <div class="col">
-                                    {{ genre.name }}
-                                    ({{ genre.friendly_name }})
+                                <div class="row">
+                                    <div class="col">
+                                        {{ genre.name }}
+                                        ({{ genre.friendly_name }})
+                                    </div>
                                 </div>
-                            </div>
                             {% endfor %}
                         {% else %}
                             <div>No Existing</div>
@@ -75,7 +75,7 @@
                     {% csrf_token %}
                     <label for="promotion-name" class="form-label">Programmatical Name:</label>
                     <input id="promotion-name" name="name" type="text" class="form-control"
-                    pattern="^[-a-z0-9_]+$" maxlength="30" required>
+                        pattern="^[-a-z0-9_]+$" maxlength="30" required>
                     <span class="invalid-feedback">only small letters, numbers, underscores or hyphens (no spaces)</span>
                     <div class="my-3">
                         <label for="promotion-friendly-name" class="form-label">Display Name:</label>

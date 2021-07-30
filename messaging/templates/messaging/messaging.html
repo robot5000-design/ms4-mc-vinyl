@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'messaging/css/messaging.css' %}">
+    <link rel="stylesheet" href="{% static 'messaging/css/messaging.css' %}">
 {% endblock %}
 
 {% block extra_title %}Messaging{% endblock %}
@@ -16,127 +16,127 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid mb-5">
-    <div class="row">
-        <div class="col">
-            <hr>
-            <h2 class="heading logo-font mb-4">Messages:</h2>
-            <hr>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <a href="{% url 'messaging' %}" class="btn btn-dark  my-2" aria-label="refresh-messages">
-                <span class="icon">
-                    <i class="fas fa-sync-alt"></i>
-                </span>
-            </a>
-            <div class="btn btn-dark  my-2 open-threads-btn">
-                <span class="icon">
-                    <i class="far fa-square"></i>
-                </span>
-                <span class="text-uppercase">Open</span>
-            </div>
-            <div class="btn btn-dark  my-2 closed-threads-btn">
-                <span class="icon">
-                    <i class="far fa-check-square"></i>
-                </span>
-                <span class="text-uppercase">Closed</span>
+    <div class="container-fluid mb-5">
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h2 class="heading logo-font mb-4">Messages:</h2>
+                <hr>
             </div>
         </div>
-    </div>
-    <div class="row messages-wrapper mt-5">
-        <div class="open-threads col-12 px-0 px-sm-3">
-            <h2 class="table-caption font-weight-bold">Open Threads:</h2>      
-            <table class="table table-hover text-center border open-threads-table">
-                <thead>
-                    <tr>
-                        <th scope="col">Ref Number</th>
-                        <th scope="col">Replied</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">From Customer</th>
-                        <th scope="col"><i class="fas fa-times-circle text-secondary"></i></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for message in open_threads %}
-                        <tr class="{% if not message.read %}font-weight-bold{% endif %}">
-                            <td>
-                                <a href="{% url 'view_message_thread' message.ref_number %}" title="{{ message.ref_number }}">
-                                    {{ message.ref_number|truncatechars:10 }}
-                                </a>
-                            </td>
-                            <td>
-                                {% if message.user.is_superuser %}
-                                    <i class="fas fa-check text-success"></i>
-                                {% else %}
-                                    <i class="fas fa-times text-warning"></i>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <div>{{ message.message_date|date:'d/m/y' }}</div>
-                                <div>{{ message.message_date|date:'H:i' }}</div>
-                            </td>
-                            <td>{{ message.customer|truncatechars:12 }}</td>
-                            <td>
-                                <div class="call-delete h5" data-messages="{{ message.ref_number }}" data-toggle="modal" data-target="#deleteMessagesModal"
-                                    aria-label="delete-message"><i class="fas fa-times-circle text-danger"></i>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'messaging' %}" class="btn btn-dark  my-2" aria-label="refresh-messages">
+                    <span class="icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </span>
+                </a>
+                <div class="btn btn-dark  my-2 open-threads-btn">
+                    <span class="icon">
+                        <i class="far fa-square"></i>
+                    </span>
+                    <span class="text-uppercase">Open</span>
+                </div>
+                <div class="btn btn-dark  my-2 closed-threads-btn">
+                    <span class="icon">
+                        <i class="far fa-check-square"></i>
+                    </span>
+                    <span class="text-uppercase">Closed</span>
+                </div>
+            </div>
         </div>
-        <div class="closed-threads col-12 px-0 px-sm-3 mt-3">
-            <h2 class="table-caption font-weight-bold">Closed Threads:</h2>
-            <table class="table table-hover text-center mt-3 border table-dark">
-                <thead>
-                    <tr>
-                        <th scope="col">Ref Number</th>
-                        <th scope="col">Replied</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">From Customer</th>
-                        <th scope="col"><i class="fas fa-times-circle text-secondary"></i></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for message in closed_threads %}
-                        <tr class="{% if not message.read %}font-weight-bold{% endif %} closed-thread">
-                            <td>
-                                <a href="{% url 'view_message_thread' message.ref_number %}" title="{{ message.ref_number }}" class="text-warning">
-                                    {{ message.ref_number|truncatechars:10 }}
-                                </a>
-                            </td>
-                            <td>
-                                {% if message.user.is_superuser %}
-                                    <i class="fas fa-check text-success"></i>
-                                {% else %}
-                                    <i class="fas fa-times text-warning"></i>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <div>{{ message.message_date|date:'d/m/y' }}</div>
-                                <div>{{ message.message_date|date:'H:i' }}</div>
-                            </td>
-                            <td>{{ message.customer|truncatechars:12 }}</td>
-                            <td>
-                                <a class="call-delete h5" data-messages="{{ message.ref_number }}" data-toggle="modal" data-target="#deleteMessagesModal"
-                                    aria-label="delete-message"><i class="fas fa-times-circle text-danger"></i>
-                                </a>
-                            </td>
+        <div class="row messages-wrapper mt-5">
+            <div class="open-threads col-12 px-0 px-sm-3">
+                <h2 class="table-caption font-weight-bold">Open Threads:</h2>      
+                <table class="table table-hover text-center border open-threads-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Ref Number</th>
+                            <th scope="col">Replied</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">From Customer</th>
+                            <th scope="col"><i class="fas fa-times-circle text-secondary"></i></th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for message in open_threads %}
+                            <tr class="{% if not message.read %}font-weight-bold{% endif %}">
+                                <td>
+                                    <a href="{% url 'view_message_thread' message.ref_number %}" title="{{ message.ref_number }}">
+                                        {{ message.ref_number|truncatechars:10 }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if message.user.is_superuser %}
+                                        <i class="fas fa-check text-success"></i>
+                                    {% else %}
+                                        <i class="fas fa-times text-warning"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div>{{ message.message_date|date:'d/m/y' }}</div>
+                                    <div>{{ message.message_date|date:'H:i' }}</div>
+                                </td>
+                                <td>{{ message.customer|truncatechars:12 }}</td>
+                                <td>
+                                    <div class="call-delete h5" data-messages="{{ message.ref_number }}" data-toggle="modal" data-target="#deleteMessagesModal"
+                                        aria-label="delete-message"><i class="fas fa-times-circle text-danger"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="closed-threads col-12 px-0 px-sm-3 mt-3">
+                <h2 class="table-caption font-weight-bold">Closed Threads:</h2>
+                <table class="table table-hover text-center mt-3 border table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Ref Number</th>
+                            <th scope="col">Replied</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">From Customer</th>
+                            <th scope="col"><i class="fas fa-times-circle text-secondary"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for message in closed_threads %}
+                            <tr class="{% if not message.read %}font-weight-bold{% endif %} closed-thread">
+                                <td>
+                                    <a href="{% url 'view_message_thread' message.ref_number %}" title="{{ message.ref_number }}" class="text-warning">
+                                        {{ message.ref_number|truncatechars:10 }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if message.user.is_superuser %}
+                                        <i class="fas fa-check text-success"></i>
+                                    {% else %}
+                                        <i class="fas fa-times text-warning"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div>{{ message.message_date|date:'d/m/y' }}</div>
+                                    <div>{{ message.message_date|date:'H:i' }}</div>
+                                </td>
+                                <td>{{ message.customer|truncatechars:12 }}</td>
+                                <td>
+                                    <a class="call-delete h5" data-messages="{{ message.ref_number }}" data-toggle="modal" data-target="#deleteMessagesModal"
+                                        aria-label="delete-message"><i class="fas fa-times-circle text-danger"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="btt-button">
+            <a class="btt-link d-flex h-100">
+                <i class="fas fa-arrow-up mx-auto my-auto"></i>
+            </a>	
         </div>
     </div>
-    <div class="btt-button">
-        <a class="btt-link d-flex h-100">
-            <i class="fas fa-arrow-up mx-auto my-auto"></i>
-        </a>	
-    </div>
-</div>
 {% include 'messaging/includes/modal_delete.html' %}
 {% endblock %}
 
