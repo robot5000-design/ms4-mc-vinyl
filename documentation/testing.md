@@ -17,9 +17,7 @@ As a user:
 
 _These requirements have been met by keeping the site similar to other e-comerce store layouts and not straying beyond convention in terms of layout._
 
-![EasyNavigation][1]
-
-[1]: ../documentation/images_for_readme/easy-nav.jpg "Easy Navigation"
+---
 
 As the site owner/administrator:
 
@@ -31,17 +29,17 @@ As a user:
 
 _These requirements have been met by using Django Allauth to help with authentication providing validated forms for users to register, login and change password._
 
-![Register][2]
+![Register][1]
 
-[2]: ../documentation/images_for_readme/register.jpg "Register"
+[1]: ../documentation/images_for_readme/register.jpg "Register"
 
-![Login][3]
+![Login][2]
 
-[3]: ../documentation/images_for_readme/login.jpg "Login"
+[2]: ../documentation/images_for_readme/login.jpg "Login"
 
-![ChangePassword][4]
+![ChangePassword][3]
 
-[4]: ../documentation/images_for_readme/change-password.jpg "Change Password"
+[3]: ../documentation/images_for_readme/change-password.jpg "Change Password"
 
 As the site owner/administrator:
 
@@ -53,9 +51,9 @@ As a user:
 
 _These requirements have been met by allowing users to search and sort products with the easily accessible search input always at the top of a page. Products can be searched by artist, title or genre and can be sorted by price, by rating or alphabetically. They can also be separated by what's on promotion._
 
-![SearchSort][5]
+![SearchSort][4]
 
-[5]: ../documentation/images_for_readme/search-sort.jpg "Search and Sort"
+[4]: ../documentation/images_for_readme/search-sort.jpg "Search and Sort"
 
 As the site owner/administrator:
 
@@ -79,9 +77,9 @@ As a user:
 
 _These requirements have been met by providing a Wishlist page where users can save up to 10 of their favourite products referenced to their user account._
 
-![Wishlist][6]
+![Wishlist][5]
 
-[6]: ../documentation/images_for_readme/wishlist.jpg "Wishlist Page"
+[5]: ../documentation/images_for_readme/wishlist.jpg "Wishlist Page"
 
 As the site owner/administrator:
 
@@ -131,7 +129,7 @@ As a user:
 
 - I want to be able to see past orders and be easily able to contact the site owner in the event of a problem with an order.
 
-_These requirements have been met by providing a user message model and messaging app. Past orders can be seen by the site admin on the All Orders page and can be searched by user. Messages can sent by customers and replied to by the site admin. Message threads can be marked open or closed and at a glance the admin can what messages have been replied to. New messages appear in bold font._
+_These requirements have been met by providing a user message model and messaging app. Past orders can be seen by the site admin on the All-Orders page and can be searched by user. Messages can be sent by customers and replied to by the site admin. Message threads can be marked open or closed and at a glance the admin can what messages have been replied to. New messages appear in bold font._
 
 ![Messaging][7]
 
@@ -196,7 +194,53 @@ _These requirements have largly been met by Django's own inbuilt security. In ad
 
 ---
 
-## 2. Page Responsiveness
+## 2. Automated Testing
+
+Although this project was developed using a test driven development approach, it was mostly manual testing of functions and apps as they were developed. Automated testing was carried out at the end with the time that was left. Coverage was used to generate reports showing the percentage of each app tested. These can be seen below. Most views, models and forms have been tested to near 100% in all the apps, with some exceptions in the checkout app.
+
+### **Cart App:**
+
+![CartCoverage][12]
+
+[12]: ../documentation/images_for_readme/cart-coverage.jpg "Cart Test Coverage"
+
+### **Messaging App:**
+
+![MessagingCoverage][13]
+
+[13]: ../documentation/images_for_readme/messaging-coverage.jpg "Messaging Test Coverage"
+
+### **Profiles App:**
+
+![ProfilesCoverage][14]
+
+[14]: ../documentation/images_for_readme/profiles-coverage.jpg "Profiles Test Coverage"
+
+### **Products App:**
+
+![ProductsCoverageTop][15]
+
+[15]: ../documentation/images_for_readme/products-coverage-top.jpg "Products Test Coverage Top"
+
+![ProductsCoverageBottom][16]
+
+[16]: ../documentation/images_for_readme/products-coverage-bottom.jpg "Products Test Coverage Bottom"
+
+### **Wishlist App:**
+
+![WishlistCoverage][17]
+
+[17]: ../documentation/images_for_readme/wishlist-coverage.jpg "Wishlist Test Coverage"
+
+### **Checkout App:**
+
+![CheckoutCoverage][18]
+
+[18]: ../documentation/images_for_readme/checkout-coverage.jpg "Checkout Test Coverage"
+
+---
+
+## 3. Page Responsiveness
 
 ### Testing responsiveness of each html page
 
@@ -227,7 +271,7 @@ W1200px | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y 
 - Samsung A21s
 - Samsung Galaxy S10
 - Huawei P30 Pro
-- iPhone 11 Safari through Browserstack (limited test)
+- iPhone 11 Pro Safari through Browserstack (limited test)
 - Asus k501u 4k laptop
 - Chrome Dev Tools Device Emulator:
   - Samsung Galaxy Fold
@@ -241,11 +285,10 @@ W1200px | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y | y 
 The site has been tested on the following browsers on Windows 10:
 
 - Internet Explorer 11
-- Firefox 87.0
+- Firefox 89.0
 - Google Chrome 89.0.4389.114
-- Opera 75.0.3969.149
-- Microsoft Edge 89.0.774.68
-- Safari 10.1 on Mac using www.browserstack.com (limited test)
+- Opera 77.0.4054.277
+- Microsoft Edge 91.0.864.48
 
 and tested on a Google Pixel 5:
 
@@ -255,7 +298,7 @@ All HTML and CSS files have been passed through the w3c validation service here 
 
 Javascript files were passed through jshint.com without any significant issues.
 
-Python code was passed through pylint and there are no outstanding issues.
+Python code was passed through pylint and there are no known significant outstanding issues.
 
 The Javascript on the site does not function on Internet Explorer 11, but considering its overall low usage and the fact that it is being discontinued in 2021, it was deemed not worth spending time on.
 
@@ -263,23 +306,23 @@ Chrome Development Tools Lighthouse after some work, scored the site well, an ex
 
 Products Page:
 
-![LighthouseExample][12]
+![LighthouseExample][19]
 
-[12]: ../documentation/images_for_readme/lighthouse-products.jpg "Lighthouse Example Score"
+[19]: ../documentation/images_for_readme/lighthouse-products.jpg "Lighthouse Example Score"
 
 Product Detail Page:
 
-![LighthouseExample2][13]
+![LighthouseExample2][20]
 
-[13]: ../documentation/images_for_readme/lighthouse-product-detail.jpg "Lighthouse Example Score 2"
+[20]: ../documentation/images_for_readme/lighthouse-product-detail.jpg "Lighthouse Example Score 2"
 
 ---
 
-## 3. Final Testing Test Cases on Live Website
+## 4. Final Testing Test Cases on Live Website
 
 The site has been tested on both mobile and desktop for responsiveness and functionality.
 
-Any issues have been cataloged in the Issues section on Github and closed when a sufficient solution was reached. There are no known exisiting issues with the final deployed version. Begin all tests not logged in (anonymous user).
+Any issues have been cataloged in the Issues section on Github and closed when a sufficient solution was reached. There are no known exisiting issues with the final deployed version. All tests should be started with user not logged in (anonymous user), unless otherwise stated.
 
 - TC01
 
@@ -552,7 +595,7 @@ Any issues have been cataloged in the Issues section on Github and closed when a
 
 ---
 
-## 4. Debugging
+## 5. Debugging
 
 Although there are no known outstanding bugs, the main problematic bugs were reported in the issues section of Github and are copied below.
 
@@ -589,16 +632,3 @@ Although there are no known outstanding bugs, the main problematic bugs were rep
     _Solved by adding a conditional statement checking if the user profile exists on an order before using it. On the deployed site there are probably messages from orders that have been tampered with or users changed or removed. So this makes the site more robust._
 
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
