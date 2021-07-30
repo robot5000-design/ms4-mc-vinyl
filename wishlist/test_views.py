@@ -2,8 +2,8 @@ from django.test import TestCase
 from django.contrib.messages import get_messages
 
 from django.contrib.auth.models import User
-from .models import Wishlist
 from products.models import Product
+from .models import Wishlist
 
 
 class TestWishlistModels(TestCase):
@@ -14,13 +14,13 @@ class TestWishlistModels(TestCase):
 
         testuser.save()
 
-        product = Product.objects.create(
+        Product.objects.create(
             artist='Test Artist',
             title='Test Title',
             sku='Test SKU',
             price='1',
         )
-    
+
     # Test View Wishlist Page
     #
     def test_view_wishlist_page_wishlist_empty(self):
@@ -61,7 +61,8 @@ class TestWishlistModels(TestCase):
     def test_login_required_add_to_wishlist(self):
         product = Product.objects.get(sku='Test SKU')
         response = self.client.get(f'/wishlist/add/{product.id}/')
-        self.assertRedirects(response, f'/accounts/login/?next=/wishlist/add/{product.id}/')
+        self.assertRedirects(
+            response, f'/accounts/login/?next=/wishlist/add/{product.id}/')
 
     def test_add_to_wishlist_product_already_in_wishlist(self):
         self.client.login(username='testuser', password='testpassword')
@@ -110,6 +111,15 @@ class TestWishlistModels(TestCase):
             str(messages[0]), 'Removed item from your wishlist')
         self.assertRedirects(response, f'/products/{product.id}/')
 
+    def test_login_required_remove_from_wishlist(self):
+        product = Product.objects.get(sku='Test SKU')
+        redirect_from = 'product'
+        response = self.client.get(
+            f'/wishlist/remove/{product.id}/{redirect_from}/')
+        self.assertRedirects(
+            response,
+            f'/accounts/login/?next=/wishlist/remove/{product.id}/{redirect_from}/')
+
     def test_remove_from_wishlist_redirect_from_wishlist(self):
         self.client.login(username='testuser', password='testpassword')
         test_user = User.objects.get(username='testuser')
@@ -151,10 +161,16 @@ class TestWishlistModels(TestCase):
             str(messages[0]), 'Added all items to your cart')
         self.assertRedirects(response, '/cart/')
 
+    def test_login_required_transfer_to_cart(self):
+        product = Product.objects.get(sku='Test SKU')
+        response = self.client.get('/wishlist/transfer/')
+        self.assertRedirects(
+            response, '/accounts/login/?next=/wishlist/transfer/')
+
     def test_transfer_to_cart_wishlist_empty(self):
         self.client.login(username='testuser', password='testpassword')
         test_user = User.objects.get(username='testuser')
-        wishlist = Wishlist.objects.create(user=test_user)
+        Wishlist.objects.create(user=test_user)
         response = self.client.get('/wishlist/transfer/')
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(

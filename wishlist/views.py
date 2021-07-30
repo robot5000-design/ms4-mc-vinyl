@@ -96,6 +96,7 @@ def remove_from_wishlist(request, item_id, redirect_from):
     return redirect(redirect_url)
 
 
+@login_required
 def transfer_all_to_cart(request):
     ''' Add all items on the wishlist to the shopping cart.
 
