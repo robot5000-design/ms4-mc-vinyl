@@ -113,14 +113,14 @@ def transfer_all_to_cart(request):
     # If cart is in session, get it or else create one
     cart = request.session.get('cart', {})
 
-    try:
-        wishlist = Wishlist.objects.filter(user=request.user.id)[0]
+    # try:
+    wishlist = Wishlist.objects.filter(user=request.user.id)[0]
 
-    except IndexError:
-        messages.error(request, "There's nothing to add!")
-        return redirect(reverse('view_wishlist'))
-    else:
-        wishlist_items = wishlist.products.all()
+    # except IndexError:
+    #     messages.error(request, "There's nothing to add!")
+    #     return redirect(reverse('view_wishlist'))
+    # else:
+    wishlist_items = wishlist.products.all()
 
     if wishlist_items:
         for item in wishlist_items:

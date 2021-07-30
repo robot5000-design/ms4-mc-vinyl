@@ -118,7 +118,8 @@ class TestWishlistModels(TestCase):
             f'/wishlist/remove/{product.id}/{redirect_from}/')
         self.assertRedirects(
             response,
-            f'/accounts/login/?next=/wishlist/remove/{product.id}/{redirect_from}/')
+            f'/accounts/login/?next=/wishlist/remove/{product.id}/{redirect_from}/'
+        )
 
     def test_remove_from_wishlist_redirect_from_wishlist(self):
         self.client.login(username='testuser', password='testpassword')
