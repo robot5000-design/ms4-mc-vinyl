@@ -146,3 +146,12 @@ label .asteriskField {
 .is-invalid {
     border: 2px solid #ca1919 !important;
 }
+
+/* Add Edit Product Form Choice Inputs */
+#id_genre {
+    min-height: 200px;
+}
+
+#id_promotion {
+    min-height: 150px;
+}
