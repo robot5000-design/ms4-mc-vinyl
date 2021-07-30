@@ -11,13 +11,13 @@ from .models import Wishlist
 
 @login_required
 def view_wishlist(request):
-    """ A view that renders the wishlist contents page.
+    ''' A view that renders the wishlist contents page.
 
     Args:
         request (object): HTTP request object.
     Returns:
         Renders the wishlist page.
-    """
+    '''
     try:
         wishlist = Wishlist.objects.filter(user=request.user.id)[0]
 
@@ -38,7 +38,7 @@ def view_wishlist(request):
 
 @login_required
 def add_to_wishlist(request, item_id):
-    """ Add a quantity of the specified product to the wishlist.
+    ''' Add a quantity of the specified product to the wishlist.
 
     Checks if the product and the wishlist exist. If the wishlist does
     not exist, it is created and the product is added to it. The wishlist
@@ -49,7 +49,7 @@ def add_to_wishlist(request, item_id):
         item_id (int): id which identifies a product in the database.
     Returns:
         Redirects to the product detail page for that product.
-    """
+    '''
     product = get_object_or_404(Product, pk=item_id)
 
     try:
@@ -70,7 +70,7 @@ def add_to_wishlist(request, item_id):
 
 @login_required
 def remove_from_wishlist(request, item_id, redirect_from):
-    """Remove the item from wishlist.
+    '''Remove the item from wishlist.
 
     Gets the product and wishlist from the database and removes the
     product from the request user's wishlist if it exists.
@@ -80,7 +80,7 @@ def remove_from_wishlist(request, item_id, redirect_from):
         item_id (int): id which identifies a product in the database.
     Returns:
         Redirects to the wishlist page.
-    """
+    '''
     product = get_object_or_404(Product, pk=item_id)
     wishlist = get_object_or_404(Wishlist, user=request.user.id)
 
@@ -96,8 +96,9 @@ def remove_from_wishlist(request, item_id, redirect_from):
     return redirect(redirect_url)
 
 
+@login_required
 def transfer_all_to_cart(request):
-    """ Add all items on the wishlist to the shopping cart.
+    ''' Add all items on the wishlist to the shopping cart.
 
     If the items are already in the cart it increments the quantity
     by 1. It then sets the cart in session equal to the cart object
@@ -108,7 +109,7 @@ def transfer_all_to_cart(request):
     Returns:
         Redirects view_cart page if successful.
         Redirects back to the wishlist page if unsuccessful.
-    """
+    '''
     # If cart is in session, get it or else create one
     cart = request.session.get('cart', {})
 

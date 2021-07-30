@@ -13,14 +13,14 @@ from .forms import UserProfileForm
 
 @login_required
 def profile(request):
-    """ Display and edit the user's profile. Display order summary.
+    ''' Display and edit the user's profile. Display order summary.
 
     Args:
         request (object): HTTP request object.
     Returns:
         Render of the profile template.
         Redirects to the profile page after update or failed update.
-    """
+    '''
     user_profile = get_object_or_404(UserProfile, user=request.user)
 
     if request.method == 'POST':
@@ -48,7 +48,7 @@ def profile(request):
 
 @login_required
 def order_history(request, order_number):
-    """ Display the history including messages of a past order.
+    ''' Display the history including messages of a past order.
 
     Gets past details on an order and all associated messages.
     Renders a user message form so that the user can send a message regarding
@@ -59,10 +59,13 @@ def order_history(request, order_number):
         order_number (uuid): unique order reference number.
     Returns:
         Render of the past_order template.
-    """
+    '''
     order = get_object_or_404(Order, order_number=order_number)
+    # Validate if user should be accessing this order
+    valid_order_choice = Order.objects.filter(
+        user_profile__user=request.user, order_number=order.order_number)
 
-    if request.user != order.user_profile.user:
+    if not valid_order_choice:
         messages.error(request, 'Order does not match user!')
         return redirect(reverse('home'))
 
@@ -87,7 +90,7 @@ def order_history(request, order_number):
 
 @login_required
 def add_user_message(request, order_number):
-    """ Handles the sending of a user message regarding a past order.
+    ''' Handles the sending of a user message regarding a past order.
 
     If the user message form is valid the message is saved and an email is
     sent to the admin.
@@ -97,9 +100,11 @@ def add_user_message(request, order_number):
         order_number (uuid): unique order reference number.
     Returns:
         Redirects to the same order history page.
-    """
+    '''
     if request.method == 'POST':
-        message_form = UserMessageForm(request.POST)
+        message_form = UserMessageForm({
+            'user_message': request.POST['user_message']
+        })
 
         if message_form.is_valid():
             UserMessage.objects.create(
@@ -109,18 +114,20 @@ def add_user_message(request, order_number):
             )
             messages.info(request, 'Successfully added a message!')
 
-            customer_email = settings.DEFAULT_FROM_EMAIL
+            message = request.POST['user_message']
+            send_email_address = settings.EMAIL_HOST_USER
             subject_context = {'ref_number': order_number}
             body_context = {
                     'user': request.user,
                     'ref_number': order_number,
-                    'message': request.POST['user_message']
+                    'message': message,
                 }
             path = 'profiles/confirmation_emails/'
-            send_confirmation_email(customer_email, subject_context,
+            send_confirmation_email(send_email_address, subject_context,
                                     body_context, path)
         else:
             messages.error(request, 'Failed to add message. Please ensure the \
                            form is valid.')
-
+        return redirect(reverse('order_history', args=[order_number]))
+    messages.error(request, 'Invalid Method.')
     return redirect(reverse('order_history', args=[order_number]))

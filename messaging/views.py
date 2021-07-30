@@ -11,7 +11,7 @@ from .forms import UserMessageForm
 
 @login_required
 def messaging(request):
-    """ Display all messages.
+    ''' Display all messages.
 
     Gets all messages grouped by order reference number by getting
     distinct id's first and then using the id's to filter messages.
@@ -22,7 +22,7 @@ def messaging(request):
     Returns:
         Render of the messaging template.
         Redirects to home url if not superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -42,6 +42,12 @@ def messaging(request):
                     .order_by('-message_date')
                     )
     for message in all_messages:
+        order = get_object_or_404(Order, order_number=message.ref_number)
+        if order.user_profile:
+            customer = order.user_profile.user.username
+        else:
+            customer = order.full_name
+        message.customer = customer
         if message.closed is False:
             open_threads.append(message)
         else:
@@ -57,7 +63,7 @@ def messaging(request):
 
 @login_required
 def view_message_thread(request, ref_number):
-    """ Display a thread of messages.
+    ''' Display a thread of messages.
 
     Gets a thread of messages all associated with one order
     reference number. Gets the order, the associated user
@@ -69,7 +75,7 @@ def view_message_thread(request, ref_number):
     Returns:
         Render of the message_thread template.
         Redirects to home url if not superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -78,28 +84,31 @@ def view_message_thread(request, ref_number):
                       .filter(ref_number=ref_number)
                       .order_by('-message_date')
                       )
-    message_thread.update(read=True)
-    order = get_object_or_404(Order, order_number=ref_number)
+    if message_thread:
+        message_thread.update(read=True)
+        order = get_object_or_404(Order, order_number=ref_number)
 
-    user = list(message_thread)[-1].user
-    thread_status = message_thread[0].closed
-    message_form = UserMessageForm()
+        user = order.user_profile.user
+        thread_status = message_thread[0].closed
+        message_form = UserMessageForm()
 
-    template = 'messaging/message_thread.html'
-    context = {
-        'message_thread': message_thread,
-        'ref_number': ref_number,
-        'message_form': message_form,
-        'user': user,
-        'thread_status': thread_status,
-        'order': order,
-    }
-    return render(request, template, context)
+        template = 'messaging/message_thread.html'
+        context = {
+            'message_thread': message_thread,
+            'ref_number': ref_number,
+            'message_form': message_form,
+            'user': user,
+            'thread_status': thread_status,
+            'order': order,
+        }
+        return render(request, template, context)
+    messages.error(request, 'That does not exist!')
+    return redirect(reverse('messaging'))
 
 
 @login_required
 def add_admin_reply(request, ref_number):
-    """ Adds an admin message reply.
+    ''' Adds an admin message reply.
 
     Facilitates the admin user to write a message response to a customer
     regarding a specific order.
@@ -110,7 +119,7 @@ def add_admin_reply(request, ref_number):
     Returns:
         Render of the message_thread template.
         Redirects to home url if not superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -119,11 +128,11 @@ def add_admin_reply(request, ref_number):
         message_form = UserMessageForm(request.POST)
 
         if message_form.is_valid():
-            UserMessage.objects.create(
+            message = UserMessage.objects.create(
                 ref_number=ref_number,
                 user=request.user,
                 user_message=request.POST['user_message'],
-            )
+                )
             messages.info(request, 'Successfully added a message!')
 
             # send an email to customer
@@ -133,6 +142,7 @@ def add_admin_reply(request, ref_number):
             body_context = {
                     'user': request.user,
                     'ref_number': ref_number,
+                    'message': message,
                 }
             path = 'messaging/confirmation_emails/'
             send_confirmation_email(customer_email, subject_context,
@@ -140,14 +150,17 @@ def add_admin_reply(request, ref_number):
 
             return redirect(reverse('view_message_thread', args=[ref_number]))
 
-        messages.error(request, 'Failed to add message. Please ensure the \
-                       form is valid.')
+        messages.error(
+            request, 'Failed to add message. Please ensure the form is valid.'
+            )
         return redirect(reverse('view_message_thread', args=[ref_number]))
+    messages.error(request, 'Invalid Method.')
+    return redirect(reverse('view_message_thread', args=[ref_number]))
 
 
 @login_required
 def delete_thread(request, ref_number):
-    """ Removes all messages in a thread associated with a specific
+    ''' Removes all messages in a thread associated with a specific
     ref number.
 
     Args:
@@ -156,12 +169,12 @@ def delete_thread(request, ref_number):
     Returns:
         Render of the messaging template.
         Redirects to home url if not superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
-    if request.POST:
+    if request.method == 'POST':
         UserMessage.objects.filter(ref_number=ref_number).delete()
         messages.info(request, 'Message Thread Deleted.')
     else:
@@ -171,7 +184,7 @@ def delete_thread(request, ref_number):
 
 @login_required
 def change_thread_status(request, ref_number):
-    """ Close/open a thread associated with a specific
+    ''' Close/open a thread associated with a specific
     ref number.
 
     Args:
@@ -180,12 +193,12 @@ def change_thread_status(request, ref_number):
     Returns:
         Render of the message_thread template.
         Redirects to home url if not superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
-    if request.POST:
+    if request.method == 'POST':
         message_thread = UserMessage.objects.filter(
             ref_number=ref_number).order_by('-message_date')
         try:

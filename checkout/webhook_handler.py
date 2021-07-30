@@ -12,24 +12,24 @@ from .models import Order, OrderLineItem
 
 
 class StripeWH_Handler:
-    """ Class to handle Stripe webhooks
-    """
+    ''' Class to handle Stripe webhooks
+    '''
 
     def __init__(self, request):
         self.request = request
 
     def handle_event(self, event):
-        """ Handle a generic/unknown/unexpected webhook event
+        ''' Handle a generic/unknown/unexpected webhook event
 
         Returns:
             HTTP Response object.
-        """
+        '''
         return HttpResponse(
             content=f'Unhandled webhook received: {event["type"]}',
             status=200)
 
     def handle_payment_intent_succeeded(self, event):
-        """ Handle the payment_intent.succeeded webhook from Stripe
+        ''' Handle the payment_intent.succeeded webhook from Stripe
 
         If the order already exists in the database an email is sent to the
         customer and a succesful http response returned to stripe.
@@ -40,7 +40,7 @@ class StripeWH_Handler:
 
         Returns:
             HTTP Response object.
-        """
+        '''
         intent = event.data.object
         pid = intent.id
         cart = intent.metadata.cart
@@ -60,11 +60,6 @@ class StripeWH_Handler:
         shipping_details = intent.shipping
         grand_total = round(intent.charges.data[0].amount / 100, 2)
 
-        # Clean data in the shipping details
-        for field, value in shipping_details.address.items():
-            if value == "":
-                shipping_details.address[field] = None
-
         # Update profile information if save_info was checked
         profile = None
         username = intent.metadata.username
@@ -74,11 +69,11 @@ class StripeWH_Handler:
                 profile.default_full_name = shipping_details.name
                 profile.default_phone_number = shipping_details.phone
                 profile.default_country = shipping_details.address.country
-                profile.default_postcode = shipping_details.address.postal_code
                 profile.default_town_or_city = shipping_details.address.city
                 profile.default_street_address1 = shipping_details.address.line1
                 profile.default_street_address2 = shipping_details.address.line2
                 profile.default_county = shipping_details.address.state
+                profile.default_postcode = shipping_details.address.postal_code
                 profile.save()
 
         order_exists = False
@@ -163,11 +158,11 @@ class StripeWH_Handler:
             status=200)
 
     def handle_payment_intent_payment_failed(self, event):
-        """ Handle the payment_intent.payment_failed webhook from Stripe
+        ''' Handle the payment_intent.payment_failed webhook from Stripe
 
         Returns:
             HTTP Response object.
-        """
+        '''
         return HttpResponse(
             content=f'Webhook received: {event["type"]}',
             status=200)

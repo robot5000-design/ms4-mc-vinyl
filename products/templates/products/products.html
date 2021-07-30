@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
 {% endblock %}
 
+{% block extra_title %}All Products{% endblock %}
+
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
@@ -63,7 +65,7 @@
                             {% if request.user.is_superuser %}
                                 <div class="row mx-auto pb-1 admin-buttons-row">
                                     <div class="col-6 px-0">
-                                        <a class="btn btn-dark edit-product-btn w-100" href="{% url 'edit_product' product.id %}"><small>Edit</small></a>
+                                        <a class="btn btn-outline-dark edit-product-btn w-100" href="{% url 'edit_product' product.id %}"><small>Edit</small></a>
                                     </div>
                                     <div class="col-6 px-0">
                                         <a class="btn btn-danger call-delete w-100" data-toggle="modal" data-target="#deleteProductModal"><small>Delete</small></a>
@@ -71,27 +73,28 @@
                                 </div>
                                 {% include 'products/includes/modal_delete.html' %}
                             {% endif %}
-                            <div class="card h-100 border-0 bg-light card-wrapper">                                
-                                {% if product.image %}
-                                    <a href="{% url 'product_detail' product.id %}">
-                                        <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.title }}">
-                                    </a>
-                                {% else %}
-                                    <a href="{% url 'product_detail' product.id %}">
-                                        <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.title }}">
-                                    </a>
-                                {% endif %}
+                            <div class="card h-100 border-0 bg-light card-wrapper">
+                                <a href="{% url 'product_detail' product.id %}" class="text-center p-1">
+                                    {% if product.image %}
+                                        <img class="card-img-top img-fluid products-img rounded-lg" src="{{ product.image.url }}" alt="{{ product.title }}">
+                                    {% else %}
+                                        <img class="card-img-top img-fluid products-img rounded-lg" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.title }}">
+                                    {% endif %}
+                                </a>
                                 <div class="card-body pb-2">
                                     <div class="row">
                                         <div class="col">
+                                            {% if product.pre_discount_price %}
+                                                <s class="small">€{{ product.pre_discount_price }}</s>
+                                            {% endif %}
                                             <p class="lead font-weight-bold">€{{ product.price }}</p>
                                         </div>
                                         <div class="col text-right">
                                             {% if product.rating %}
-                                            <small class=""><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
-                                        {% else %}
-                                            <small class="">No Rating</small>
-                                        {% endif %}
+                                                <small><i class="fas fa-star mr-1"></i>{{ product.rating }}</small>
+                                            {% else %}
+                                                <small><i class="fas fa-star mr-1"></i>N/A</small>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="row card-album-title">
@@ -103,14 +106,14 @@
                                     <div class="row">
                                         <div class="col">                                            
                                             {% if product.genre %}
-                                            <p class="small mt-1 mb-0 genre-wrapper">
-                                                <i class="fas fa-tag mr-1"></i>
-                                                {% for genre in product.genre.all %}
-                                                    <a class="" href="{% url 'products' %}?genre={{ genre }}">
-                                                        {{ genre.friendly_name|capfirst }}
-                                                    </a>{% if product.genre.all|length > 1 and forloop.counter != product.genre.all|length %} | {% endif %}
-                                                {% endfor %}
-                                            </p>
+                                                <p class="small mt-1 mb-0 genre-wrapper">
+                                                    <i class="fas fa-tag mr-1"></i>
+                                                    {% for genre in product.genre.all %}
+                                                        <a class="" href="{% url 'products' %}?genre={{ genre }}">
+                                                            {{ genre.friendly_name|capfirst }}
+                                                        </a>{% if product.genre.all|length > 1 and forloop.counter != product.genre.all|length %} | {% endif %}
+                                                    {% endfor %}
+                                                </p>
                                             {% endif %}
                                         </div>
                                     </div>

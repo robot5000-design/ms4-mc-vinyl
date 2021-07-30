@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
 {% endblock %}
 
+{% block extra_title %}Product Details{% endblock %}
+
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
@@ -15,6 +17,16 @@
 
 {% block content %}
     <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <a href="#" class="btn btn-outline-dark mt-3 go-back">
+                    <span class="icon">
+                        <i class="fas fa-chevron-left"></i>
+                    </span>
+                    <span class="text-uppercase">Back</span>
+                </a>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
                 <div class="image-container my-5">
@@ -31,13 +43,23 @@
                 <div class="product-details-container mb-5 mt-md-5">
                     {% if request.user.is_superuser %}
                         <div class="pb-4">
-                            <a class="btn btn-dark edit-product-btn" href="{% url 'edit_product' product.id %}">Edit</a>
+                            <a class="btn btn-outline-dark edit-product-btn" href="{% url 'edit_product' product.id %}">Edit</a>
                             <a class="btn btn-danger call-delete" data-toggle="modal" data-target="#deleteProductModal">Delete</a>
                         </div>
                         {% include 'products/includes/modal_delete.html' %}
                     {% endif %}
                     <p class="logo-font detail-artist">{{ product.artist }}</p>
                     <p class="my-3"><strong>{{ product.title }}</strong></p>
+                    <div class="mb-3 mt-2">
+                        {% if product.rating %}
+                            <small><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                        {% else %}
+                            <small><i class="fas fa-star mr-1"></i>No Rating</small>
+                        {% endif %}
+                    </div>
+                    {% if product.pre_discount_price %}
+                        <s class="small">€{{ product.pre_discount_price }}</s>
+                    {% endif %}
                     <p class="lead mb-3 text-left font-weight-bold">€{{ product.price }}
                         {% if in_wishlist %}
                             <a href="{% url 'remove_from_wishlist' product.id 'product' %}" aria-label="remove-from-wishlist" class="wishlist-remove text-danger ml-3"><i class="fas fa-heart"></i></a>
@@ -62,14 +84,7 @@
                     <div><small><strong>Label: </strong> {{ product.label }}</small></div>
                     <div><small><strong>Album Format: </strong>{{ product.album_format }}</small></div>
                     <div><small><strong>Colour: </strong>{{ product.color }}</small></div>                   
-                    <div><small><strong>SKU: </strong>{{ product.sku }}</small></div>                   
-                    <div class="mb-4 mt-2">
-                        {% if product.rating %}
-                            <small><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
-                        {% else %}
-                            <small>No Rating</small>
-                        {% endif %}
-                    </div>
+                    <div class="pb-3"><small><strong>SKU: </strong>{{ product.sku }}</small></div>
                     <p class="my-4">{{ product.description }}</p>
                     {% for track in product.track_list %}
                         <div class="row my-2">
@@ -164,10 +179,13 @@
                     <div class="row">
                     {% for review in reviews %}
                         <div class="col-12 py-2">
-                            <div class="small">
-                                Reviewed by: {{ review.user.username }} {{ review.review_date|date:"d M Y" }}
+                            <div class="small mb-2">
+                                Reviewed by: <span class="font-weight-bold">{{ review.user.username }}</span>
                             </div>
-                            <div class="my-2">
+                            <div class="small">
+                                Date: {{ review.review_date|date:"d M Y" }}
+                            </div>
+                            <div class="my-3">
                                 {{ review.body }}
                             </div>
                             <div class="">
@@ -184,7 +202,7 @@
                                         <i class="fas fa-thumbs-up fs-5 pe-2"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
                                     </div>
                                 {% else %}
-                                    <i class="fas fa-thumbs-up"></i> {% if review.upvote_count %}{{ review.upvote_count }}{% else %}0{% endif %}
+                                    <i class="fas fa-thumbs-up"></i> {{ review.upvote_count }}
                                 {% endif %}
                             </div>
                             {% if review.admin_comment %}

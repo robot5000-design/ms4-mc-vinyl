@@ -5,7 +5,7 @@ from products.models import Product
 
 
 def cart_contents(request):
-    """ Facilitates the contents of the cart to be accessible from
+    ''' Facilitates the contents of the cart to be accessible from
     any template.
 
     Args:
@@ -13,7 +13,7 @@ def cart_contents(request):
     Returns:
         A context of items including cart contents which are needed
         to be accessible from multiple template locations.
-    """
+    '''
     cart_items = []
     total = 0
     product_count = 0
@@ -37,10 +37,9 @@ def cart_contents(request):
     else:
         delivery = 0
         free_delivery_delta = 0
-        
 
     grand_total = delivery + total
-    
+
     # this context is available accross every template and every app
     # because it was added to context processors in settings
     context = {

@@ -1,22 +1,80 @@
-{% extends "base.html" %}
 {% load static %}
 
-{% block page_header %}
-    <div class="container header-container">
-        <div class="row">
-            <div class="col"></div>
-        </div>
-    </div>
-{% endblock %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="an e-commerce site for selling vinyl records" />
 
-{% block content %}
-    <main class="container py-5">
-        <div class="row m-0">
-            <div class="col-12 col-lg-6">
-                <p>Internal Server Error 500</p>
-                <p>Please click below to return to safety.</p>
-                <a href="{% url 'home' %}" class="btn btn-success">Back</a>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="shortcut icon" type="image/png" href="{{ MEDIA_URL }}favicon.ico"/>
+
+        <script src="https://kit.fontawesome.com/b92bca4325.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+        <!-- Stripe -->
+        <script src="https://js.stripe.com/v3/"></script>
+
+        <title>MC Vinyl Internal Server Error Page</title>
+    </head>
+    <body>
+        <header class="container-fluid">
+            <div class="row d-lg-none">
+                <div class="col bg-dark">
+                    <a href="{% url 'home' %}" class="nav-link logo-font text-white mx-auto">
+                        <h2 class="mobile-logo my-1">MC Vinyl</h2>
+                    </a>                
+                </div>            
             </div>
-        </div>
-    </main>
-{% endblock %}
+            <div id="topnav" class="row bg-light pt-lg-2 d-none d-lg-flex">
+                <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
+                    <a href="{% url 'home' %}" class="nav-link main-logo-link">
+                        <h2 class="logo-font text-dark my-0 d-inline"><strong>MC</strong> Vinyl</h2>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <main class="main-container container my-5">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <p>{{ exception }}</p>
+                    <p>HTTP 500 Internal Server Error</p>
+                    <p>Please click below to return to safety.</p>
+                    <a href="{% url 'home' %}" class="btn btn-success">Back</a>
+                </div>
+            </div>
+        </main>        
+        <footer>
+            <div class="container-fluid footer-container">
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="list-inline social-links pt-4 pb-1">
+                            <li class="list-inline-item p-2">
+                                <a href="https://www.facebook.com/" target="_blank" rel="noreferrer">
+                                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                    <span class="sr-only">Facebook link</span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item p-2">
+                                <a href="https://twitter.com/" target="_blank" rel="noreferrer">
+                                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                                    <span class="sr-only">twitter link</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row pt-3 footer-terms">
+                    <div class="col-12">
+                        <p>For Educational Purposes Only</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="{% static 'js/base.js' %}"></script>
+    </body>
+</html>

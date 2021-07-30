@@ -142,3 +142,7 @@ label .asteriskField {
     color: #201ec0;
     width: fit-content;
 }
+
+.is-invalid {
+    border: 2px solid #ca1919 !important;
+}

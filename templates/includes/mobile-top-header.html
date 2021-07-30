@@ -9,7 +9,7 @@
             <div class="input-group w-100">
                 <input class="form-control border-dark" type="text" name="q" placeholder="Search our site" required>
                 <div class="input-group-append">
-                    <button class="form-control form-control btn btn-outline-dark" type="submit" aria-label="search">
+                    <button class="btn btn-outline-dark" type="submit" aria-label="search">
                         <span class="icon">
                             <i class="fas fa-search"></i>
                         </span>
@@ -42,7 +42,7 @@
                 <a href="{% url 'add_product' %}" class="dropdown-item">Add a New Product</a>
                 <a href="{% url 'product_tags_admin' %}" class="dropdown-item">Product Tags Admin</a>
             {% endif %}
-            <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
+            <a href="{% url 'profile' %}" class="dropdown-item">My Orders & Messages</a>
             <a href="{% url 'account_change_password' %}" class="dropdown-item">Change Password</a>
             <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
         {% else %}

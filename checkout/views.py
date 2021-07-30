@@ -22,14 +22,14 @@ from .models import Order, OrderLineItem
 
 @require_POST
 def cache_checkout_data(request):
-    """ Caches the checkout data to be used in the event of a failure or
+    ''' Caches the checkout data to be used in the event of a failure or
     interuption of the normal flow of the stripe payment.
 
     Args:
         request (object): HTTP request object.
     Returns:
         A HTTP Response (to the JS post request).
-    """
+    '''
     try:
         # get the payment intent id
         pid = request.POST.get('client_secret').split('_secret')[0]
@@ -47,7 +47,7 @@ def cache_checkout_data(request):
 
 
 def checkout(request):
-    """ Handles checkout with stripe and generates the stripe payment
+    ''' Handles checkout with stripe and generates the stripe payment
     intent.
 
     Populates, validates and saves the order form. Checks that each product
@@ -58,7 +58,7 @@ def checkout(request):
     Returns:
         Render of the checkout template.
         A redirect to a specific url if a post request.
-    """
+    '''
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
 
@@ -80,7 +80,6 @@ def checkout(request):
             'street_address2': request.POST['street_address2'],
             'county': request.POST['county'],
         }
-
         order_form = OrderForm(form_data)
         if order_form.is_valid():
             order = order_form.save(commit=False)
@@ -126,7 +125,6 @@ def checkout(request):
         amount=stripe_total,
         currency=settings.STRIPE_CURRENCY,
     )
-
     # Attempt to prefill the form with any info the user maintains in
     # their profile
     if request.user.is_authenticated:
@@ -162,7 +160,7 @@ def checkout(request):
 
 
 def checkout_success(request, order_number):
-    """ Handle successful checkouts
+    ''' Handle successful checkouts
 
     For logged-in users:
         Save user profile to the order. Save profile form if requested.
@@ -176,7 +174,11 @@ def checkout_success(request, order_number):
         order_number (uuid): unique order reference number.
     Returns:
         Render of the checkout success template.
-    """
+    Raises:
+        django Http404 exception - If there's an order number mismatch
+        or order number does not exist in session. This could happen if
+        a user tries to access through the url.
+    '''
     if 'order_number' not in request.session:
         raise Http404("Sorry that page has expired!")
     if request.session['order_number'] != order_number:
@@ -225,7 +227,7 @@ def checkout_success(request, order_number):
 
 @login_required
 def view_all_orders(request):
-    """ Allows the admin to view all orders
+    ''' Allows the admin to view all orders
 
     Gets all orders on the database ordered by date to send
     to the template.
@@ -235,7 +237,7 @@ def view_all_orders(request):
     Returns:
         Render of the all_orders template.
         A redirect to a specific home url if not a superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -266,7 +268,7 @@ def view_all_orders(request):
 
 @login_required
 def view_order_detail(request, order_number):
-    """ Display order detail
+    ''' Display order detail
 
     Gets a specific order detail and all messages associated with that
     order to send to the template.
@@ -277,7 +279,7 @@ def view_order_detail(request, order_number):
     Returns:
         Render of the order_detail template.
         A redirect to a specific home url if not a superuser.
-    """
+    '''
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))

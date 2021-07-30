@@ -3,12 +3,12 @@ from .models import Order
 
 
 class OrderForm(forms.ModelForm):
-    """ Represents an order form which contains the shipping
+    ''' Represents an order form which contains the shipping
     details for an order.
-    """
+    '''
     class Meta:
-        """ Fields to be part of the form
-        """
+        ''' Fields to be part of the form
+        '''
         model = Order
         fields = ('full_name', 'email', 'phone_number',
                   'street_address1', 'street_address2',
@@ -16,9 +16,9 @@ class OrderForm(forms.ModelForm):
                   'county',)
 
     def __init__(self, *args, **kwargs):
-        """ Add placeholders and classes, remove auto-generated
+        ''' Add placeholders and classes, remove auto-generated
         labels and set autofocus on first field
-        """
+        '''
         super().__init__(*args, **kwargs)
         placeholders = {
             'full_name': 'Full Name',

@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
 {% endblock %}
 
+{% block extra_title %}Profile Page with Orders & Messages{% endblock %}
+
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
@@ -39,6 +41,7 @@
             </div>
             <div class="col-12 col-lg-8">
                 <p class="">Order History</p>
+                <p class="">Click an order for order messages.</p>
                 <div class="order-history table-responsive">
                     <table class="table table-sm table-borderless">
                         <thead>
@@ -71,7 +74,7 @@
                                             {% endfor %}
                                         </ul>
                                     </td>
-                                    <td>${{ order.grand_total }}</td>
+                                    <td>€{{ order.grand_total }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>

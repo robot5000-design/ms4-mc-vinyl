@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
 {% endblock %}
 
+{% block extra_title %}Checkout{% endblock %}
+
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
@@ -73,13 +75,13 @@
                 <p class="">Please fill out the form below to complete your order</p>
                 <form action="{% url 'checkout' %}" method="POST" id="payment-form">
                     {% csrf_token %}
-                    <fieldset class="rounded px-3 mb-5">
+                    <fieldset class="rounded px-sm-3 mb-5">
                         <legend class="fieldset-label small text-dark px-2 w-auto">Details</legend>
                         {{ order_form.full_name|as_crispy_field }}
                         {{ order_form.email|as_crispy_field }}
                     </fieldset>
-                    <fieldset class="rounded px-3 mb-5">
-                        <legend class="fieldset-label small text-dark px-2 w-auto">Delivery</legend>
+                    <fieldset class="rounded px-sm-3 mb-5">
+                        <legend class="fieldset-label small text-dark w-auto px-2">Delivery</legend>
                         {{ order_form.phone_number|as_crispy_field }}
                         {{ order_form.street_address1|as_crispy_field }}
                         {{ order_form.street_address2|as_crispy_field }}
@@ -99,7 +101,7 @@
 							{% endif %}
 						</div>
                     </fieldset>
-                    <fieldset class="px-3">
+                    <fieldset class="px-sm-3">
                         <legend class="fieldset-label small text-dark px-2 w-auto">Payment</legend>
                         <!-- A Stripe card element will go here -->
                         <div class="mb-3" id="card-element"></div>
@@ -108,7 +110,7 @@
                         <!-- Pass the client secret to the view so we can get the payment intent id -->
                         <input type="hidden" value="{{ client_secret }}" name="client_secret">
                     </fieldset>
-                    <div class="submit-button text-right mt-5 mb-2">                    
+                    <div class="submit-button text-right mt-5 mb-2 px-sm-3">                    
 						<a href="{% url 'view_cart' %}" class="btn btn-outline-dark ">
 							<span class="icon">
 								<i class="fas fa-chevron-left"></i>

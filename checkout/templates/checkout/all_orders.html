@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
 {% endblock %}
 
+{% block extra_title %}All Orders{% endblock %}
+
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
@@ -46,7 +48,7 @@
                     <p>Search "no account" to see anonymous user orders.</p>
                 </div>
                 {% if orders %}
-                    <div class="order-history table-responsive">
+                    <div class="order-history table-responsive mt-5">
                         <table class="table table-sm table-borderless">
                             <thead>
                                 <tr>
@@ -70,12 +72,13 @@
                                         </td>
                                         <td>
                                             {% if order.user_profile.user %}
-                                                {{ order.user_profile.user }}
+                                                <div class="d-md-none">{{ order.user_profile.user|truncatechars:14 }}</div>
+                                                <div class="d-none d-md-block">{{ order.user_profile.user|truncatechars:30 }}</div>
                                             {% else %}
                                                 No Account
                                             {% endif %}
                                         </td>
-                                        <td>${{ order.grand_total }}</td>
+                                        <td>€{{ order.grand_total }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>

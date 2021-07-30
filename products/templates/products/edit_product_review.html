@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
 {% endblock %}
 
+{% block extra_title %}Edit Review{% endblock %}
+
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
@@ -22,9 +24,20 @@
                 <hr>
             </div>
         </div>
+        <div class="row mb-4">
+            <div class="col">
+                <a href="#" class="btn btn-outline-dark mt-3 go-back">
+                    <span class="icon">
+                        <i class="fas fa-chevron-left"></i>
+                    </span>
+                    <span class="text-uppercase">Back</span>
+                </a>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12 col-md-6 col-xl-4 mb-5">
                 {% if request.user.is_authenticated %}
+                    <div class="mb-3">This review has {{ review.upvote_count }} like(s).</div>
                     <form class="form edit-review-form" action="#" method="POST">
                         {% csrf_token %}
                         <div class="form-row">

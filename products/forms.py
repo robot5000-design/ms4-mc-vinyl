@@ -9,14 +9,15 @@ from .models import Product, Genre, ProductReview, Promotion
 
 
 class ProductForm(forms.ModelForm):
-    """ Represents a form for submitting new products or editing existing
+    ''' Represents a form for submitting new products or editing existing
     ones.
-    """
+    '''
     class Meta:
-        """ Fields to be inputs of product form.
-        """
+        ''' Fields to be inputs of product form.
+        '''
         model = Product
         fields = (
+            'image',
             'artist',
             'title',
             'promotion',
@@ -24,11 +25,12 @@ class ProductForm(forms.ModelForm):
             'release_date',
             'sku',
             'price',
+            'pre_discount_price',
+            'rating',
             'genre',
             'description',
             'album_format',
             'color',
-            'image',
             'track_list',
             )
 
@@ -38,12 +40,12 @@ class ProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        genres = Genre.objects.all()
+        genres = Genre.objects.all().order_by('name')
         genres_friendly_names = [
             (genre.id, genre.get_friendly_name()) for genre in genres]
         self.fields['genre'].choices = genres_friendly_names
 
-        promotions = Promotion.objects.all()
+        promotions = Promotion.objects.all().order_by('name')
         promotions_friendly_names = [
             (promotion.id, promotion.get_friendly_name())
             for promotion in promotions
@@ -59,14 +61,15 @@ class ProductForm(forms.ModelForm):
                 field.widget.attrs['aria-label'] = 'image-input'
             else:
                 field.widget.attrs['class'] = 'border-dark'
-
+                if self.fields[field_name].required:
+                    field.widget.attrs['placeholder'] = 'Required'
 
 class ProductReviewForm(forms.ModelForm):
-    """ Represents a form for product reviews.
-    """
+    ''' Represents a form for product reviews.
+    '''
     class Meta:
-        """ Fields and types for product review form.
-        """
+        ''' Fields and types for product review form.
+        '''
         model = ProductReview
         fields = (
             'body',
@@ -99,11 +102,11 @@ class ProductReviewForm(forms.ModelForm):
 
 
 class GenreForm(forms.ModelForm):
-    """ Represents a form for inputting new genre types.
-    """
+    ''' Represents a form for inputting new genre types.
+    '''
     class Meta:
-        """ Fields for genre form
-        """
+        ''' Fields for genre form
+        '''
         model = Genre
         fields = (
             'name',
@@ -112,11 +115,11 @@ class GenreForm(forms.ModelForm):
 
 
 class PromotionForm(forms.ModelForm):
-    """ Represents a form for inputting new promotion types.
-    """
+    ''' Represents a form for inputting new promotion types.
+    '''
     class Meta:
-        """ Fields for promotion form
-        """
+        ''' Fields for promotion form
+        '''
         model = Promotion
         fields = (
             'name',

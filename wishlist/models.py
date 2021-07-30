@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 
 
 class Wishlist(models.Model):
-    """ Represents a users wishlist.
-    """
+    ''' Represents a users wishlist.
+    '''
     products = models.ManyToManyField(Product, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
