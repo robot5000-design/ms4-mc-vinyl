@@ -161,6 +161,20 @@ class TestWishlistModels(TestCase):
         self.assertEqual(
             str(messages[0]), 'Added all items to your cart')
         self.assertRedirects(response, '/cart/')
+        self.assertEqual(self.client.session['cart'][str(product.id)], 1)
+
+    def test_transfer_to_cart_item_already_in_cart(self):
+        self.client.login(username='testuser', password='testpassword')
+        test_user = User.objects.get(username='testuser')
+        product = Product.objects.get(sku='Test SKU')
+        wishlist = Wishlist.objects.create(user=test_user)
+        wishlist.products.add(product)
+        response = self.client.get('/wishlist/transfer/')
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(
+            str(messages[0]), 'Added all items to your cart')
+        self.assertRedirects(response, '/cart/')
+        self.assertEqual(self.client.session['cart'][str(product.id)], 1)
 
     def test_login_required_transfer_to_cart(self):
         product = Product.objects.get(sku='Test SKU')

@@ -121,7 +121,8 @@ class TestCartViews(TestCase):
         cart = self.client.session['cart']
         self.assertEqual(cart, {})
         messages = list(get_messages(response.wsgi_request))     
-        self.assertEqual(str(messages[0]), f"Error removing item: '{product.id}'")
+        self.assertEqual(
+            str(messages[0]), f"Error removing item: '{product.id}'")
 
     def test_remove_from_cart(self):
         product = Product.objects.get(sku='Test SKU')
