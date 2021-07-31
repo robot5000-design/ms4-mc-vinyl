@@ -284,7 +284,7 @@ _UserProfile Model_
 
 _UserMessage Model_
 
-- For user messages. Contains fields such as message body, message date, message read, message topic closed. User messages are associated with a certain order by setting the ref. number equal to the particular order number. It includes User as a foreign-key.
+- For user messages. Contains fields such as message body, message date, message read, message topic closed. User messages are associated with a certain order by setting the ref. number equal to the particular order number. The mandatory fields are the ref. number, message text (user_message), message_date and two boolean status fields (read and closed). It includes the optional User as a foreign-key. By using a ref. number to link a message to an order, rather than have Order as a foreign-key, this model is set up to be re-used with a website contact form for anonymous users (future feature). Another optional contact name field could be added if necessary.
 
 _Order Model_
 
