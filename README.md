@@ -272,7 +272,7 @@ __Postgres Database Collections Schema__:
 
 [4]: ./documentation/images_for_readme/database_schema.png "Database Schema"
 
- A Postgres relational database set up in Heroku for convenience and linked to in environmental variables, was used in development as well as the deployed version, as the sqlite3 or mysql database options would not handle the arrayfield used for track listings. The development version was set up using the instruction from this page https://www.gitpod.io/blog/gitpodify/#postgresql and using the Gitpod Postgres image found here https://github.com/gitpod-io/workspace-images/blob/master/postgres/Dockerfile. The database consists of 10 models with some common relationships to each other as marked on the diagram above:
+ A Postgres relational database set up in Heroku for convenience and linked to in environmental variables, was used in development as well as the deployed version, as the sqlite3 or mysql database options would not handle the arrayfield used for track listings. The development version was set up using the instruction from this page https://www.gitpod.io/blog/gitpodify/#postgresql and using the Gitpod Postgres image found here https://github.com/gitpod-io/workspace-images/blob/master/postgres/Dockerfile. This results in a locally accessible Postgres database saved to the Gitpod workspace. The database consists of 10 models with some common relationships to each other as marked on the diagram above:
 
 _User Model_
 
