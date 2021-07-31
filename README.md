@@ -181,7 +181,7 @@ Including Log-in, log-out, register, verification and change password are all ha
 
 _Products Page:_
 
-User can see all products. They can search and sort. The search input will search by artist or title or genre. Genres can be clicked directly or the dropdown sort allows sorting by price, rating or alphabetically. Product ratings are shown and additional edit and delete product buttons are shown to superusers.
+Here users can see all products presented in a randomised order. They can search and sort. The search input will search by artist or title or genre. Genres can be clicked directly or the dropdown sort allows sorting by price, rating or alphabetically. Product ratings are shown and additional edit and delete product buttons are shown to superusers.
 
 _Product Details Page:_
 
@@ -342,6 +342,7 @@ _Libraries, frameworks and Add-ons:_
 - Psycopg2-binary - is the most popular PostgreSQL database adapter for the Python programming language.
 - boto3 - AWS SDK for Python to create, configure, and manage AWS services, such as Amazon Simple Storage Service (Amazon S3).
 - Django-storages - a collection of custom storage backends for Django. Used in combination with boto3.
+- Coverage - for generating interactive html automatic testing reports.
 
 _Database:_
 
