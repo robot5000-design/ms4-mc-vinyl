@@ -373,7 +373,7 @@ As per industry practice and to reduce the number of small commits on the master
 
 ### **4. Testing**
 
-__Final testing of links, responsiveness and Live Website test cases can be found in the [final testing document here](./documentation/testing.md).__
+__Final manual and automated testing of links, responsiveness and Live Website test cases can be found in the [final testing document here](./documentation/testing.md).__
 
 ---
 
