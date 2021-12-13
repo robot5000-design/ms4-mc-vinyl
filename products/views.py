@@ -155,7 +155,7 @@ def edit_product(request, product_id):
         Redirects to home url if not superuser.
         Redirects to product_detail page upon successful or failed update.
     '''
-    if not request.user.is_superuser:
+    if not request.user.is_staff:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
@@ -244,7 +244,7 @@ def delete_product(request, product_id):
         Redirects to home url if not superuser.
         Redirects to products page upon successful delete.
     '''
-    if not request.user.is_superuser:
+    if not request.user.is_staff:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
@@ -309,7 +309,7 @@ def edit_product_review(request, product_id, review_author):
     review = get_object_or_404(
         ProductReview, product=product, user__username=review_author)
 
-    if request.user != review.user and not request.user.is_superuser:
+    if request.user != review.user and not request.user.is_staff:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))
 
@@ -358,7 +358,7 @@ def delete_product_review(request, product_id, review_author):
     review = get_object_or_404(
         ProductReview, product=product, user__username=review_author)
 
-    if request.user != review.user and not request.user.is_superuser:
+    if request.user != review.user and not request.user.is_staff:
         messages.error(request, "Sorry, you don't have permission to do that.")
         return redirect(reverse('home'))
     if request.method == 'POST':

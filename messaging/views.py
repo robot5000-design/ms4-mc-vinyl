@@ -170,7 +170,7 @@ def delete_thread(request, ref_number):
         Render of the messaging template.
         Redirects to home url if not superuser.
     '''
-    if not request.user.is_superuser:
+    if not request.user.is_staff:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 

@@ -14,7 +14,7 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <form action="{% url 'delete_product' product.id %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit" class="-confirm-delete-btn btn btn-danger">Confirm Delete</button>
+                    <button type="submit" class="confirm-delete-btn btn btn-danger">Confirm Delete</button>
                 </form>
             </div>
         </div>
