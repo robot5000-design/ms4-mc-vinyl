@@ -21,6 +21,8 @@ The design is based on user experience principles. Clean coding and a responsive
 ### See the image below for an example of the responsiveness of the site.
 
 Click the image to be taken to a live demo of the site:
+Sign-In with username: design300   pw: Designing#]=
+This account will show additional functionality intended for staff with some functionality disabled.
 
 [![homepage][1]][2]
 
